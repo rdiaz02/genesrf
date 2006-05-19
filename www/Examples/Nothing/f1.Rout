@@ -1,0 +1,45 @@
+Loading required package: randomForest
+randomForest 4.5-11 
+Type rfNews() to see new features/changes/bug fixes.
+	56 slaves are spawned successfully. 0 failed.
+[1] "Using as seed for SPRNG 3951646397"
+Hmisc library by Frank E Harrell Jr
+
+Type library(help='Hmisc'), ?Overview, or ?Hmisc.Overview')
+to see overall documentation.
+
+NOTE:Hmisc no longer redefines [.factor to drop unused levels when
+subsetting.  To get the old behavior of Hmisc type dropUnusedLevels().
+
+Attaching package: 'Hmisc'
+
+
+	The following object(s) are masked from package:stats :
+
+	 ecdf 
+
+
+ Using as cluster  TheCluster
+      Running bootstrap iterations using cluster (can take a while)
+
+     .632+ prediction error  0.3549 
+[1] "Using as cluster  TheCluster"
+
+ Obtaining random importances using cluster (might take a while)
+null device 
+          1 
+null device 
+          1 
+null device 
+          1 
+null device 
+          1 
+null device 
+          1 
+null device 
+          1 
+[1] 1
+
+
+
+ Normal termination

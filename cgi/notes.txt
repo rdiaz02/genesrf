@@ -1,0 +1,51 @@
+Monitoring R finshed, etc.
+-------------------------
+
+Three possible approaches.
+
+1. Do all error checking in Python, none in R. 
+2. Check if R process still up, blablabla.
+3. As now: look at Rout. Either it shows a predifined message or not.
+
+
+1. Pain in the ass in some occassions, and possibly not general
+   enough.
+
+2. Logic like:
+### Either it is running or it ain't
+### if it is, nothing, just keep running.
+### If it ain't (and wasn't dealt with in a previous run, since then
+### we'd know what to do: no pid exists)
+###       - I just killed it (nothing to do, since I check that)
+###       - It finished OK:                        write it to exitStatus
+###       - Finished with a caught execption:      write it to exitStatus
+###       - Finished with uncaught exception: (won't do anything)
+
+###       Thus: check for pid:  int(os.popen('ps -P 25477 | wc -l').readline())
+###       where 25477 is replaced by value from pid.txt
+
+
+###       If the process does not exist
+###                            If no exitStatus: uncaught exception
+###                            If exitStatus: then call the routine
+###       for OK run (thought we can differentiate between exitStatus
+###       == OK and not OK
+
+###       If the process exists, we get a 2: continue running
+
+But the problem is using popen. If, by mistake, the PID is not a pid
+but some manipualtion of it, could have security problems. 
+(I could not find a Python function to figure out if a PID corresponds
+to a currently running process).
+
+Even disregarding security concerns, not obvious this is simpler thatn
+solution 3.
+
+
+3. The one implemented. By using .Last and executing it from the
+   bailing-out functions, can exit in the middle of anywher. Note:
+   normal termination here includes catching a user error. It is
+   normal because it is like catching a predefined exception.
+
+   For rebundancy, and in case it is needed, I also generate an
+   "exitStatus" file.

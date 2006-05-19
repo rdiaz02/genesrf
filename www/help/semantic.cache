@@ -1,0 +1,14 @@
+;; Object help/
+;; SEMANTICDB Tags save file
+(semanticdb-project-database-file "help/"
+  :tables (list 
+   (semanticdb-table "genesrf-help.html"
+    :major-mode 'html-helper-mode
+    :tags 'nil
+    :file "genesrf-help.html"
+    )
+   )
+  :file "semantic.cache"
+  :semantic-tag-version "2.0beta3"
+  :semanticdb-version "2.0beta3"
+  )

@@ -1,0 +1,61 @@
+Immediate todo:
+
+
+eliminar saving all.RData
+
+
+
+
+
+
+
+Later:
+-----
+
+Improve plot quality?
+generate a full pdf report?
+modulo pyApache
+to beautify R -> HTML: CGIwithR, or HTMLgen or HTMLkit
+do not hard-wire the URL, but use as parameter or constant!!!
+
+
+********************
+
+Full pdf report:
+----------------
+
+Creat a basic latex squeleton (names of figures and most filling text
+are same).
+
+Then get:
+a) names of files in original directory; but can I?? If I can't, argue
+confidentiality. 
+
+b) version (R) and versions of key packages (random forest,
+varSelRF, etc).
+
+c) Settings for the run.
+
+d) date (from LaTeX itself)
+
+Then something like:
+
+"Automatically generated report for GeneSrF (Gene Selection using
+random Forests).
+
+You run GeneSrF (http://...) on  date(). 
+
+Then the figures (which are just includes common for all, since names
+dont change; ojo, but whatch out for variable number of figures).
+
+Then the rest.
+
+
+An option is to prepare a bunch of pieces, then use cat and send all
+to a single .tex file, and then pdftex it.
+
+Buuuut: I don't like the cut and other uses of the shell for
+security. Alternatively, could use R itself and then write or sink to
+a file. (But pdftexit from Python). 
+
+Or could use multiple latex files.
