@@ -1,4 +1,0 @@
-> invisible(options(echo = TRUE))
-> proc.time()
-[1] 0.36 0.03 0.40 0.00 0.00
-> 
