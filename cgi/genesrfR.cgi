@@ -181,6 +181,21 @@ def radioUpload(fieldName, acceptedValues):
     return tmp
 
 
+#def makePalsurl(tmp_dir):
+#	f=open("idtype")
+#	idtype = f.read().strip()
+#	f.close()
+#	f=open("organism")
+#	organism = f.read().strip()
+#	f.close()
+#	if (idtype != "None" and organism != "None"):
+#		url_org_id = "org=" + organism + "&idtype=" + idtype + "&"
+#	else:
+#		url_org_id = ""
+#	gene_list_file = "http://pomelo2.bioinfo.cnio.es/tmp/" + tmp_dir + "/gene.list.txt"
+#	data_file = "datafile=" + gene_list_file
+#	Pals_main_url = "http://pals.bioinfo.cnio.es?" + url_org_id + data_file
+#	return(Pals_main_url)
 
 #########################################################
 #########################################################

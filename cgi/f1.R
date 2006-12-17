@@ -38,10 +38,10 @@ system(paste("mv ../../R.running.procs/", new.name1,
 
 library(CGIwithR)
 
-png.width = 7
-png.height = 6
+png.width = 400
+png.height = 350
 ##png.res = 144
-png.pointsize = 14
+png.pointsize = 12
 png.family = "Helvetica"
 
 graphDir <- paste(getwd(), "/", sep = "")
@@ -279,9 +279,9 @@ HTML.varSelRFBoot <- function(object,
 
 caughtUserError <- function(message) {
     webPNG("fboot001.png", width = png.width,
-           height = png.height, 
-           pointsize = png.pointsize,
-           family = png.family)
+           height = png.height, ps = 8)
+#            pointsize = png.pointsize,
+#            family = png.family)
     plot(x = c(0, 1), y = c(0, 1),
          type = "n", axes = FALSE, xlab = "", ylab = "")
     box()
@@ -305,9 +305,9 @@ caughtUserError <- function(message) {
 
 caughtOurError <- function(message) {
     webPNG("ErrorFigure.png", width = png.width,
-           height = png.height, 
-           pointsize = png.pointsize,
-           family = png.family)
+           height = png.height, ps = 8)
+#            pointsize = png.pointsize,
+#            family = png.family)
     plot(x = c(0, 1), y = c(0, 1),
          type = "n", axes = FALSE, xlab = "", ylab = "")
     box()
@@ -505,17 +505,17 @@ if(class(trycode) == "try-error")
 plots.oobpreds <- levels(Class)
 
 webPNG(file = "fboot%03d.png", width = png.width,
-        height = png.height,
-        pointsize = png.pointsize,
-        family = png.family)
+        height = png.height, ps = png.pointsize)
+#        pointsize = png.pointsize,
+#        family = png.family)
 par(cex.axis = 0.75); par(cex.lab = 1); par(cex.main = 1.2)
 plot(rf.vs1.boot)
 dev.off()
 
 webPNG(file = "fimpspec-all.png", width = png.width,
-        height = png.height, 
-        pointsize = png.pointsize,
-        family = png.family)
+        height = png.height, ps = png.pointsize)
+#        pointsize = png.pointsize,
+#        family = png.family)
 par(cex.axis = 0.75); par(cex.lab = 1.4); par(cex.main = 1.5)
 randomVarImpsRFplot(rvi, rf1,
                     main = "Importance Spectrum: all genes",
@@ -531,9 +531,9 @@ dev.off()
 
 
 webPNG(file = "fimpspec-200.png", width = png.width,
-       height = png.height,
-       pointsize = png.pointsize,
-       family = png.family)
+       height = png.height, ps = png.pointsize)
+#       pointsize = png.pointsize,
+#       family = png.family)
 par(cex.axis = 0.75); par(cex.lab = 1.4); par(cex.main = 1.5)
 randomVarImpsRFplot(rvi, rf1, nvars = 200,
                     main = "Importance Spectrum: first 200 genes",
@@ -541,9 +541,9 @@ randomVarImpsRFplot(rvi, rf1, nvars = 200,
 dev.off()
 
 webPNG(file = "fimpspec-30.png", width = png.width,
-       height = png.height,
-       pointsize = png.pointsize,
-       family = png.family)
+       height = png.height, ps = png.pointsize)
+#       pointsize = png.pointsize,
+#       family = png.family)
 par(cex.axis = 0.75); par(cex.lab = 1.4); par(cex.main = 1.5)
 randomVarImpsRFplot(rvi, rf1, nvars = 30,
                     main = "Importance Spectrum: first 30 genes",
@@ -553,9 +553,9 @@ dev.off()
 
 
 webPNG(file = "fselprobplot.png", width = png.width,
-       height = png.height,
-       pointsize = png.pointsize,
-       family = png.family)
+       height = png.height, ps = png.pointsize)
+#       pointsize = png.pointsize,
+#       family = png.family)
 par(cex.axis = 0.75); par(cex.lab = 1.4); par(cex.main = 1.5)
 selProbPlot(rf.vs1.boot, k = c(20, 100), 
             main = "Selection Probability Plot")
