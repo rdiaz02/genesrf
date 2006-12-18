@@ -11,11 +11,11 @@ import dircache
 ##import string
 import whrandom
 from stat import ST_SIZE
-#import cgitb
-#cgitb.enable() ## zz: eliminar for real work?
+import cgitb
+cgitb.enable() ## zz: eliminar for real work?
 sys.stderr = sys.stdout
 
-MAX_genesrf = 4 ## MAX_genesrf + 1 = Maximum number of R processes running at same time.
+MAX_genesrf = 15 ## MAX_genesrf + 1 = Maximum number of R processes running at same time.
 MAX_time = 3600 * 24 * 5 ## 5 is days until deletion of a tmp directory
 R_MAX_time = 3600 * 4 ## 4 hours is max duration allowd for any process
 MAX_covariate_size = 363948523L ## a 500 * 40000 array of floats

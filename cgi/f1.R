@@ -37,9 +37,9 @@ system(paste("mv ../../R.running.procs/", new.name1,
 
 
 library(CGIwithR)
-
-png.width = 400
-png.height = 350
+library(GDD)
+png.width = 550
+png.height = 550
 ##png.res = 144
 png.pointsize = 12
 png.family = "Helvetica"
@@ -57,9 +57,9 @@ graphDir <- paste(getwd(), "/", sep = "")
 ####       Constants for var sel rf #########
 ##############################################
 
-numBootstrap <- 200
-numRand <- 50
-numTree <- 2000
+numBootstrap <- 20
+numRand <- 10
+numTree <- 200
 
 
 
@@ -278,8 +278,8 @@ HTML.varSelRFBoot <- function(object,
 
 
 caughtUserError <- function(message) {
-    webPNG("fboot001.png", width = png.width,
-           height = png.height, ps = 8)
+    GDD("fboot001.png", width = png.width,
+           height = png.height, ps = 10)
 #            pointsize = png.pointsize,
 #            family = png.family)
     plot(x = c(0, 1), y = c(0, 1),
@@ -304,8 +304,8 @@ caughtUserError <- function(message) {
 
 
 caughtOurError <- function(message) {
-    webPNG("ErrorFigure.png", width = png.width,
-           height = png.height, ps = 8)
+    GDD("ErrorFigure.png", width = png.width,
+           height = png.height, ps = 10)
 #            pointsize = png.pointsize,
 #            family = png.family)
     plot(x = c(0, 1), y = c(0, 1),
@@ -504,19 +504,29 @@ if(class(trycode) == "try-error")
                
 plots.oobpreds <- levels(Class)
 
-webPNG(file = "fboot%03d.png", width = png.width,
-        height = png.height, ps = png.pointsize)
+
+bitmap(file = "fboot%03d.png", width = 9,
+        height = 9, pointsize = 12)
 #        pointsize = png.pointsize,
 #        family = png.family)
-par(cex.axis = 0.75); par(cex.lab = 1); par(cex.main = 1.2)
+par(cex.axis = 0.75); par(cex.lab = 1.4); par(cex.main = 1.4)
 plot(rf.vs1.boot)
 dev.off()
 
-webPNG(file = "fimpspec-all.png", width = png.width,
+## does not work: superimposes axis and main labels
+## GDD(file = "fboot", type = "gif", width = png.width,
+##         height = png.height, ps = png.pointsize)
+## #        pointsize = png.pointsize,
+## #        family = png.family)
+## par(cex.axis = 0.75); par(cex.lab = 0.8); par(cex.main = 0.8)
+## plot(rf.vs1.boot)
+## dev.off()
+
+GDD(file = "fimpspec-all.png", width = png.width,
         height = png.height, ps = png.pointsize)
 #        pointsize = png.pointsize,
 #        family = png.family)
-par(cex.axis = 0.75); par(cex.lab = 1.4); par(cex.main = 1.5)
+par(cex.axis = 0.75); par(cex.lab = 1.2); par(cex.main = 1.2)
 randomVarImpsRFplot(rvi, rf1,
                     main = "Importance Spectrum: all genes",
                     overlay = TRUE)
@@ -530,21 +540,21 @@ legend(x = 0.4 * dim(xdata)[2], y = 0.85 * maxy ,
 dev.off()
 
 
-webPNG(file = "fimpspec-200.png", width = png.width,
+GDD(file = "fimpspec-200.png", width = png.width,
        height = png.height, ps = png.pointsize)
 #       pointsize = png.pointsize,
 #       family = png.family)
-par(cex.axis = 0.75); par(cex.lab = 1.4); par(cex.main = 1.5)
+par(cex.axis = 0.75); par(cex.lab = 1.2); par(cex.main = 1.2)
 randomVarImpsRFplot(rvi, rf1, nvars = 200,
                     main = "Importance Spectrum: first 200 genes",
                     overlay = TRUE)
 dev.off()
 
-webPNG(file = "fimpspec-30.png", width = png.width,
+GDD(file = "fimpspec-30.png", width = png.width,
        height = png.height, ps = png.pointsize)
 #       pointsize = png.pointsize,
 #       family = png.family)
-par(cex.axis = 0.75); par(cex.lab = 1.4); par(cex.main = 1.5)
+par(cex.axis = 0.75); par(cex.lab = 1.2); par(cex.main = 1.2)
 randomVarImpsRFplot(rvi, rf1, nvars = 30,
                     main = "Importance Spectrum: first 30 genes",
                     overlay = TRUE)
@@ -552,11 +562,11 @@ dev.off()
 
 
 
-webPNG(file = "fselprobplot.png", width = png.width,
+GDD(file = "fselprobplot.png", width = png.width,
        height = png.height, ps = png.pointsize)
 #       pointsize = png.pointsize,
 #       family = png.family)
-par(cex.axis = 0.75); par(cex.lab = 1.4); par(cex.main = 1.5)
+par(cex.axis = 0.75); par(cex.lab = 1.2); par(cex.main = 1.2)
 selProbPlot(rf.vs1.boot, k = c(20, 100), 
             main = "Selection Probability Plot")
 dev.off()
