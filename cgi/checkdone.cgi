@@ -82,7 +82,6 @@ def extract_for_PaLS_from_geneSrF(file_in1 = '/results.html',
     f3.close()
 
 
-
 def clean_for_PaLS(file_in, file_out):
     """ Make sure no file has two consecutive lines that start with '#',
     so there are not lists without genes."""
@@ -90,22 +89,25 @@ def clean_for_PaLS(file_in, file_out):
     f2 = open(file_out, mode = 'w')
     maxi = len(f1) - 1
     i = 0
-    tmp1 = f1[i]
-    while True:
-        if i == maxi:
-            break
-        tmp2 = f1[i + 1]
-        if not tmp1.startswith('#'):
-            f2.write(tmp1)
-        elif not tmp2.startswith('#'):
-            f2.write(tmp1)
-        tmp1 = tmp2
-        i += 1
-
+    if len(f1) == 0:
+        f2.close()
+    else:
+        tmp1 = f1[i]
+        tmp2 = ' '
+        while True:
+            if i == maxi:
+                break
+            tmp2 = f1[i + 1]
+            if not tmp1.startswith('#'):
+                f2.write(tmp1)
+            elif not tmp2.startswith('#'):
+                f2.write(tmp1)
+            tmp1 = tmp2
+            i += 1
     ### make sure last one is written if not a "#"
-    if not tmp2.startswith('#'):
-        f2.write(tmp2)
-    f2.close()
+        if not tmp2.startswith('#'):
+            f2.write(tmp2)
+        f2.close()
 
 
 def printPalsURL(newDir,
