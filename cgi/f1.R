@@ -57,9 +57,9 @@ graphDir <- paste(getwd(), "/", sep = "")
 ####       Constants for var sel rf #########
 ##############################################
 
-numBootstrap <- 20
-numRand <- 10
-numTree <- 200
+numBootstrap <- 200
+numRand <- 50
+numTree <- 2000
 
 
 
