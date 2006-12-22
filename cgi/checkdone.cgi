@@ -1,8 +1,5 @@
 #!/usr/bin/python
 
-## All this code is copyright Ramon Diaz-Uriarte. For security reasons, this is for
-## now confidential. No license is granted to copy, distribute, or modify it.
-## Once everything is OK, it will be distributed under the GPL.
 
 import sys
 import os
