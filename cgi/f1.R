@@ -1,6 +1,3 @@
-#@+leo-ver=4-thin
-#@+node:ramon.20060206203326.1:@thin /http/genesrf2/cgi/genesrf_f1_leo.R
-#@@language r
 ## Define an explicit .Last, so that we know exactly what is the last
 ## thing in .Rout in case of normal termination. (And normal
 ## termination includes catching a user error!).
@@ -280,8 +277,6 @@ HTML.varSelRFBoot <- function(object,
 caughtUserError <- function(message) {
     GDD("fboot001.png", width = png.width,
            height = png.height, ps = 10)
-#            pointsize = png.pointsize,
-#            family = png.family)
     plot(x = c(0, 1), y = c(0, 1),
          type = "n", axes = FALSE, xlab = "", ylab = "")
     box()
@@ -306,8 +301,6 @@ caughtUserError <- function(message) {
 caughtOurError <- function(message) {
     GDD("ErrorFigure.png", width = png.width,
            height = png.height, ps = 10)
-#            pointsize = png.pointsize,
-#            family = png.family)
     plot(x = c(0, 1), y = c(0, 1),
          type = "n", axes = FALSE, xlab = "", ylab = "")
     box()
@@ -445,6 +438,9 @@ if(any(is.na(xdata))) {
 ##############################################
 ##############################################
 
+print("First gc")
+print(gc())
+
 trycode <- try(
                rf1 <- randomForest(xdata, Class,
                                    ntree = numTree,
@@ -454,6 +450,9 @@ if(class(trycode) == "try-error")
   caughtOurError(paste("Could not run first random forest, with error",
                        trycode, ". \n Please let us know so we can fix the code."))
 
+print("Second gc")
+print(gc())
+
 
 trycode <- try(
                rf.vs1 <- varSelRF(xdata, Class, fitted.rf = rf1)
@@ -462,7 +461,8 @@ if(class(trycode) == "try-error")
   caughtOurError(paste("Could not run varSelRF, with error",
                        trycode, ". \n Please let us know so we can fix the code."))
 
-
+print("Third gc")
+print(gc())
                
 trycode <- try(
               rf.vs1.boot <- varSelRFBoot(xdata, Class, srf = rf.vs1,
@@ -524,8 +524,6 @@ dev.off()
 
 GDD(file = "fimpspec-all.png", width = png.width,
         height = png.height, ps = png.pointsize)
-#        pointsize = png.pointsize,
-#        family = png.family)
 par(cex.axis = 0.75); par(cex.lab = 1.2); par(cex.main = 1.2)
 randomVarImpsRFplot(rvi, rf1,
                     main = "Importance Spectrum: all genes",
