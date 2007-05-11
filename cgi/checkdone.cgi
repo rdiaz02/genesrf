@@ -17,7 +17,7 @@ import cgitb
 cgitb.enable() ## zz: eliminar for real work?
 sys.stderr = sys.stdout ## eliminar?
 
-R_MAX_time = 4 * 3600 ## 4 hours is max duration allowd for any process
+R_MAX_time = 24 * 3600 ## 4 hours is max duration allowd for any process
 
 ## For redirections, from Python Cookbook
 
@@ -109,7 +109,7 @@ def clean_for_PaLS(file_in, file_out):
 
 def printPalsURL(newDir,
                  tmpDir,
-                 application_url = "http://genesrf.bioinfo.cnio.es",
+                 application_url = "http://genesrf2.bioinfo.cnio.es",
                  f1 = "Selected.genes.txt",
                  f2 = "Selected.and.bootstrap.selected.txt",
                  s1 = "genes selected in main run (this rarely makes any sense!)",
@@ -205,7 +205,7 @@ def relaunchCGI():
     print '</head> <body>'
     print '<p> This is an autorefreshing page; your results will eventually be displayed here.\n'
     print 'If your browser does not autorefresh, the results will be kept for five days at</p>'
-    print '<p><a href="' + getBaseURL() + '?newDir=' + newDir + '">', 'http://genesrf.bioinfo.cnio.es/tmp/'+ newDir + '/results.html</a>.' 
+    print '<p><a href="' + getBaseURL() + '?newDir=' + newDir + '">', 'http://genesrf2.bioinfo.cnio.es/tmp/'+ newDir + '/results.html</a>.' 
     print '</p> </body> </html>'
     
 
@@ -251,79 +251,93 @@ def printOKRun():
 
     outf.write("<html><head><title>GeneSrF results </title></head><body>\n")
 
-    listPNGS = glob.glob(tmpDir + "/fboot*.png")
-    listPNGS.sort()
-    nf1 = len(listPNGS)
-    outf.write('<h2>OOB error vs. num of genes <a href="http://genesrf.bioinfo.cnio.es/help/genesrf-help.html#f1">(help)</a></h2> \n')
-    outf.write('<IMG BORDER="0" SRC="' +
-                   listPNGS[nf1 - 1].replace(tmpDir + '/', '') + '">') 
-    if nf1 > 1:
-        outf.write('<br /><br /><h2>OOB predictions <a href="http://genesrf.bioinfo.cnio.es/help/genesrf-help.html#f2">(help)</a></h2> \n')
-        for index in range(nf1 - 1):
-            tmpfile = listPNGS[index].replace(tmpDir + '/','')
-            outf.write('<IMG BORDER="0" SRC="' +
-                       tmpfile + '">') 
+    if os.path.exists(tmpDir + "/ErrorFigure.png"):
+        outf.write('<IMG BORDER="0" SRC="ErrorFigure.png">')
+        outf.write("<br /><br /> <hr>")
+        outf.write("<pre>")
+        outf.write('<br /><br /><h2> Results <a href="http://adacgh.bioinfo.cnio.es/help/adacgh-help.html#outputText">(help)</a></h2> \n')
+        outf.write("<br /><br /> <hr>")
+        outf.write(cgi.escape(resultsFile))
+        outf.write("</pre>")
+        outf.write("</body></html>")
+        outf.flush()
+        outf.close()
+        Rresults.close()
+        shutil.copyfile(tmpDir + "/pre-results.html", tmpDir + "/results.html")
 
-    if os.path.exists(tmpDir + "/fimpspec-all.png"):
-        outf.write('<br /><br /><h2> Importance spectrum plots <a href="http://genesrf.bioinfo.cnio.es/help/genesrf-help.html#f3">(help)</a></h2> \n')
-        outf.write('<IMG BORDER="0" SRC="fimpspec-all.png">')
-    if os.path.exists(tmpDir + "/fimpspec-200.png"):
-        outf.write('<IMG BORDER="0" SRC="fimpspec-200.png">')
-    if os.path.exists(tmpDir + "/fimpspec-30.png"):
-        outf.write('<IMG BORDER="0" SRC="fimpspec-30.png">')
+    else:
+        listPNGS = glob.glob(tmpDir + "/fboot*.png")
+        listPNGS.sort()
+        nf1 = len(listPNGS)
+        outf.write('<h2>OOB error vs. num of genes <a href="http://genesrf2.bioinfo.cnio.es/help/genesrf-help.html#f1">(help)</a></h2> \n')
+        outf.write('<IMG BORDER="0" SRC="' +
+                       listPNGS[nf1 - 1].replace(tmpDir + '/', '') + '">') 
+        if nf1 > 1:
+            outf.write('<br /><br /><h2>OOB predictions <a href="http://genesrf2.bioinfo.cnio.es/help/genesrf-help.html#f2">(help)</a></h2> \n')
+            for index in range(nf1 - 1):
+                tmpfile = listPNGS[index].replace(tmpDir + '/','')
+                outf.write('<IMG BORDER="0" SRC="' +
+                           tmpfile + '">') 
 
-    if os.path.exists(tmpDir + "/fselprobplot.png"):
-        outf.write('<br /><br /><h2> Selection probability plot <a href="http://genesrf.bioinfo.cnio.es/help/genesrf-help.html#f4">(help)</a></h2> \n')
-        outf.write('<IMG BORDER="0" SRC="fselprobplot.png">')
-    
-    outf.write("<br /><br /> <hr>")
-#    outf.write("<pre>")
-    outf.write('<br /><br /><h2> Results <a href="http://genesrf.bioinfo.cnio.es/help/genesrf-help.html#resultstext">(help)</a></h2> \n')
-    outf.write(resultsFile)
-#    outf.write("</pre>")
+        if os.path.exists(tmpDir + "/fimpspec-all.png"):
+            outf.write('<br /><br /><h2> Importance spectrum plots <a href="http://genesrf2.bioinfo.cnio.es/help/genesrf-help.html#f3">(help)</a></h2> \n')
+            outf.write('<IMG BORDER="0" SRC="fimpspec-all.png">')
+        if os.path.exists(tmpDir + "/fimpspec-200.png"):
+            outf.write('<IMG BORDER="0" SRC="fimpspec-200.png">')
+        if os.path.exists(tmpDir + "/fimpspec-30.png"):
+            outf.write('<IMG BORDER="0" SRC="fimpspec-30.png">')
 
+        if os.path.exists(tmpDir + "/fselprobplot.png"):
+            outf.write('<br /><br /><h2> Selection probability plot <a href="http://genesrf2.bioinfo.cnio.es/help/genesrf-help.html#f4">(help)</a></h2> \n')
+            outf.write('<IMG BORDER="0" SRC="fselprobplot.png">')
 
-    ## compress all the results
-    allResults = tarfile.open(tmpDir + '/all.results.tar.gz', 'w:gz')
-    allResults.add(tmpDir + '/results.txt', 'results.txt')
-    
-    if os.path.exists(tmpDir + "/fselprobplot.png"): allResults.add(tmpDir + '/fselprobplot.png', 'SelectionProbabilityPlot.png')
-    if os.path.exists(tmpDir + "/fimpspec-all.png"): allResults.add(tmpDir + '/fimpspec-all.png', 'ImportanceSpectrumAllGenes.png')
-    if os.path.exists(tmpDir + "/fimpspec-200.png"): allResults.add(tmpDir + '/fimpspec-200.png', 'ImportanceSpectrum200Genes.png')
-    if os.path.exists(tmpDir + "/fimpspec-30.png"): allResults.add(tmpDir + '/fimpspec-30.png', 'ImportanceSpectrum30Genes.png')
-    allResults.add(listPNGS[nf1 - 1], 'OOBErrorvsNumGenes.png')
-    if nf1 > 1:
-        for index in range(nf1 - 1):
-            allResults.add(listPNGS[index], 'OOBPredictionsFigure' + str(index + 1) + '.png')
-    ## Now, the pdfs
-    listPDFS = glob.glob(tmpDir + "/fboot*.pdf")
-    if len(listPDFS):
-        listPDFS.sort()
-        allResults.add(tmpDir + '/fselprobplot.pdf', 'SelectionProbabilityPlot.pdf') 
-        allResults.add(tmpDir + '/fimpspec-all.pdf', 'ImportanceSpectrumAllGenes.pdf')
-        allResults.add(tmpDir + '/fimpspec-200.pdf', 'ImportanceSpectrum200Genes.pdf')
-        allResults.add(tmpDir + '/fimpspec-30.pdf', 'ImportanceSpectrum30Genes.pdf')
-        allResults.add(listPDFS[nf1 - 1], 'OOBErrorvsNumGenes.pdf')
+        outf.write("<br /><br /> <hr>")
+    #    outf.write("<pre>")
+        outf.write('<br /><br /><h2> Results <a href="http://genesrf2.bioinfo.cnio.es/help/genesrf-help.html#resultstext">(help)</a></h2> \n')
+        outf.write(resultsFile)
+    #    outf.write("</pre>")
+        ## compress all the results
+        allResults = tarfile.open(tmpDir + '/all.results.tar.gz', 'w:gz')
+        allResults.add(tmpDir + '/results.txt', 'results.txt')
+
+        if os.path.exists(tmpDir + "/fselprobplot.png"): allResults.add(tmpDir + '/fselprobplot.png', 'SelectionProbabilityPlot.png')
+        if os.path.exists(tmpDir + "/fimpspec-all.png"): allResults.add(tmpDir + '/fimpspec-all.png', 'ImportanceSpectrumAllGenes.png')
+        if os.path.exists(tmpDir + "/fimpspec-200.png"): allResults.add(tmpDir + '/fimpspec-200.png', 'ImportanceSpectrum200Genes.png')
+        if os.path.exists(tmpDir + "/fimpspec-30.png"): allResults.add(tmpDir + '/fimpspec-30.png', 'ImportanceSpectrum30Genes.png')
+        allResults.add(listPNGS[nf1 - 1], 'OOBErrorvsNumGenes.png')
         if nf1 > 1:
             for index in range(nf1 - 1):
-                allResults.add(listPDFS[index], 'OOBPredictionsFigure' + str(index + 1) + '.pdf')
+                allResults.add(listPNGS[index], 'OOBPredictionsFigure' + str(index + 1) + '.png')
+        ## Now, the pdfs
+        listPDFS = glob.glob(tmpDir + "/fboot*.pdf")
+        if len(listPDFS):
+            listPDFS.sort()
+            allResults.add(tmpDir + '/fselprobplot.pdf', 'SelectionProbabilityPlot.pdf') 
+            allResults.add(tmpDir + '/fimpspec-all.pdf', 'ImportanceSpectrumAllGenes.pdf')
+            allResults.add(tmpDir + '/fimpspec-200.pdf', 'ImportanceSpectrum200Genes.pdf')
+            allResults.add(tmpDir + '/fimpspec-30.pdf', 'ImportanceSpectrum30Genes.pdf')
+            allResults.add(listPDFS[nf1 - 1], 'OOBErrorvsNumGenes.pdf')
+            if nf1 > 1:
+                for index in range(nf1 - 1):
+                    allResults.add(listPDFS[index], 'OOBPredictionsFigure' + str(index + 1) + '.pdf')
 
-    allResults.close()
-    outf.write('<hr> <a href="http://genesrf.bioinfo.cnio.es/tmp/' +
-               newDir + '/all.results.tar.gz">Download</a> all figures and text results.')  
+        allResults.close()
+        outf.write('<hr> <a href="http://genesrf2.bioinfo.cnio.es/tmp/' +
+                   newDir + '/all.results.tar.gz">Download</a> all figures and text results.')  
 
-    outf.write(printPalsURL(newDir, tmpDir))
-    outf.write("</body></html>")
-    outf.flush()
-    outf.close()
-    Rresults.close()
-    shutil.copyfile(tmpDir + "/pre-results.html", tmpDir + "/results.html")
-    extract_for_PaLS_from_geneSrF(file_in1 = tmpDir + '/results.html',
-                                  file_in2 = tmpDir + '/model.freqs.table.html',
-                                  file_out = tmpDir + '/Selected.genes.txt',
-                                  file_out1 = tmpDir + '/Selected.and.bootstrap.selected.txt')
-
-
+        outf.write(printPalsURL(newDir, tmpDir))
+        outf.write("</body></html>")
+        outf.flush()
+        outf.close()
+        Rresults.close()
+        shutil.copyfile(tmpDir + "/pre-results.html", tmpDir + "/results.html")
+        try:
+            extract_for_PaLS_from_geneSrF(file_in1 = tmpDir + '/results.html',
+                                          file_in2 = tmpDir + '/model.freqs.table.html',
+                                          file_out = tmpDir + '/Selected.genes.txt',
+                                          file_out1 = tmpDir + '/Selected.and.bootstrap.selected.txt')
+        except:
+            None
 
 def printRKilled():
     Rresults = open(tmpDir + "/results.txt")
@@ -380,7 +394,7 @@ if re.search(r'[^0-9]', str(newDir)):
     sys.exit()
     
 redirectLoc = "/tmp/" + newDir
-tmpDir = "/http/genesrf/www/tmp/" + newDir
+tmpDir = "/http/genesrf2/www/tmp/" + newDir
 
 if not os.path.isdir(tmpDir):
     commonOutput()
@@ -395,7 +409,7 @@ if not os.path.isdir(tmpDir):
 ## No need to reopen files or check anything else. Return url with results
 ## and bail out.
 if os.path.exists(tmpDir + "/natural.death.pid.txt") or os.path.exists(tmpDir + "/killed.pid.txt"):
-    print 'Location: http://genesrf.bioinfo.cnio.es/tmp/'+ newDir + '/results.html \n\n'
+    print 'Location: http://genesrf2.bioinfo.cnio.es/tmp/'+ newDir + '/results.html \n\n'
     sys.exit()
 
 ## No, we were not done. Need to examine R output
@@ -421,10 +435,10 @@ if os.path.exists(tmpDir + "/pid.txt"):
         os.rename(tmpDir + '/pid.txt', tmpDir + '/killed.pid.txt')
         os.remove(tmpDir + '/f1.R')
         try:
-            os.system("rm /http/genesrf/www/R.running.procs/R." + newDir + "*")
+            os.system("rm /http/genesrf2/www/R.running.procs/R." + newDir + "*")
         except:
             None
-        print 'Location: http://genesrf.bioinfo.cnio.es/tmp/'+ newDir + '/results.html \n\n'
+        print 'Location: http://genesrf2.bioinfo.cnio.es/tmp/'+ newDir + '/results.html \n\n'
 ##                chkmpi = os.system('/http/mpi.log/adhocCheckRmpi.py GeneSrF&')
         sys.exit()
 
@@ -443,10 +457,10 @@ if errorRun > 0:
     except:
         None
     try:
-        os.system("rm /http/genesrf/www/R.running.procs/R." + newDir + "*")
+        os.system("rm /http/genesrf2/www/R.running.procs/R." + newDir + "*")
     except:
         None
-    print 'Location: http://genesrf.bioinfo.cnio.es/tmp/'+ newDir + '/results.html \n\n'
+    print 'Location: http://genesrf2.bioinfo.cnio.es/tmp/'+ newDir + '/results.html \n\n'
 
 
 elif finishedOK > 0:
@@ -465,10 +479,10 @@ elif finishedOK > 0:
     os.remove(tmpDir + '/f1.R')
     ##    chkmpi = os.system('/http/mpi.log/adhocCheckRmpi.py GeneSrF&')
     try:
-        os.system("rm /http/genesrf/www/R.running.procs/R." + newDir  + "*")
+        os.system("rm /http/genesrf2/www/R.running.procs/R." + newDir  + "*")
     except:
         None
-    print 'Location: http://genesrf.bioinfo.cnio.es/tmp/'+ newDir + '/results.html \n\n'
+    print 'Location: http://genesrf2.bioinfo.cnio.es/tmp/'+ newDir + '/results.html \n\n'
 
     
 else:
@@ -487,7 +501,7 @@ else:
 # print "<p> getPathInfo ",getPathinfo(), "<p>"
 # print "</body></html>"
 
-# # # getQualifiedURL http://genesrf.bioinfo.cnio.es
+# # # getQualifiedURL http://genesrf2.bioinfo.cnio.es
 # # # getScriptname /cgi-bin/checkdone.cgi
-# # # getBaseURL http://genesrf.bioinfo.cnio.es/cgi-bin/checkdone.cgi
-# # # getPathInfo Traceback (most recent call last): File "/http/genesrf/cgi/checkdone.cgi", line 120, in ? print "
+# # # getBaseURL http://genesrf2.bioinfo.cnio.es/cgi-bin/checkdone.cgi
+# # # getPathInfo Traceback (most recent call last): File "/http/genesrf2/cgi/checkdone.cgi", line 120, in ? print "

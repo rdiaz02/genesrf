@@ -33,7 +33,7 @@ system(paste("mv ../../R.running.procs/", new.name1,
              sep = ""))
 
 
-library(CGIwithR)
+#library(CGIwithR)
 library(GDD)
 png.width = 550
 png.height = 550

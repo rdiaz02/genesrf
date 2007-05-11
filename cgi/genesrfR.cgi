@@ -17,7 +17,7 @@ sys.stderr = sys.stdout
 
 MAX_genesrf = 15 ## MAX_genesrf + 1 = Maximum number of R processes running at same time.
 MAX_time = 3600 * 24 * 5 ## 5 is days until deletion of a tmp directory
-R_MAX_time = 3600 * 4 ## 4 hours is max duration allowd for any process
+R_MAX_time = 3600 * 24 ## 4 hours is max duration allowd for any process
 MAX_covariate_size = 363948523L ## a 500 * 40000 array of floats
 MAX_class_size = 61897L
 ##  f5 <- rep(paste(paste(letters, collapse = ""),
@@ -209,9 +209,9 @@ def radioUpload(fieldName, acceptedValues):
 
 ## Deleting tmp directories older than MAX_time
 currentTime = time.time()
-currentTmp = dircache.listdir("/http/genesrf/www/tmp")
+currentTmp = dircache.listdir("/http/genesrf2/www/tmp")
 for directory in currentTmp:
-    tmpS = "/http/genesrf/www/tmp/" + directory
+    tmpS = "/http/genesrf2/www/tmp/" + directory
     if (currentTime - os.path.getmtime(tmpS)) > MAX_time:
         shutil.rmtree(tmpS)
 
@@ -219,7 +219,7 @@ for directory in currentTmp:
 ### Creating temporal directories
 newDir = str(whrandom.randint(1, 10000)) + str(os.getpid()) + str(whrandom.randint(1, 100000)) + str(int(currentTime)) + str(whrandom.randint(1, 10000))
 redirectLoc = "/tmp/" + newDir
-tmpDir = "/http/genesrf/www/tmp/" + newDir
+tmpDir = "/http/genesrf2/www/tmp/" + newDir
 os.mkdir(tmpDir)
 os.chmod(tmpDir, 0700)
 
@@ -274,14 +274,14 @@ fileNamesBrowser.close()
 ##
 
 ## Now, delete any R file left (e.g., from killing procs, etc).
-RrunningFiles = dircache.listdir("/http/genesrf/www/R.running.procs")
+RrunningFiles = dircache.listdir("/http/genesrf2/www/R.running.procs")
 for Rtouchfile in RrunningFiles:
-    tmpS = "/http/genesrf/www/R.running.procs/" + Rtouchfile
+    tmpS = "/http/genesrf2/www/R.running.procs/" + Rtouchfile
     if (currentTime - os.path.getmtime(tmpS)) > R_MAX_time:
         os.remove(tmpS)
 
 ## Now, verify any processes left
-numRgenesrf = len(glob.glob("/http/genesrf/www/R.running.procs/R.*@*%*"))
+numRgenesrf = len(glob.glob("/http/genesrf2/www/R.running.procs/R.*@*%*"))
 if numRgenesrf > MAX_genesrf:
     shutil.rmtree(tmpDir)
     commonOutput()
@@ -300,7 +300,7 @@ if numRgenesrf > MAX_genesrf:
 
 covarInServer = tmpDir + "/covariate"
 arrayNames = tmpDir + "/arrayNames"
-srvfile = open(covarInServer, mode = 'r')
+srvfile = open(covarInServer, mode = 'rU')
 arrayfile = open(arrayNames, mode = 'w')
 num_name_lines = 0
 while 1:
@@ -336,10 +336,10 @@ os.chmod(arrayNames, 0600)
 
 ## touch Rout, o.w. checkdone can try to open a non-existing file
 touchRout = os.system("/bin/touch " + tmpDir + "/f1.Rout") 
-##touchRrunning = os.system("/bin/touch /http/genesrf/www/R.running.procs/R." + newDir)
-touchRrunning = os.system("/bin/touch /http/genesrf/www/R.running.procs/R." + newDir +
+##touchRrunning = os.system("/bin/touch /http/genesrf2/www/R.running.procs/R." + newDir)
+touchRrunning = os.system("/bin/touch /http/genesrf2/www/R.running.procs/R." + newDir +
                           "@" + socket.gethostname())
-shutil.copy("/http/genesrf/cgi/f1.R", tmpDir)
+shutil.copy("/http/genesrf2/cgi/f1.R", tmpDir)
 ## we add the 2> error.msg because o.w. if we kill R we get a server error as standard
 ## error is sent to the server
 # Rcommand = "cd " + tmpDir + "; " + "/usr/bin/R CMD BATCH --no-restore --no-readline --no-save -q f1.R 2> error.msg &"
@@ -354,7 +354,7 @@ createResultsFile = os.system("/bin/touch " + tmpDir + "/results.txt")
 ## Copy to tmpDir a results.html that redirects to checkdone.cgi
 ## If communication gets broken, there is always a results.html
 ## that will do the right thing.
-shutil.copy("/http/genesrf/cgi/results-pre.html", tmpDir)
+shutil.copy("/http/genesrf2/cgi/results-pre.html", tmpDir)
 os.system("cd " + tmpDir + "; /bin/sed 's/sustituyeme/" +
           newDir + "/g' results-pre.html > results.html; rm results-pre.html")
 
