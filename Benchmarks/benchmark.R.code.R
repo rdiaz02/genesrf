@@ -25,7 +25,11 @@ timef <- function(dataset, num.node) {
 dm <- expand.grid(dataset = datanames, num.node = nodes, reps = c(1, 2, 3))
 walltime <- rep(NA, nrow(dm))
 
-for(i in 1:nrow(dm)) walltime[i] <- timef(dm[i, 1], dm[i, 2])
+for(i in 1:nrow(dm)) {
+    cat("\n Doing i ", i, ".  dataset = ", dm[i, 1],
+        " . num.node = ", dm[i, 2], "\n")
+    walltime[i] <- timef(dm[i, 1], dm[i, 2])
+}
 
 dm$walltime <- walltime
 
