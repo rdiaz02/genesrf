@@ -29,6 +29,7 @@ for(i in 1:nrow(dm)) {
     cat("\n Doing i ", i, ".  dataset = ", dm[i, 1],
         " . num.node = ", dm[i, 2], "\n")
     walltime[i] <- timef(dm[i, 1], dm[i, 2])
+    save.image()
 }
 
 dm$walltime <- walltime
