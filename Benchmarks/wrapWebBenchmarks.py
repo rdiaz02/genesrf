@@ -45,5 +45,17 @@ for i in range(len(alltests)):
         
 writeFile(timings, 'web.bnchmk.txt')
 
+## something screwed up above. but since it was run interactively, I copy output and then
+## process.
+
+## We then do
+## grep "Ran 1 test in " out.web.txt | sed 's/Ran 1 test in //' | sed 's/s//' > web.bnchmk.txt
+
+
 os.system("rm data.sets.tar.gz")
 os.system("rm -r -f data.sets")
+
+
+
+
+##########
