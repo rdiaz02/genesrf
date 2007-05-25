@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head>
+ <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15">
+ <LINK REL="stylesheet" HREF="../../style1.css"> <html><head><title>GeneSrF results </title></head><body>
+<h2>OOB error vs. num of genes <a href="http://genesrf2.bioinfo.cnio.es/help/genesrf-help.html#f1">(help)</a></h2> 
+<IMG BORDER="0" SRC="fbootB3.png"><br /><br /><h2>OOB predictions <a href="http://genesrf2.bioinfo.cnio.es/help/genesrf-help.html#f2">(help)</a></h2> 
+<IMG BORDER="0" SRC="fbootB1.png"><IMG BORDER="0" SRC="fbootB2.png"><br /><br /><h2> Importance spectrum plots <a href="http://genesrf2.bioinfo.cnio.es/help/genesrf-help.html#f3">(help)</a></h2> 
+<IMG BORDER="0" SRC="fimpspec-all.png"><IMG BORDER="0" SRC="fimpspec-200.png"><IMG BORDER="0" SRC="fimpspec-30.png"><br /><br /><h2> Selection probability plot <a href="http://genesrf2.bioinfo.cnio.es/help/genesrf-help.html#f4">(help)</a></h2> 
+<IMG BORDER="0" SRC="fselprobplot.png"><br /><br /> <hr><br /><br /><h2> Results <a href="http://genesrf2.bioinfo.cnio.es/help/genesrf-help.html#resultstext">(help)</a></h2> 
+<h3>Variable selection using all data </h3><h4>Variables used</h4><TABLE frame="box">
+<tr><th width=200>Gene name</th></tr>
+<tr><td> 2124.Zyxin </td></tr>
+<tr><td> 896.FAH Fumarylacetoacetate </td></tr>
+</TABLE><p> Number of variables used:  2 </p><hr /><br><h3>Bootstrap results</h3><p><b>Bootstrap (.632+) estimate of prediction error</b>  (using 200 bootstrap iterations): 0.09024<p>Resubstitution error:                           0 </p><p>Leave-one-out bootstrap error:                  0.12661 </p><p>Error rate at random:                           0.28947 </p><br><p>Number of vars in bootstrapped forests:        <pre>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   2.00    2.00    2.00    2.28    2.00    7.00 
+</pre></p></p><p>Overlapp of bootstrapped forests with forest from all data</p><pre>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.0000  0.0000  0.5000  0.3713  0.5000  1.0000 
+</pre></p><br><h3>Variable freqs. in bootstrapped models</h3><TABLE frame="box">
+<tr><th width=200>Gene name</th><th>Frequency</th></tr>
+<tr><td> 2124.Zyxin </td><td> 0.41 </td></tr>
+<tr><td> 896.FAH Fumarylacetoacetate </td><td> 0.375 </td></tr>
+<tr><td> 829.CST3 Cystatin C (amyloid angiopathy and cerebral hemorrhage) </td><td> 0.11 </td></tr>
+<tr><td> 1037.ACADM Acyl-Coenzyme A dehydrogenase, C-4 to C-12 straight chain </td><td> 0.09 </td></tr>
+<tr><td> 2386.TOP2B Topoisomerase (DNA) II beta (180kD) </td><td> 0.075 </td></tr>
+<tr><td> 2600.APLP2 Amyloid beta (A4) precursor-like protein 2 </td><td> 0.055 </td></tr>
+<tr><td> 894.PPBP Connective tissue activation peptide III </td><td> 0.05 </td></tr>
+<tr><td> 2939.TCF3 Transcription factor 3 (E2A immunoglobulin enhancer binding factors E12/E47) </td><td> 0.045 </td></tr>
+<tr><td> 849.Oncoprotein 18 (Op18) gene </td><td> 0.045 </td></tr>
+<tr><td> 2670.ELA2 Elastatse 2, neutrophil </td><td> 0.04 </td></tr>
+<tr><td> 1907.GRN Granulin </td><td> 0.035 </td></tr>
+<tr><td> 523.SPTAN1 Spectrin, alpha, non-erythrocytic 1 (alpha-fodrin) </td><td> 0.035 </td></tr>
+<tr><td> 766.LYN V-yes-1 Yamaguchi sarcoma viral related oncogene homolog </td><td> 0.035 </td></tr>
+<tr><td> 786.Neuromedin B mRNA </td><td> 0.035 </td></tr>
+<tr><td> 2002.T-COMPLEX PROTEIN 1, GAMMA SUBUNIT </td><td> 0.03 </td></tr>
+<tr><td> 283.KIAA0181 gene, partial cds </td><td> 0.03 </td></tr>
+<tr><td> 378.CYSTATIN A </td><td> 0.03 </td></tr>
+<tr><td> 937.CTSD Cathepsin D (lysosomal aspartyl protease) </td><td> 0.03 </td></tr>
+<tr><td> 1042.CCND3 Cyclin D3 </td><td> 0.025 </td></tr>
+<tr><td> 1413.GLUTATHIONE S-TRANSFERASE, MICROSOMAL </td><td> 0.025 </td></tr>
+<tr><td> 1448.Leukotriene C4 synthase (LTC4S) gene </td><td> 0.025 </td></tr>
+<tr><td> 1995.RETINOBLASTOMA BINDING PROTEIN P48 </td><td> 0.025 </td></tr>
+<tr><td> 2289.MCM3 Minichromosome maintenance deficient (S. cerevisiae) 3 </td><td> 0.025 </td></tr>
+<tr><td> 546.Protein tyrosine kinase related mRNA sequence </td><td> 0.025 </td></tr>
+<tr><td> 808.CD33 CD33 antigen (differentiation antigen) </td><td> 0.025 </td></tr>
+<tr><td> 1834.VIL2 Villin 2 (ezrin) </td><td> 0.02 </td></tr>
+<tr><td> 1977.CHRNA7 Cholinergic receptor, nicotinic, alpha polypeptide 7 </td><td> 0.02 </td></tr>
+<tr><td> 738.Terminal transferase mRNA </td><td> 0.02 </td></tr>
+<tr><td> 848.PTX3 Pentaxin-related gene, rapidly induced by IL-1 beta </td><td> 0.02 </td></tr>
+<tr><td> 108.ADM Adrenomedullin </td><td> 0.015 </td></tr>
+<tr><td> 1417.Phosphotyrosine independent ligand p62 for the Lck SH2 domain mRNA </td><td> 0.015 </td></tr>
+<tr><td> 1524.Putative enterocyte differentiation promoting factor mRNA, partial cds </td><td> 0.015 </td></tr>
+<tr><td> 1556.Lysophospholipase homolog (HU-K5) mRNA </td><td> 0.015 </td></tr>
+<tr><td> 1920.SON SON DNA binding protein </td><td> 0.015 </td></tr>
+<tr><td> 2438.CALM1 Calmodulin 1 (phosphorylase kinase, delta) </td><td> 0.015 </td></tr>
+<tr><td> 2499.Epican, Alt. Splice 11 </td><td> 0.015 </td></tr>
+<tr><td> 703.RB1 Retinoblastoma 1 (including osteosarcoma) </td><td> 0.015 </td></tr>
+<tr><td> 1009.DF D component of complement (adipsin) </td><td> 0.01 </td></tr>
+<tr><td> 1069.Azurocidin gene </td><td> 0.01 </td></tr>
+<tr><td> 1455.PKD2 Autosomal dominant polycystic kidney disease type II </td><td> 0.01 </td></tr>
+<tr><td> 1811.ALDR1 Aldehyde reductase 1 (low Km aldose reductase) </td><td> 0.01 </td></tr>
+<tr><td> 2702.MYL1 Myosin light chain (alkali) </td><td> 0.01 </td></tr>
+<tr><td> 2761.CD36 CD36 antigen (collagen type I receptor, thrombospondin receptor) </td><td> 0.01 </td></tr>
+<tr><td> 2801.DHPS Deoxyhypusine synthase </td><td> 0.01 </td></tr>
+<tr><td> 2870.HOX 2.2 gene extracted from Human Hox2.2 gene for a homeobox protein </td><td> 0.01 </td></tr>
+<tr><td> 3046.Transcriptional activator hSNF2b </td><td> 0.01 </td></tr>
+<tr><td> 394.Macmarcks </td><td> 0.01 </td></tr>
+<tr><td> 515.SNRPN Small nuclear ribonucleoprotein polypeptide N </td><td> 0.01 </td></tr>
+<tr><td> 792.ANPEP Alanyl (membrane) aminopeptidase (aminopeptidase N, aminopeptidase M, microsomal aminopeptidase, CD13) </td><td> 0.01 </td></tr>
+<tr><td> 838.Translational initiation factor 2 beta subunit (elF-2-beta) mRNA </td><td> 0.01 </td></tr>
+<tr><td> 1006.TCF12 Transcription factor 12 (HTF4, helix-loop-helix transcription factors 4) </td><td> 0.005 </td></tr>
+<tr><td> 1101.CDC10 Cell division cycle 10 (homologous to CDC10 of S. cerevisiae </td><td> 0.005 </td></tr>
+<tr><td> 1391.HOXA9 Homeo box A9 </td><td> 0.005 </td></tr>
+<tr><td> 140.NADPH-flavin reductase </td><td> 0.005 </td></tr>
+<tr><td> 1445.Protein kinase ATR mRNA </td><td> 0.005 </td></tr>
+<tr><td> 1676.Myeloid progenitor inhibitory factor-1 MPIF-1 mRNA </td><td> 0.005 </td></tr>
+<tr><td> 1754.Catalase (EC 1.11.1.6) 5'flank and exon 1 mapping to chromosome 11, band p13 (and joined CDS) </td><td> 0.005 </td></tr>
+<tr><td> 1778.PLECKSTRIN </td><td> 0.005 </td></tr>
+<tr><td> 178.RANBP1 RAN binding protein 1 </td><td> 0.005 </td></tr>
+<tr><td> 1883.PROTEASOME IOTA CHAIN </td><td> 0.005 </td></tr>
+<tr><td> 1911.ME491  gene extracted from H.sapiens gene for Me491/CD63 antigen </td><td> 0.005 </td></tr>
+<tr><td> 1939.LMP2 gene extracted from H.sapiens genes TAP1, TAP2, LMP2, LMP7 and DOB </td><td> 0.005 </td></tr>
+<tr><td> 1973.ERCC5 DNA excision repair protein ERCC5 </td><td> 0.005 </td></tr>
+<tr><td> 1978.OZF mRNA </td><td> 0.005 </td></tr>
+<tr><td> 2122.Novel T-cell activation protein </td><td> 0.005 </td></tr>
+<tr><td> 2172.Nucleoside-diphosphate kinase </td><td> 0.005 </td></tr>
+<tr><td> 2198.LEPR Leptin receptor </td><td> 0.005 </td></tr>
+<tr><td> 2244.Phosphatidylinositol 3-kinase </td><td> 0.005 </td></tr>
+<tr><td> 2418.Transcriptional activator hSNF2b </td><td> 0.005 </td></tr>
+<tr><td> 2459.CD24 signal transducer mRNA and 3' region </td><td> 0.005 </td></tr>
+<tr><td> 2489.C-myb gene extracted from Human (c-myb) gene, complete primary cds, and five complete alternatively spliced cds </td><td> 0.005 </td></tr>
+<tr><td> 2559.P4HB Procollagen-proline, 2-oxoglutarate 4-dioxygenase (proline 4-hydroxylase), beta polypeptide (protein disulfide isomerase; thyroid hormone binding protein p55) </td><td> 0.005 </td></tr>
+<tr><td> 2664.INTERLEUKIN-8 PRECURSOR </td><td> 0.005 </td></tr>
+<tr><td> 2671.GB DEF = Neutrophil elastase gene, exon 5 </td><td> 0.005 </td></tr>
+<tr><td> 2734.GLUL Glutamate-ammonia ligase (glutamine synthase) </td><td> 0.005 </td></tr>
+<tr><td> 2750.PFC Properdin P factor, complement </td><td> 0.005 </td></tr>
+<tr><td> 2803.TFIIB related factor hBRF (HBRF) mRNA </td><td> 0.005 </td></tr>
+<tr><td> 2813.Epb72 gene exon 1 </td><td> 0.005 </td></tr>
+<tr><td> 2829.MEF2A gene (myocyte-specific enhancer factor 2A, C9 form) extracted from Human myocyte-specific enhancer factor 2A (MEF2A) gene, first coding </td><td> 0.005 </td></tr>
+<tr><td> 2860.Butyrophilin (BTF5) mRNA </td><td> 0.005 </td></tr>
+<tr><td> 2921.LYZ Lysozyme </td><td> 0.005 </td></tr>
+<tr><td> 2922.Lysozyme gene (EC 3.2.1.17) </td><td> 0.005 </td></tr>
+<tr><td> 304.KIAA0191 gene, partial cds </td><td> 0.005 </td></tr>
+<tr><td> 350.KIAA0246 gene, partial cds </td><td> 0.005 </td></tr>
+<tr><td> 422.Heat Shock Protein, 70 Kda (Gb:Y00371) </td><td> 0.005 </td></tr>
+<tr><td> 479.PROTEIN PHOSPHATASE PP2A, 65 KD REGULATORY SUBUNIT, ALPHA ISOFORM </td><td> 0.005 </td></tr>
+<tr><td> 566.INDUCED MYELOID LEUKEMIA CELL DIFFERENTIATION PROTEIN MCL1 </td><td> 0.005 </td></tr>
+<tr><td> 606.High mobility group protein (HMG-I(Y)) gene exons 1-8 </td><td> 0.005 </td></tr>
+<tr><td> 648.HnRNP F protein mRNA </td><td> 0.005 </td></tr>
+<tr><td> 717.Inducible protein mRNA </td><td> 0.005 </td></tr>
+<tr><td> 746.ADA Adenosine deaminase </td><td> 0.005 </td></tr>
+<tr><td> 750.UROD Uroporphyrinogen decarboxylase </td><td> 0.005 </td></tr>
+<tr><td> 803.PPGB Protective protein for beta-galactosidase (galactosialidosis) </td><td> 0.005 </td></tr>
+<tr><td> 96.KIAA0102 gene </td><td> 0.005 </td></tr>
+</TABLE><br><h3>Variable freqs. of variables in forest from all data, and summary</h3><TABLE frame="box">
+<tr><th width=200>Gene name</th><th>Frequency</th></tr>
+<tr><td> 2124.Zyxin </td><td> 0.41 </td></tr>
+<tr><td> 896.FAH Fumarylacetoacetate </td><td> 0.375 </td></tr>
+</TABLE><br><pre>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+ 0.3750  0.3838  0.3925  0.3925  0.4012  0.4100 
+</pre><hr><br><h3>Model frequencies in bootstrap samples</h3><p><a href="./model.freqs.table.html">View</a> model frequencies table (can be large)</p><hr><br><h3>Mean class membership probabilities from out of bag samples</h3><TABLE BORDER>
+<tr><td>Subject/array</td><td>ALL</td><td>AML</td></tr>
+<tr><td>1</td><td><div align=right>0.8968</div></td><td><div align=right>0.1032</div></td></tr>
+<tr><td>2</td><td><div align=right>0.8151</div></td><td><div align=right>0.1849</div></td></tr>
+<tr><td>3</td><td><div align=right>0.9500</div></td><td><div align=right>0.0500</div></td></tr>
+<tr><td>4</td><td><div align=right>0.9468</div></td><td><div align=right>0.0532</div></td></tr>
+<tr><td>5</td><td><div align=right>0.8296</div></td><td><div align=right>0.1704</div></td></tr>
+<tr><td>6</td><td><div align=right>0.9332</div></td><td><div align=right>0.0668</div></td></tr>
+<tr><td>7</td><td><div align=right>0.9182</div></td><td><div align=right>0.0818</div></td></tr>
+<tr><td>8</td><td><div align=right>0.7523</div></td><td><div align=right>0.2477</div></td></tr>
+<tr><td>9</td><td><div align=right>0.9611</div></td><td><div align=right>0.0389</div></td></tr>
+<tr><td>10</td><td><div align=right>0.8098</div></td><td><div align=right>0.1902</div></td></tr>
+<tr><td>11</td><td><div align=right>0.9312</div></td><td><div align=right>0.0688</div></td></tr>
+<tr><td>12</td><td><div align=right>0.6954</div></td><td><div align=right>0.3046</div></td></tr>
+<tr><td>13</td><td><div align=right>0.9946</div></td><td><div align=right>0.0054</div></td></tr>
+<tr><td>14</td><td><div align=right>0.8461</div></td><td><div align=right>0.1539</div></td></tr>
+<tr><td>15</td><td><div align=right>0.9966</div></td><td><div align=right>0.0034</div></td></tr>
+<tr><td>16</td><td><div align=right>0.9873</div></td><td><div align=right>0.0127</div></td></tr>
+<tr><td>17</td><td><div align=right>0.8162</div></td><td><div align=right>0.1838</div></td></tr>
+<tr><td>18</td><td><div align=right>0.8620</div></td><td><div align=right>0.1380</div></td></tr>
+<tr><td>19</td><td><div align=right>0.9441</div></td><td><div align=right>0.0559</div></td></tr>
+<tr><td>20</td><td><div align=right>1.0000</div></td><td><div align=right>0.0000</div></td></tr>
+<tr><td>21</td><td><div align=right>0.9255</div></td><td><div align=right>0.0745</div></td></tr>
+<tr><td>22</td><td><div align=right>0.6817</div></td><td><div align=right>0.3183</div></td></tr>
+<tr><td>23</td><td><div align=right>0.9271</div></td><td><div align=right>0.0729</div></td></tr>
+<tr><td>24</td><td><div align=right>0.9933</div></td><td><div align=right>0.0067</div></td></tr>
+<tr><td>25</td><td><div align=right>0.8721</div></td><td><div align=right>0.1279</div></td></tr>
+<tr><td>26</td><td><div align=right>0.9738</div></td><td><div align=right>0.0262</div></td></tr>
+<tr><td>27</td><td><div align=right>0.9494</div></td><td><div align=right>0.0506</div></td></tr>
+<tr><td>28</td><td><div align=right>0.4080</div></td><td><div align=right>0.5920</div></td></tr>
+<tr><td>29</td><td><div align=right>0.3204</div></td><td><div align=right>0.6796</div></td></tr>
+<tr><td>30</td><td><div align=right>0.1123</div></td><td><div align=right>0.8877</div></td></tr>
+<tr><td>31</td><td><div align=right>0.2961</div></td><td><div align=right>0.7039</div></td></tr>
+<tr><td>32</td><td><div align=right>0.4707</div></td><td><div align=right>0.5293</div></td></tr>
+<tr><td>33</td><td><div align=right>0.1566</div></td><td><div align=right>0.8434</div></td></tr>
+<tr><td>34</td><td><div align=right>0.2143</div></td><td><div align=right>0.7857</div></td></tr>
+<tr><td>35</td><td><div align=right>0.4040</div></td><td><div align=right>0.5960</div></td></tr>
+<tr><td>36</td><td><div align=right>0.1676</div></td><td><div align=right>0.8324</div></td></tr>
+<tr><td>37</td><td><div align=right>0.0379</div></td><td><div align=right>0.9621</div></td></tr>
+<tr><td>38</td><td><div align=right>0.2926</div></td><td><div align=right>0.7074</div></td></tr>
+</TABLE>
+<hr><br><h3>Variable (gene) importances from original data</h3><p><a href="./var.imps.table.html">View</a> variable importances table (can be large)</p><hr> <a href="http://genesrf2.bioinfo.cnio.es/Examples/Leukemia/all.results.tar.gz">Download</a> all figures and text results.<br /> <hr> <h3> Send results to <a href = "http://pals.bioinfo.cnio.es"><IMG BORDER="0" SRC="../../palsfavicon40.png" align="middle"></a></h3><p> Send set of <a href="http://pals.bioinfo.cnio.es?datafile=http://genesrf2.bioinfo.cnio.es/Examples/Leukemia/Selected.genes.txt">genes selected in main run (this rarely makes any sense!) to PaLS</a></p><p> Send set of <a href="http://pals.bioinfo.cnio.es?datafile=http://genesrf2.bioinfo.cnio.es/Examples/Leukemia/Selected.and.bootstrap.selected.txt">genes selected in main run and in bootstrap runs to PaLS</a></p></body></html>

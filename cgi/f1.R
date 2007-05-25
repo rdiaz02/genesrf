@@ -505,14 +505,9 @@ if(class(trycode) == "try-error")
 plots.oobpreds <- levels(Class)
 
 
-bitmap(file = "fboot%03d.png", width = 9,
-        height = 9, pointsize = 12)
-#        pointsize = png.pointsize,
-#        family = png.family)
-par(cex.axis = 0.75); par(cex.lab = 1.4); par(cex.main = 1.4)
-plot(rf.vs1.boot)
-dev.off()
 
+
+## The folliwing 
 ## does not work: superimposes axis and main labels
 ## GDD(file = "fboot", type = "gif", width = png.width,
 ##         height = png.height, ps = png.pointsize)
@@ -521,6 +516,46 @@ dev.off()
 ## par(cex.axis = 0.75); par(cex.lab = 0.8); par(cex.main = 0.8)
 ## plot(rf.vs1.boot)
 ## dev.off()
+
+## This next one looks very ugly 
+## bitmap(file = "fboot%03d.png", width = 9,
+##         height = 9, pointsize = 12)
+## par(cex.axis = 0.75); par(cex.lab = 1.4); par(cex.main = 1.4)
+## plot(rf.vs1.boot)
+## dev.off()
+
+
+## So we'll go one by one
+
+numgddplots <- length(levels(Class))
+
+for(ngddpl in 1:numgddplots) {
+    GDD(file = paste("fbootB", ngddpl, sep = ""), type = "png",
+        width = png.width,
+        height = png.height, ps = png.pointsize,
+        bg = "white")
+    par(cex.axis = 0.75); par(cex.lab = 1); par(cex.main = 1)
+    plot(rf.vs1.boot,
+         ErrorNum = FALSE,
+         class.to.plot = ngddpl)
+    dev.off()
+}
+
+GDD(file = paste("fbootB", numgddplots + 1, sep = ""), type = "png",
+    width = png.width,
+    height = png.height, ps = png.pointsize,
+    bg = "white")
+par(cex.axis = 0.75); par(cex.lab = 1); par(cex.main = 1)
+par(las = 2)
+par(mar = c(5, 5, 4, 2) + 0.1)
+par(mgp = c(4, 1, 0))
+plot(rf.vs1.boot,
+     ErrorNum = TRUE,
+     oobProb = FALSE)
+dev.off()
+
+
+
 
 GDD(file = "fimpspec-all.png", width = png.width,
         height = png.height, ps = png.pointsize)
