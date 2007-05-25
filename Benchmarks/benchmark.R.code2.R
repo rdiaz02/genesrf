@@ -1,3 +1,9 @@
+### ojo con el num.node y el lambhost.
+
+system("lamhalt")
+system("lamboot -v lamb-host.karl02.3.def")
+
+
 library(Rmpi)
 library(snow)
 
@@ -13,7 +19,7 @@ narrays <- c(20, 40, 80, 100)
 
 
 
-timef <- function(ngene, narray, dataset = "prostate", num.node = 60) {
+timef <- function(ngene, narray, dataset = "prostate", num.node = 90) {
     try(stopCluster(TheCluster))
     try(rm("TheCluster"))
     basicClusterInit(num.node)

@@ -58,4 +58,19 @@ os.system("rm -r -f data.sets")
 
 
 
+
+### Oh, I forgot Golub's Leukemia. Add it
+
+
+alltests = ('leukemia', 'leukemia', 'leukemia')
+timingsl =  [-99] * len(alltests)
+for i in range(len(alltests)):
+    try:
+        timingsl[i] = launchTest(alltests[i])
+    except:
+        None
+
+
+
+
 ##########

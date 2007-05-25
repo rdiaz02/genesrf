@@ -66,7 +66,8 @@ class GeneSrF(FunkLoadTestCase):
     def test_lymphoma(self): self.test1('lymphoma')
     def test_brain(self): self.test1('brain')
     def test_adeno(self): self.test1('adenocarcinoma')
-
+    def test_leukemia(self): self.test1('leukemia')
+    
     def tearDown(self):
         """Setting up test."""
         self.logd("tearDown.\n")
