@@ -1,7 +1,7 @@
 ### ojo con el num.node y el lambhost.
 
 system("lamhalt")
-system("lamboot -v lamb-host.karl02.3.def")
+system("lamboot -v lamb-host.karl02.def")
 
 
 library(Rmpi)
@@ -19,7 +19,7 @@ narrays <- c(20, 40, 80, 100)
 
 
 
-timef <- function(ngene, narray, dataset = "prostate", num.node = 90) {
+timef <- function(ngene, narray, dataset = "prostate", num.node = 120) {
     try(stopCluster(TheCluster))
     try(rm("TheCluster"))
     basicClusterInit(num.node)
@@ -46,7 +46,11 @@ walltime2 <- rep(NA, nrow(dmB))
 for(i in 1:nrow(dmB)) {
     cat("\n Doing i ", i, ".  ngenes = ", dmB[i, 1],
         " . narrays = ", dmB[i, 2], "\n")
+    try(stopCluster(TheCluster))
+    try(rm("TheCluster"))
+    try(rm(TheCluster))
     walltime2[i] <- timef(dmB[i, 1], dmB[i, 2])
+    cat("\n       This walltime was ", walltime2[i], "\n")
     save.image()
 }
 
