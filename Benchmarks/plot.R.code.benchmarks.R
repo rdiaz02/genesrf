@@ -68,3 +68,47 @@ dev.off()
 
 
 
+########################
+
+## benchmarking with prostate data set
+
+mt <- tapply(dmB$walltime, list(dmB$number.genes, dmB$number.arrays), mean)
+mean.for.6033.genes <-  mt[5, -5]
+mean.for.102.arrays <-  mt[-5, 5]
+
+
+pdf("R_timings_2.pdf", width = 11, height = 7, paper = "special")
+postscript("R_timings_2.eps", width = 11, height = 7, paper = "special")
+par(mar = c(4.8, 5.8, 4.8, .81))  
+par(mgp = c(3.2, 1, 0))
+par(cex.main = 1.75)
+par(cex.lab = 1.72)
+par(cex.axis = 1.2)
+par(cex.las = 1.7)
+par(mfrow = c(1, 2))
+par(las = 1)
+plot(walltime ~ as.numeric(factor(number.arrays)), data = dmB[1:12, ],
+     type = "p", xlab = "Number of arrays",
+     ylab = "User wall time (seconds)", log = "y",
+     axes = FALSE,
+     main = "Prostate data set, 6033 genes",
+     cex = 1.8)
+box()
+axis(2)
+axis(2, at = c(180, 400, 1500))
+axis(1, at = c(1, 2, 3, 4), labels = c("20", "40", "80", "100"))
+lines(mean.for.6033.genes ~ c(1, 2, 3, 4), lwd = 2.2)
+
+par(las = 1)
+plot(walltime ~ as.numeric(factor(number.genes)), data = dmB[13:24, ],
+     type = "p", xlab = "Number of genes",
+     ylab = "User wall time (seconds)", log = "y",
+     axes = FALSE,
+     main = "Prostate data set, 102 samples",
+     cex = 1.8)
+box()
+axis(2)
+axis(2, at = c(250, 1800))
+axis(1, at = c(1, 2, 3, 4), labels = c("1000", "2000", "4000", "6000"))
+lines(mean.for.102.arrays ~ c(1, 2, 3, 4), lwd = 2.2)
+dev.off()

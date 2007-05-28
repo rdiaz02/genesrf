@@ -16,7 +16,7 @@ postscript("web_timings.eps", width = 11, height = 8, paper = "special")
 #pdf("web_timings.pdf", width = 11, height = 8, paper = "special")
 par(las = 1)
 par(cex = 1.3)
-par(cex.lab = 1)
+par(cex.lab = 1.4)
 stripchart(timings ~ data.sets, vertical = TRUE, pch = 19,
            col = rainbow(9), xlab = "",
            ylab = "User wall time (seconds)")
