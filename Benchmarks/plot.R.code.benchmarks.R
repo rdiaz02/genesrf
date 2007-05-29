@@ -72,13 +72,14 @@ dev.off()
 
 ## benchmarking with prostate data set
 
+load("dmB.RData")
 mt <- tapply(dmB$walltime, list(dmB$number.genes, dmB$number.arrays), mean)
 mean.for.6033.genes <-  mt[5, -5]
 mean.for.102.arrays <-  mt[-5, 5]
 
 
 pdf("R_timings_2.pdf", width = 11, height = 7, paper = "special")
-postscript("R_timings_2.eps", width = 11, height = 7, paper = "special")
+#postscript("R_timings_2.eps", width = 11, height = 7, paper = "special")
 par(mar = c(4.8, 5.8, 4.8, .81))  
 par(mgp = c(3.2, 1, 0))
 par(cex.main = 1.75)
@@ -104,7 +105,7 @@ plot(walltime ~ as.numeric(factor(number.genes)), data = dmB[13:24, ],
      type = "p", xlab = "Number of genes",
      ylab = "User wall time (seconds)", log = "y",
      axes = FALSE,
-     main = "Prostate data set, 102 samples",
+     main = "Prostate data set, 102 arrays",
      cex = 1.8)
 box()
 axis(2)
