@@ -205,8 +205,6 @@ def radioUpload(fieldName, acceptedValues):
 #########################################################
 #########################################################
 
-
-
 ## Deleting tmp directories older than MAX_time
 currentTime = time.time()
 currentTmp = dircache.listdir("/http/genesrf2/www/tmp")
