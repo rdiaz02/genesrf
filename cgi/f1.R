@@ -13,6 +13,7 @@ rm(list = ls())
     cat("\n\n Normal termination\n")
     try(system(paste("/http/mpi.log/killLAM.py", lamSESSION, "&")))
     try(mpi.quit(save = "no"), silent = TRUE)
+
 }
 
 startExecTime <- format(Sys.time())
@@ -72,11 +73,11 @@ library(Rmpi)
 library(rsprng)
 
 trylam <- try(
-              lamSESSION <- scan("lamSuffix", sep = "\t", strip.white = TRUE))
+              lamSESSION <- scan("lamSuffix", what = "character", sep = "\t", strip.white = TRUE))
 trycode <- (
             basicClusterInit(mpi.universe.size()) ## use all CPUs in lam universe
             )
-if(class(trycode) == "try-error") {
+if(inherits(trycode, "try-error")) {
   caughtOurError(paste("Could not initialize MPI, with error",
                        trycode, ". \n Please let us know so we can fix the code."))
 
@@ -345,7 +346,7 @@ xdata <- read.table("covariate", header = FALSE, sep = "\t",
                     comment.char = "#",
 		    quote = ""))
 
-if(class(tryxdata) == "try-error")
+if(inherits(tryxdata, "try-error"))
     caughtUserError("The covariate file is not of the appropriate format\n")
 
 
@@ -376,6 +377,12 @@ if(length(arrayNames) > 0) {
                           "The duplicated names are ", dupnames, "\n")
         caughtUserError(emessage)
     }
+    if(ncol(xdata) != length(arrayNames)) {
+      emessage <- paste("We get that the number of columns in your data (", ncol(xdata), ")\n",
+                        "is different from the number of column names (", length(arrayNames), ")\n",
+                        "Check for things such as '#' or '#NULL!' in the middle of your data.\n")
+      caughtUserError(emessage)
+    }
     colnames(xdata) <- arrayNames
 }
 
@@ -386,7 +393,7 @@ trycl <- try(
              )
 ## to prevent problems with a space at end of classes
 
-if(class(trycl) == "try-error")
+if(inherits(trycl, "try-error"))
     caughtUserError("The class file is not of the appropriate format\n")
 
 if(Class[length(Class)] == "") Class <- factor(Class[-length(Class)])
@@ -446,7 +453,7 @@ trycode <- try(
                                    ntree = numTree,
                                    importance = TRUE)
                )
-if(class(trycode) == "try-error")
+if(inherits(trycode, "try-error"))
   caughtOurError(paste("Could not run first random forest, with error",
                        trycode, ". \n Please let us know so we can fix the code."))
 
@@ -457,7 +464,7 @@ print(gc())
 trycode <- try(
                rf.vs1 <- varSelRF(xdata, Class, fitted.rf = rf1)
                )
-if(class(trycode) == "try-error")
+if(inherits(trycode, "try-error"))
   caughtOurError(paste("Could not run varSelRF, with error",
                        trycode, ". \n Please let us know so we can fix the code."))
 
@@ -469,7 +476,7 @@ trycode <- try(
                             TheCluster = TheCluster,
                             bootnumber = numBootstrap)
             )
-if(class(trycode) == "try-error")
+if(inherits(trycode, "try-error"))
   caughtOurError(paste("Could not run varSelRFBoot, with error",
                        trycode, ". \n Please let us know so we can fix the code."))
 
@@ -481,7 +488,7 @@ trycode <- try(
                        numrandom = numRand,
                        TheCluster = TheCluster)
             )
-if(class(trycode) == "try-error")
+if(inherits(trycode, "try-error"))
   caughtOurError(paste("Could not run randomVarImpsRF, with error",
                        trycode, ". \n Please let us know so we can fix the code."))
 
@@ -493,7 +500,7 @@ trycode <- try(
                colnames(imps) <- "Mean Decrease in Accuracy"
              }
             )
-if(class(trycode) == "try-error")
+if(inherits(trycode, "try-error"))
   caughtOurError(paste("Problem with imps code, with error",
                        trycode, ". \n Please let us know so we can fix the code."))
 
@@ -612,7 +619,7 @@ trycode <- try(
                HTML.varSelRFBoot(rf.vs1.boot, return.model.freqs = TRUE,
                                  file = "results.txt")
 )
-if(class(trycode) == "try-error")
+if(inherits(trycode, "try-error"))
   caughtOurError(paste("Could not run summary boot, with error",
                        trycode, ". \n Please let us know so we can fix the code."))
 
@@ -687,12 +694,15 @@ trycode <- (
               dev.off()
             }
             )
-if(class(trycode) == "try-error")
+if(inherits(trycode, "try-error"))
   caughtOurError(paste("Plotting problem, with error",
                        trycode, ". \n Please let us know so we can fix the code."))
 
 
 stopCluster(TheCluster)
+
+## cat(paste("\n Did the call to stopCluster ", date(), " \n"),
+##     file = "tmp.checks", append = TRUE)
 
 
 

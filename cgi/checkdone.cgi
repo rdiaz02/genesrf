@@ -425,7 +425,8 @@ if os.path.exists(tmpDir + "/pid.txt"):
         lamenv = open(tmpDir + "/lamSuffix", mode = "r").readline()
         try:
             os.system('export LAM_MPI_SESSION_SUFFIX=' + lamenv +
-                      '; lamhalt -H; lamwipe -H')
+                      '; lamhalt -H; lamwipe -H; touch ' +
+                      tmpDir + '/lamKilledFromPython')
         except:
             None
 #             os.kill(int(open(tmpDir + "/pid.txt", mode = "r").readline()),
@@ -433,7 +434,7 @@ if os.path.exists(tmpDir + "/pid.txt"):
 
         printRKilled()
         os.rename(tmpDir + '/pid.txt', tmpDir + '/killed.pid.txt')
-        os.remove(tmpDir + '/f1.R')
+##        os.remove(tmpDir + '/f1.R')
         try:
             os.system("rm /http/genesrf2/www/R.running.procs/R." + newDir + "*")
         except:
@@ -445,7 +446,7 @@ if os.path.exists(tmpDir + "/pid.txt"):
 if errorRun > 0:
     printErrorRun()
     os.rename(tmpDir + '/pid.txt', tmpDir + '/natural.death.pid.txt')
-    os.remove(tmpDir + '/f1.R')
+##    os.remove(tmpDir + '/f1.R')
 ##    chkmpi = os.system('/http/mpi.log/adhocCheckRmpi.py GeneSrF&')
     try:
         lamenv = open(tmpDir + "/lamSuffix", mode = "r").readline()
@@ -453,7 +454,8 @@ if errorRun > 0:
         None
     try:
         os.system('export LAM_MPI_SESSION_SUFFIX=' + lamenv +
-                  '; lamhalt -H; lamwipe -H')
+                  '; lamhalt -H; lamwipe -H; touch ' +
+                  tmpDir + '/lamKilledFromPython')
     except:
         None
     try:
@@ -471,12 +473,13 @@ elif finishedOK > 0:
         None
     try:
         lamkill = os.system('export LAM_MPI_SESSION_SUFFIX=' + lamenv +
-                            '; lamhalt -H; lamwipe -H')
+                            '; lamhalt -H; lamwipe -H; touch ' +
+                            tmpDir + '/lamKilledFromPython')
     except:
         None
     printOKRun()
     os.rename(tmpDir + '/pid.txt', tmpDir + '/natural.death.pid.txt')
-    os.remove(tmpDir + '/f1.R')
+#    os.remove(tmpDir + '/f1.R')
     ##    chkmpi = os.system('/http/mpi.log/adhocCheckRmpi.py GeneSrF&')
     try:
         os.system("rm /http/genesrf2/www/R.running.procs/R." + newDir  + "*")
