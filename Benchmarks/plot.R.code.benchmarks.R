@@ -18,6 +18,11 @@ dm.all$factor.num.node <- factor(dm.all$factor.num.node,
 
 dm.all <- dm.all[order(dm.all$factor.num.node),]
 
+dm.ratio <- dm.all[1:5, 4]/dm.all[, 4]
+dm.all$ratio <- dm.ratio
+
+
+
 
 #postscript("R_timings_1.eps", width = 11, height = 8, paper = "special")
 pdf("R_timings_1.pdf", width = 11, height = 8, paper = "special")
@@ -65,6 +70,73 @@ legend(x = 6, y = 60000,
        lwd = 2)
 
 dev.off()
+
+
+
+
+pdf("R_timings_1B.pdf", width = 11, height = 8, paper = "special")
+
+par(las = 1)
+par(cex = 1.4)
+par(mar = c(3.8, 5.2, .81, .81))  
+par(mgp = c(4, 1, 0))
+par(cex.lab = 1.4)
+plot(ratio ~ as.numeric(factor.num.node), type = "b", axes = FALSE,
+     data = subset(dm.all, dataset == "gl"),
+     ylim = c(min(dm.all$ratio), max(dm.all$ratio)),
+     col = rainbow(5)[1],
+     lty = 2,
+     log = "y",
+     xlab = "",
+     ylab = "",
+     lwd = 2)
+box()
+axis(2)
+axis(1, at = as.numeric(dm.all$factor.num.node),
+     labels = as.character(dm.all$factor.num.node))
+mtext("Number of Rmpi slaves", side = 1, line = 2.5, cex = 2)
+lines(ratio ~ as.numeric(factor.num.node), type = "b", lwd = 2,
+      data = subset(dm.all, dataset == "vv3"),
+      col = rainbow(5)[2],
+      lty = 1)
+lines(ratio ~ as.numeric(factor.num.node), type = "b", lwd = 2,
+      data = subset(dm.all, dataset == "lymphoma"),
+      col = rainbow(5)[3],
+      lty = 3)
+lines(ratio ~ as.numeric(factor.num.node), type = "b", lwd = 2,
+      data = subset(dm.all, dataset == "brain"),
+      col = rainbow(5)[4],
+      lty = 4)
+lines(ratio ~ as.numeric(factor.num.node), type = "b", lwd = 2,
+      data = subset(dm.all, dataset == "ra"),
+      col = rainbow(5)[5],
+      lty = 5)
+
+legend(x = 5, y = 20,
+       c("Leukemia (7,600 s)", "Breast3 (71,700 s)", "Lymphoma (22,000 s)", "Brain (27,000 s)", "Adeno. (97,000 s)")[c(5, 2, 4, 3, 1)],
+       lty = c(2, 1, 3, 4, 5)[c(5, 2, 4, 3, 1)],
+       col = rainbow(5)[c(5, 2, 4, 3, 1)],
+       lwd = 2)
+par(las = 0)
+mtext("Fold increase in speed (compared to a single Rmpi slave)", side = 2, line = 2.5, cex = 1.5)
+dev.off()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
