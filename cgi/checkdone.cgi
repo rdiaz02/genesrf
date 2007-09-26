@@ -299,7 +299,7 @@ def printOKRun():
         ## compress all the results
         allResults = tarfile.open(tmpDir + '/all.results.tar.gz', 'w:gz')
         allResults.add(tmpDir + '/results.txt', 'results.txt')
-
+	if os.path.exists(tmpDir + "/all.RData"): allResults.add(tmpDir + '/all.RData', 'all_R_objects.RData')
         if os.path.exists(tmpDir + "/fselprobplot.png"): allResults.add(tmpDir + '/fselprobplot.png', 'SelectionProbabilityPlot.png')
         if os.path.exists(tmpDir + "/fimpspec-all.png"): allResults.add(tmpDir + '/fimpspec-all.png', 'ImportanceSpectrumAllGenes.png')
         if os.path.exists(tmpDir + "/fimpspec-200.png"): allResults.add(tmpDir + '/fimpspec-200.png', 'ImportanceSpectrum200Genes.png')
