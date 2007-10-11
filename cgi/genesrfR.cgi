@@ -232,7 +232,10 @@ organism = radioUpload('organism', acceptedOrganisms)
 
 if(fs.getfirst("covariate2")!= None):
     prep_tmpdir = fs.getfirst("covariate2")
-    shutil.copy("/http/prep/www/tmp/" + prep_tmpdir +"/outdata.txt",tmpDir + "/covariate")
+    ## an ugly hack, as prep not in this filesystem
+    os.system('wget http://prep.bioinfo.cnio.es/tmp/' + prep_tmpdir +
+              '/outdata.txt -O ' + tmpDir + '/covariate')
+    ## shutil.copy("/http/prep/www/tmp/" + prep_tmpdir +"/outdata.txt",tmpDir + "/covariate")
 else:
     fileUpload('covariate')
     if os.stat(tmpDir + '/covariate')[ST_SIZE] > MAX_covariate_size:
