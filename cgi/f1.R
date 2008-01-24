@@ -2,6 +2,8 @@
 ## thing in .Rout in case of normal termination. (And normal
 ## termination includes catching a user error!).
 
+version
+
 rm(list = ls())
 
 .Last <- function() {
@@ -644,10 +646,11 @@ sink()
 ### for debugging:
 save(file = "all.RData", list = ls())
      
-
+pdf.height <- 12
+pdf.width <- 12
 ### Now the pdfs
-pdf(file = "fboot%03d.pdf", onefile = FALSE, width = png.width,
-        height = png.height)
+pdf(file = "fboot%03d.pdf", onefile = FALSE, width = pdf.width,
+        height = pdf.height)
 plot(rf.vs1.boot)
 dev.off()
 
@@ -655,8 +658,8 @@ dev.off()
           
 trycode <- (
             {             
-              pdf(file = "fimpspec-all.pdf", onefile = FALSE, width = png.width,
-                  height = png.height)
+              pdf(file = "fimpspec-all.pdf", onefile = FALSE, width = pdf.width,
+                  height = pdf.height)
               randomVarImpsRFplot(rvi, rf1,
                                   main = "Importance Spectrum: all genes",
                                   overlay = TRUE)
@@ -671,15 +674,15 @@ trycode <- (
               dev.off()
               
               
-              pdf(file = "fimpspec-200.pdf", onefile = FALSE, width = png.width,
-                  height = png.height)
+              pdf(file = "fimpspec-200.pdf", onefile = FALSE, width = pdf.width,
+                  height = pdf.height)
               randomVarImpsRFplot(rvi, rf1, nvars = 200,
                                   main = "Importance Spectrum: first 200 genes",
                                   overlay = TRUE)
               dev.off()
               
-              pdf(file = "fimpspec-30.pdf", onefile = FALSE, width = png.width,
-                  height = png.height)
+              pdf(file = "fimpspec-30.pdf", onefile = FALSE, width = pdf.width,
+                  height = pdf.height)
               randomVarImpsRFplot(rvi, rf1, nvars = 30,
                                 main = "Importance Spectrum: first 30 genes",
                                   overlay = TRUE)
@@ -687,8 +690,8 @@ trycode <- (
               
               
               
-              pdf(file = "fselprobplot.pdf", onefile = FALSE, width = png.width,
-                height = png.height)
+              pdf(file = "fselprobplot.pdf", onefile = FALSE, width = pdf.width,
+                height = pdf.height)
               selProbPlot(rf.vs1.boot, k = c(20, 100), 
                           main = "Selection Probability Plot")
               dev.off()
@@ -697,7 +700,6 @@ trycode <- (
 if(inherits(trycode, "try-error"))
   caughtOurError(paste("Plotting problem, with error",
                        trycode, ". \n Please let us know so we can fix the code."))
-
 
 stopCluster(TheCluster)
 

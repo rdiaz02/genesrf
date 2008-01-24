@@ -298,7 +298,9 @@ def printOKRun():
     #    outf.write("</pre>")
         ## compress all the results
         allResults = tarfile.open(tmpDir + '/all.results.tar.gz', 'w:gz')
-        allResults.add(tmpDir + '/results.txt', 'results.txt')
+        os.system('cd ' + tmpDir +'; cp results.txt rr.html; w3m -dump rr.html > results.TXT; rm rr.html')
+        allResults.add(tmpDir + '/results.TXT', 'results.txt')
+        
 	if os.path.exists(tmpDir + "/all.RData"): allResults.add(tmpDir + '/all.RData', 'all_R_objects.RData')
         if os.path.exists(tmpDir + "/fselprobplot.png"): allResults.add(tmpDir + '/fselprobplot.png', 'SelectionProbabilityPlot.png')
         if os.path.exists(tmpDir + "/fimpspec-all.png"): allResults.add(tmpDir + '/fimpspec-all.png', 'ImportanceSpectrumAllGenes.png')
@@ -320,7 +322,7 @@ def printOKRun():
             if nf1 > 1:
                 for index in range(nf1 - 1):
                     allResults.add(listPDFS[index], 'OOBPredictionsFigure' + str(index + 1) + '.pdf')
-
+        allResults.add(tmpDir + '/pre-results.html', 'results.html')                    
         allResults.close()
         outf.write('<hr> <a href="http://genesrf2.bioinfo.cnio.es/tmp/' +
                    newDir + '/all.results.tar.gz">Download</a> all figures and text results.')  
