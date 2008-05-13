@@ -9,7 +9,7 @@ import time
 import shutil
 import dircache
 ##import string
-import whrandom
+import random
 from stat import ST_SIZE
 import cgitb
 cgitb.enable() ## zz: eliminar for real work?
@@ -216,7 +216,7 @@ for directory in currentTmp:
 
 
 ### Creating temporal directories
-newDir = str(whrandom.randint(1, 10000)) + str(os.getpid()) + str(whrandom.randint(1, 100000)) + str(int(currentTime)) + str(whrandom.randint(1, 10000))
+newDir = str(random.randint(1, 10000)) + str(os.getpid()) + str(random.randint(1, 100000)) + str(int(currentTime)) + str(random.randint(1, 10000))
 redirectLoc = "/tmp/" + newDir
 tmpDir = "/http/genesrf2/www/tmp/" + newDir
 os.mkdir(tmpDir)
@@ -357,8 +357,13 @@ createResultsFile = os.system("/bin/touch " + tmpDir + "/results.txt")
 ## If communication gets broken, there is always a results.html
 ## that will do the right thing.
 shutil.copy("/http/genesrf2/cgi/results-pre.html", tmpDir)
-os.system("cd " + tmpDir + "; /bin/sed 's/sustituyeme/" +
-          newDir + "/g' results-pre.html > results.html; rm results-pre.html")
+os.system("/bin/sed 's/sustituyeme/" + newDir + "/g' " +
+          tmpDir + "/results-pre.html > " +
+          tmpDir + "/results.html; rm " +
+          tmpDir +"/results-pre.html")
+
+# os.system("cd " + tmpDir + "; /bin/sed 's/sustituyeme/" +
+#           newDir + "/g' results-pre.html > results.html; rm results-pre.html")
 
 ##############    Redirect to checkdone.cgi    ##################
 print "Location: "+ getQualifiedURL("/cgi-bin/checkdone.cgi") + "?newDir=" + newDir, "\n\n"
