@@ -3,6 +3,7 @@
 ## termination includes catching a user error!).
 
 version
+system("hostname")
 
 rm(list = ls())
 
@@ -34,6 +35,64 @@ new.name1 <- paste("R.", new.name1, sep = "")
 system(paste("mv ../../R.running.procs/", new.name1,
              " ../../R.running.procs/", new.name,
              sep = ""))
+
+
+
+##############################################
+##############################################
+######                              ##########
+######         Error checking       ##########
+######                              ##########
+##############################################
+##############################################
+
+
+caughtUserError <- function(message) {
+    GDD("fboot001.png", width = png.width,
+           height = png.height, ps = 10)
+    plot(x = c(0, 1), y = c(0, 1),
+         type = "n", axes = FALSE, xlab = "", ylab = "")
+    box()
+    text(0.5, 0.7, "There was a PROBLEM with your data.")
+    text(0.5, 0.5,
+    "Please read carefully the error messages under Results,")
+    
+    text(0.5, 0.3, "fix the problem, and try again.")
+    dev.off()
+    sink(file = "results.txt")
+    cat(message)
+    sink()
+    sink(file = "exitStatus")
+    cat("Error\n\n")
+    cat(message)
+    sink()
+    quit(save = "no", status = 11, runLast = TRUE)
+}
+
+
+
+caughtOurError <- function(message) {
+    GDD("ErrorFigure.png", width = png.width,
+           height = png.height, ps = 10)
+    plot(x = c(0, 1), y = c(0, 1),
+         type = "n", axes = FALSE, xlab = "", ylab = "")
+    box()
+    text(0.5, 0.7, "There was a PROBLEM with the code.")
+    text(0.5, 0.5,
+    "Please let us know (send us the URL),")
+    
+    text(0.5, 0.3, "so that we can fix it.")
+    dev.off()
+    sink(file = "results.txt")
+    cat(message)
+    sink()
+    sink(file = "exitStatus")
+    cat("Error\n\n")
+    cat(message)
+    sink()
+    quit(save = "no", status = 11, runLast = TRUE)
+}
+
 
 
 #library(CGIwithR)
@@ -76,6 +135,10 @@ library(rsprng)
 
 trylam <- try(
               lamSESSION <- scan("lamSuffix", what = "character", sep = "\t", strip.white = TRUE))
+
+if(mpi.universe.size() < 2)
+    caughtOurError(paste("\n Error with MPI: mpi.universe.size() < 2.",
+                         "Please let us know so we can fix the code."))
 trycode <- (
             basicClusterInit(mpi.universe.size()) ## use all CPUs in lam universe
             )
@@ -268,60 +331,6 @@ HTML.varSelRFBoot <- function(object,
 
 
 
-##############################################
-##############################################
-######                              ##########
-######         Error checking       ##########
-######                              ##########
-##############################################
-##############################################
-
-
-caughtUserError <- function(message) {
-    GDD("fboot001.png", width = png.width,
-           height = png.height, ps = 10)
-    plot(x = c(0, 1), y = c(0, 1),
-         type = "n", axes = FALSE, xlab = "", ylab = "")
-    box()
-    text(0.5, 0.7, "There was a PROBLEM with your data.")
-    text(0.5, 0.5,
-    "Please read carefully the error messages under Results,")
-    
-    text(0.5, 0.3, "fix the problem, and try again.")
-    dev.off()
-    sink(file = "results.txt")
-    cat(message)
-    sink()
-    sink(file = "exitStatus")
-    cat("Error\n\n")
-    cat(message)
-    sink()
-    quit(save = "no", status = 11, runLast = TRUE)
-}
-
-
-
-caughtOurError <- function(message) {
-    GDD("ErrorFigure.png", width = png.width,
-           height = png.height, ps = 10)
-    plot(x = c(0, 1), y = c(0, 1),
-         type = "n", axes = FALSE, xlab = "", ylab = "")
-    box()
-    text(0.5, 0.7, "There was a PROBLEM with the code.")
-    text(0.5, 0.5,
-    "Please let us know (send us the URL),")
-    
-    text(0.5, 0.3, "so that we can fix it.")
-    dev.off()
-    sink(file = "results.txt")
-    cat(message)
-    sink()
-    sink(file = "exitStatus")
-    cat("Error\n\n")
-    cat(message)
-    sink()
-    quit(save = "no", status = 11, runLast = TRUE)
-}
 
 
 tmp <- try(
