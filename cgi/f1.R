@@ -94,6 +94,20 @@ caughtOurError <- function(message, runLast = TRUE) {
 }
 
 
+caughtMPIError <- function(message, runLast = FALSE) {
+    ## so that tryRrun2.py tries again
+    sink(file = "results.txt")
+    cat(message)
+    sink()
+    sink(file = "exitStatus")
+    cat("Error\n\n")
+    cat(message)
+    sink()
+    quit(save = "no", status = 11, runLast = runLast)
+}
+
+
+
 
 #library(CGIwithR)
 library(GDD)
@@ -137,7 +151,7 @@ trylam <- try(
               lamSESSION <- scan("lamSuffix", what = "character", sep = "\t", strip.white = TRUE))
 
 if(mpi.universe.size() < 2)
-    caughtOurError(paste("\n Error with MPI: mpi.universe.size() < 2.",
+    caughtMPIError(paste("\n Error with MPI: mpi.universe.size() < 2.",
                          "Please let us know so we can fix the code."),
                    runLast = FALSE)
 trycode <- (
