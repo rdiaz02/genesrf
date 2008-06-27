@@ -71,7 +71,7 @@ caughtUserError <- function(message) {
 
 
 
-caughtOurError <- function(message) {
+caughtOurError <- function(message, runLast = TRUE) {
     GDD("ErrorFigure.png", width = png.width,
            height = png.height, ps = 10)
     plot(x = c(0, 1), y = c(0, 1),
@@ -90,7 +90,7 @@ caughtOurError <- function(message) {
     cat("Error\n\n")
     cat(message)
     sink()
-    quit(save = "no", status = 11, runLast = TRUE)
+    quit(save = "no", status = 11, runLast = runLast)
 }
 
 
@@ -138,7 +138,8 @@ trylam <- try(
 
 if(mpi.universe.size() < 2)
     caughtOurError(paste("\n Error with MPI: mpi.universe.size() < 2.",
-                         "Please let us know so we can fix the code."))
+                         "Please let us know so we can fix the code."),
+                   runLast = FALSE)
 trycode <- (
             basicClusterInit(mpi.universe.size()) ## use all CPUs in lam universe
             )
