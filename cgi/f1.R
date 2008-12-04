@@ -180,8 +180,29 @@ sink()
 
 
 
+#################################################################
+## enter info into lam suffix log table
+
+tmpDir <- getwd()
+sed.command <- paste("sed -i 's/RprocessPid\t",
+                     lamSESSION, "\t", hostn, "/",
+                     pid, "\t",
+                     lamSESSION, "\t", hostn, "/' ",
+                     "/http/mpi.log/LAM_SUFFIX_Log",
+                     sep = "")
+## debugging:
+sed.command
+
+system(sed.command)
+
+
+
+
+
 idtype <- try(scan("idtype", what = "", n = 1))
 organism <- try(scan("organism", what = "", n = 1))
+
+
 
 
 
