@@ -2,6 +2,11 @@
 ## thing in .Rout in case of normal termination. (And normal
 ## termination includes catching a user error!).
 
+
+## Logic can lead to problems: if an unexpectec crash, .Last is not
+## executed, so LAM stuff not cleaned.
+
+
 version
 system("hostname")
 
@@ -376,7 +381,15 @@ if(inherits(tryxdata, "try-error"))
     caughtUserError("The covariate file is not of the appropriate format\n")
 
 
-geneNames <- xdata[, 1]
+geneNames <- NA
+geneNames <- try(xdata[, 1])
+
+if(any(is.na(geneNames))) {
+    caughtUserError("The gene names (first column of your covariate file) contains missing values. \n That is not allowed.\n")
+}
+
+
+
 xdata <- xdata[, -1]
 
 if(length(unique(geneNames)) < length(geneNames)) {
