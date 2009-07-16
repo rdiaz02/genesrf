@@ -344,7 +344,7 @@ touchRrunning = os.system("/bin/touch /http/genesrf2/www/R.running.procs/R." + n
 shutil.copy("/http/genesrf2/cgi/f1.R", tmpDir)
 ## we add the 2> error.msg because o.w. if we kill R we get a server error as standard
 ## error is sent to the server
-# Rcommand = "cd " + tmpDir + "; " + "/usr/bin/R CMD BATCH --no-restore --no-readline --no-save -q f1.R 2> error.msg &"
+# Rcommand = "cd " + tmpDir + "; " + "/var/www/bin/R-local-7-LAM-MPI/bin/R CMD BATCH --no-restore --no-readline --no-save -q f1.R 2> error.msg &"
 # Rrun = os.system(Rcommand)
 tryrrun = os.system('/http/mpi.log/tryRrun2.py ' + tmpDir +' 10 ' + 'GeneSrF &')
 createResultsFile = os.system("/bin/touch " + tmpDir + "/results.txt")
