@@ -200,7 +200,7 @@ def relaunchCGI():
     <head>
     """
     print '<meta http-equiv="Refresh"'
-    print 'content="30; URL=' + getBaseURL() + '?newDir=' + newDir + '">'
+    print 'content="10; URL=' + getBaseURL() + '?newDir=' + newDir + '">'
     print '<title>GeneSrF results</title>'
     print '</head> <body>'
     print '<p> This is an autorefreshing page; your results will eventually be displayed here.\n'
