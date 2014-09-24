@@ -187,11 +187,11 @@ report</a>. Essentially, we progressively eliminate the least important (where
 
 
   <p>There are other approaches with similar objectives, such as those
-  implemented in our tool <a href="http://tnasas.bioinfo.cnio.es">Tnasas</a>:
+  implemented in our tool <a href="http://tnasas.iib.uam.es">Tnasas</a>:
   with Tnasas we try to
   minimize prediction error but, in most cases, the criteria used for ranking
   genes are univariate criteria.   In addition, the methods implemented in
-<a href="http://tnasas.bioinfo.cnio.es">Tnasas</a> are not targeted towards
+<a href="http://tnasas.iib.uam.es">Tnasas</a> are not targeted towards
   identifying potentially large sets of redundant and relevant genes (see next).</p>
 
 
@@ -204,7 +204,7 @@ report</a>. Essentially, we progressively eliminate the least important (where
   perform similar functions and are highly correlated. Of course, there are
     many other alternatives; for instance, many gene-by-gene approaches, such
     as those implemented in <a
-    href="http://pomelo.bioinfo.cnio.es">Pomelo</a>. However, the emphasis of
+    href="http://pomelo.iib.uam.es">Pomelo</a>. However, the emphasis of
     the current tool is gene selection in the context of classification
     problems, and the use of variable importance from random forest allows to
     consider interactions and additive relationships between genes (contrary
@@ -302,7 +302,7 @@ collinearity).</p>
 	      are named "gene B"?).</li>
 
       <li><b>Missing values are NOT allowed</b>. You can use the 
-	      <a href="http://prep.bioinfo.cnio.es">preprocessor</a> and do
+	      <a href="http://prep.iib.uam.es">preprocessor</a> and do
 	      several things with your data before sending it
 	      to Tnasas. We would probably recommend you do imputation after
 	      eliminating genes with too many (more than, say, 20&#037;?) missing. Anyway,
@@ -346,8 +346,8 @@ CL1     CL2     CL1     CL4     CL2     CL2     CL1     CL4       </pre>        
 for either human, mouse, or rat genomes, you can obtain additional
 information by clicking on the gene names in the output. This
 information is returned from <a
-href="http://idclight.bioinfo.cnio.es">IDClight</a> based on that provided
-by our <a href="http://idconverter.bioinfo.cnio.es">IDConverter</a>
+href="http://idclight.iib.uam.es">IDClight</a> based on that provided
+by our <a href="http://idconverter.iib.uam.es">IDConverter</a>
 tool.</p>
 
 
@@ -435,15 +435,15 @@ uncompressors/unzipers/etc in other operating systems.</p>
 
 
 <h3><a name="pals">Sending results to <a
-href="http://pals.bioinfo.cnio.es">PaLS</a> (<FONT
+href="http://pals.iib.uam.es">PaLS</a> (<FONT
 COLOR="red">New!!</FONT>) </h3>
 <p>It is now possible to send the results to <a
-href="http://pals.bioinfo.cnio.es">PaLS</a>.  PaLS "analyzes sets
+href="http://pals.iib.uam.es">PaLS</a>.  PaLS "analyzes sets
 of lists of genes or single lists of genes. It filters those
 genes/clones/proteins that are referenced by a given percentage of
 PubMed references, Gene Ontology terms, KEGG pathways or Reactome
 pathways." (from <a
-href="http://pals.bioinfo.cnio.es/help/pals-help.html">PalS's
+href="http://pals.iib.uam.es/help/pals-help.html">PalS's
 help</a>). By sending your results to PaLS, it might be easier to make
 biological sense of your results, because you are "annotating" your
 results with additional biological information.</p>
@@ -453,7 +453,7 @@ results with additional biological information.</p>
 align="middle">PaLS icon and two lists. When you click on any of the links, the
 corresponding list of genes will be sent to PaLS. There, you can
 configure the options as you want (please, consult <a
-href="http://pals.bioinfo.cnio.es/help/pals-help.html">PalS's help</a>
+href="http://pals.iib.uam.es/help/pals-help.html">PalS's help</a>
 for details) and then submit the list. In PaLS, you can always go
 back, and keep playing with the very same gene list, modifying the options.</p>
 
@@ -476,14 +476,14 @@ with 102 subjects and 6033 genes. Of course, your mileage will vary.</p>
 
 <h3><a name="examples">Examples</a></h3>
 <p>Examples of several runs, one with fully commented results, are available 
-<a href="http://genesrf.bioinfo.cnio.es/Examples/index.html">here</a>.
+<a href="http://genesrf.iib.uam.es/Examples/index.html">here</a>.
 
 
     <h2><a name="authors">Author and Acknowledgements</a></h2>
     
     <p>This program was developped by
-      <a href="http://bioinfo.cnio.es/~rdiaz" target="_blank">Ramón Díaz-Uriarte</a>, 
-      from the <a href="http://bioinfo.cnio.es" target="_blank">Bioinformatics Unit</a> at
+      <a href="http://iib.uam.es/~rdiaz" target="_blank">Ramón Díaz-Uriarte</a>, 
+      from the <a href="http://iib.uam.es" target="_blank">Bioinformatics Unit</a> at
       <a href="http://www.cnio.es" target="_blank">CNIO</a>.
       This tool uses <a href="http://www.python.org">Python</a> for the CGI and
     <a href="http://www.r-project.org">R</a> for the computations.
@@ -549,7 +549,7 @@ cluster of machines purchased with funds from the
 varSelRF: a web-based tool and R package for gene selection and
 classification using random forest. <a
 href="http://www.biomedcentral.com/1471-2105/8/328">BMC Bioinformatics
-2007, 8:328</a>) and the URL of the application (<a href="http://genesrf.bioinfo.cnio.es">http://genesrf.bioinfo.cnio.es</a>).
+2007, 8:328</a>) and the URL of the application (<a href="http://genesrf.iib.uam.es">http://genesrf.iib.uam.es</a>).
     <li>We appreciate if you give us feedback concerning bugs, errors or misconfigurations.
 	Complaints or suggestions are welcome.</li>
     </ul>
