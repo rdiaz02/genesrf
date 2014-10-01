@@ -192,9 +192,9 @@ acceptedOrganisms = ('None', 'Hs', 'Mm', 'Rn')
 #		url_org_id = "org=" + organism + "&idtype=" + idtype + "&"
 #	else:
 #		url_org_id = ""
-#	gene_list_file = "http://pomelo2.bioinfo.cnio.es/tmp/" + tmp_dir + "/gene.list.txt"
+#	gene_list_file = "http://pomelo2.iib.uam.es/tmp/" + tmp_dir + "/gene.list.txt"
 #	data_file = "datafile=" + gene_list_file
-#	Pals_main_url = "http://pals.bioinfo.cnio.es?" + url_org_id + data_file
+#	Pals_main_url = "http://pals.iib.uam.es?" + url_org_id + data_file
 #	return(Pals_main_url)
 
 #########################################################
@@ -207,9 +207,9 @@ acceptedOrganisms = ('None', 'Hs', 'Mm', 'Rn')
 
 ## Deleting tmp directories older than MAX_time
 currentTime = time.time()
-currentTmp = dircache.listdir("/asterias-web-apps/genesrf2/www/tmp")
+currentTmp = dircache.listdir("/asterias-web-apps/genesrf/www/tmp")
 for directory in currentTmp:
-    tmpS = "/asterias-web-apps/genesrf2/www/tmp/" + directory
+    tmpS = "/asterias-web-apps/genesrf/www/tmp/" + directory
     if (currentTime - os.path.getmtime(tmpS)) > MAX_time:
         shutil.rmtree(tmpS)
 
@@ -217,7 +217,7 @@ for directory in currentTmp:
 ### Creating temporal directories
 newDir = str(random.randint(1, 10000)) + str(os.getpid()) + str(random.randint(1, 100000)) + str(int(currentTime)) + str(random.randint(1, 10000))
 redirectLoc = "/tmp/" + newDir
-tmpDir = "/asterias-web-apps/genesrf2/www/tmp/" + newDir
+tmpDir = "/asterias-web-apps/genesrf/www/tmp/" + newDir
 os.mkdir(tmpDir)
 os.chmod(tmpDir, 0700)
 
@@ -225,29 +225,29 @@ os.chmod(tmpDir, 0700)
 fs = cgi.FieldStorage()
 
 
-idtype = radioUpload('idtype', acceptedIDTypes)
-organism = radioUpload('organism', acceptedOrganisms)
+idtype = dummyUpload('idtype', 'None', tmpDir)
+organism = dummyUpload('organism', 'None', tmpDir)
 
 ##check if file coming from preP
 
-if(fs.getfirst("covariate2")!= None):
-    prep_tmpdir = fs.getfirst("covariate2")
-    ## an ugly hack, as prep not in this filesystem
-    os.system('wget http://prep.bioinfo.cnio.es/tmp/' + prep_tmpdir +
-              '/outdata.txt -O ' + tmpDir + '/covariate')
-    ## shutil.copy("/http/prep/www/tmp/" + prep_tmpdir +"/outdata.txt",tmpDir + "/covariate")
-else:
-    fileUpload('covariate')
-    if os.stat(tmpDir + '/covariate')[ST_SIZE] > MAX_covariate_size:
-        shutil.rmtree(tmpDir)
-        commonOutput()
-        print "<h1> GENESRF ERROR </h1>"
-        print "<p> Covariate file way too large </p>"
-        print "<p> Covariate files this size not allowed.</p>"
-        print "</body></html>"
-        sys.exit()
+# if(fs.getfirst("covariate2")!= None):
+#     prep_tmpdir = fs.getfirst("covariate2")
+#     ## an ugly hack, as prep not in this filesystem
+#     os.system('wget http://prep.iib.uam.es/tmp/' + prep_tmpdir +
+#               '/outdata.txt -O ' + tmpDir + '/covariate')
+#     ## shutil.copy("/asterias-web-apps/prep/www/tmp/" + prep_tmpdir +"/outdata.txt",tmpDir + "/covariate")
+# else:
+fileUpload('covariate', fs, tmpDir, APP_NAME)
+if os.stat(tmpDir + '/covariate')[ST_SIZE] > MAX_covariate_size:
+    shutil.rmtree(tmpDir)
+    commonOutput()
+    print "<h1> GENESRF ERROR </h1>"
+    print "<p> Covariate file way too large </p>"
+    print "<p> Covariate files this size not allowed.</p>"
+    print "</body></html>"
+    sys.exit()
 
-fileUpload('class')
+fileUpload('class', fs, tmpDir, APP_NAME)
 if os.stat(tmpDir + '/class')[ST_SIZE] > MAX_class_size:
     shutil.rmtree(tmpDir)
     commonOutput()
@@ -266,23 +266,19 @@ fileNamesBrowser.write(fs['class'].filename + '\n')
 fileNamesBrowser.close()
 
 
-
-
 ## current number of processes > max number of processes?
 ## and yes, we do it here, not before, so that we have the most
 ## current info about number of process right before we launch R.
 
-##
-
 ## Now, delete any R file left (e.g., from killing procs, etc).
-RrunningFiles = dircache.listdir("/asterias-web-apps/genesrf2/www/R.running.procs")
+RrunningFiles = dircache.listdir("/asterias-web-apps/genesrf/www/R.running.procs")
 for Rtouchfile in RrunningFiles:
-    tmpS = "/asterias-web-apps/genesrf2/www/R.running.procs/" + Rtouchfile
+    tmpS = "/asterias-web-apps/genesrf/www/R.running.procs/" + Rtouchfile
     if (currentTime - os.path.getmtime(tmpS)) > R_MAX_time:
         os.remove(tmpS)
 
 ## Now, verify any processes left
-numRgenesrf = len(glob.glob("/asterias-web-apps/genesrf2/www/R.running.procs/R.*@*%*"))
+numRgenesrf = len(glob.glob("/asterias-web-apps/genesrf/www/R.running.procs/R.*@*%*"))
 if numRgenesrf > MAX_genesrf:
     shutil.rmtree(tmpDir)
     commonOutput()
@@ -337,15 +333,11 @@ os.chmod(arrayNames, 0600)
 
 ## touch Rout, o.w. checkdone can try to open a non-existing file
 touchRout = os.system("/bin/touch " + tmpDir + "/f1.Rout") 
-##touchRrunning = os.system("/bin/touch /asterias-web-apps/genesrf2/www/R.running.procs/R." + newDir)
-touchRrunning = os.system("/bin/touch /asterias-web-apps/genesrf2/www/R.running.procs/R." + newDir +
+##touchRrunning = os.system("/bin/touch /asterias-web-apps/genesrf/www/R.running.procs/R." + newDir)
+touchRrunning = os.system("/bin/touch /asterias-web-apps/genesrf/www/R.running.procs/R." + newDir +
                           "@" + socket.gethostname())
-shutil.copy("/asterias-web-apps/genesrf2/cgi/f1.R", tmpDir)
-## we add the 2> error.msg because o.w. if we kill R we get a server error as standard
-## error is sent to the server
-# Rcommand = "cd " + tmpDir + "; " + "/var/www/bin/R-local-7-LAM-MPI/bin/R CMD BATCH --no-restore --no-readline --no-save -q f1.R 2> error.msg &"
-# Rrun = os.system(Rcommand)
-tryrrun = os.system('/asterias-web-apps/mpi.log/tryRrun2.py ' + tmpDir +' 10 ' + 'GeneSrF &')
+shutil.copy("/asterias-web-apps/genesrf/cgi/f1.R", tmpDir)
+tryrrun = os.system('/asterias-web-apps/web-apps-common/tryRrun2.py ' + tmpDir +' 2 ' + 'GeneSrF &')
 createResultsFile = os.system("/bin/touch " + tmpDir + "/results.txt")
 
 
@@ -355,7 +347,7 @@ createResultsFile = os.system("/bin/touch " + tmpDir + "/results.txt")
 ## Copy to tmpDir a results.html that redirects to checkdone.cgi
 ## If communication gets broken, there is always a results.html
 ## that will do the right thing.
-shutil.copy("/asterias-web-apps/genesrf2/cgi/results-pre.html", tmpDir)
+shutil.copy("/asterias-web-apps/genesrf/cgi/results-pre.html", tmpDir)
 os.system("/bin/sed 's/sustituyeme/" + newDir + "/g' " +
           tmpDir + "/results-pre.html > " +
           tmpDir + "/results.html; rm " +

@@ -1,3 +1,6 @@
+## How to call Rmpi
+
+
 ## Define an explicit .Last, so that we know exactly what is the last
 ## thing in .Rout in case of normal termination. (And normal
 ## termination includes catching a user error!).
@@ -6,7 +9,7 @@
 ## Logic can lead to problems: if an unexpectec crash, .Last is not
 ## executed, so LAM stuff not cleaned.
 
-
+require(Cairo)
 version
 system("hostname")
 
@@ -17,11 +20,10 @@ rm(list = ls())
     cat("\nNormal termination\n", file = RterminatedOK)
     flush(RterminatedOK)
     close(RterminatedOK)    
-    try(stopCluster(TheCluster))
+    ## try(stopCluster(TheCluster))
     cat("\n\n Normal termination\n")
-    try(system(paste("/http/mpi.log/killLAM.py", lamSESSION, "&")))
-    try(mpi.quit(save = "no"), silent = TRUE)
-
+    ## try(system(paste("/http/mpi.log/killLAM.py", lamSESSION, "&")))
+    ## try(mpi.quit(save = "no"), silent = TRUE)
 }
 
 startExecTime <- format(Sys.time())
@@ -53,8 +55,7 @@ system(paste("mv ../../R.running.procs/", new.name1,
 
 
 caughtUserError <- function(message) {
-    GDD("fboot001.png", width = png.width,
-           height = png.height, ps = 10)
+    CairoPNG("fboot001.png", width = png.width, height = png.height, ps = 10)
     plot(x = c(0, 1), y = c(0, 1),
          type = "n", axes = FALSE, xlab = "", ylab = "")
     box()
@@ -77,8 +78,8 @@ caughtUserError <- function(message) {
 
 
 caughtOurError <- function(message, runLast = TRUE) {
-    GDD("ErrorFigure.png", width = png.width,
-           height = png.height, ps = 10)
+    CairoPNG("ErrorFigure.png", width = png.width, height = png.height,
+             ps = 10)
     plot(x = c(0, 1), y = c(0, 1),
          type = "n", axes = FALSE, xlab = "", ylab = "")
     box()
@@ -115,7 +116,7 @@ caughtMPIError <- function(message, runLast = FALSE) {
 
 
 #library(CGIwithR)
-library(GDD)
+# library(GDD)
 png.width = 550
 png.height = 550
 ##png.res = 144
@@ -151,27 +152,31 @@ library(varSelRF)
 library(snow)
 library(Rmpi)
 library(rsprng)
+library(parallel)
 
-trylam <- try(
-              lamSESSION <- scan("lamSuffix", what = "character", sep = "\t", strip.white = TRUE))
 
-if(mpi.universe.size() < 2)
-    caughtMPIError(paste("\n Error with MPI: mpi.universe.size() < 2.",
-                         "Please let us know so we can fix the code."),
-                   runLast = FALSE)
-trycode <- (
-            basicClusterInit(mpi.universe.size()) ## use all CPUs in lam universe
-            )
-if(inherits(trycode, "try-error")) {
-  caughtOurError(paste("Could not initialize MPI, with error",
-                       trycode, ". \n Please let us know so we can fix the code."))
 
-  sink(file = "/http/mpi.log/GeneSrFErrorLog", append = TRUE)
-  cat("Snow failing  on node", system("hostname"),
-      "on", date(), "from dir",
-      getwd(), "\n")
-  sink()
-}
+
+## trylam <- try(
+##               lamSESSION <- scan("lamSuffix", what = "character", sep = "\t", strip.white = TRUE))
+
+## if(mpi.universe.size() < 2)
+##     caughtMPIError(paste("\n Error with MPI: mpi.universe.size() < 2.",
+##                          "Please let us know so we can fix the code."),
+##                    runLast = FALSE)
+## trycode <- (
+##             basicClusterInit(mpi.universe.size()) ## use all CPUs in lam universe
+##             )
+## if(inherits(trycode, "try-error")) {
+##   caughtOurError(paste("Could not initialize MPI, with error",
+##                        trycode, ". \n Please let us know so we can fix the code."))
+
+##   sink(file = "/http/mpi.log/GeneSrFErrorLog", append = TRUE)
+##   cat("Snow failing  on node", system("hostname"),
+##       "on", date(), "from dir",
+##       getwd(), "\n")
+##   sink()
+## }
 
 
 sink(file = "mpiOK")
@@ -184,16 +189,16 @@ sink()
 ## enter info into lam suffix log table
 
 tmpDir <- getwd()
-sed.command <- paste("sed -i 's/RprocessPid\t",
-                     lamSESSION, "\t", hostn, "/",
-                     pid, "\t",
-                     lamSESSION, "\t", hostn, "/' ",
-                     "/http/mpi.log/LAM_SUFFIX_Log",
-                     sep = "")
-## debugging:
-sed.command
+## sed.command <- paste("sed -i 's/RprocessPid\t",
+##                      lamSESSION, "\t", hostn, "/",
+##                      pid, "\t",
+##                      lamSESSION, "\t", hostn, "/' ",
+##                      "/http/mpi.log/LAM_SUFFIX_Log",
+##                      sep = "")
+## ## debugging:
+## sed.command
 
-system(sed.command)
+## system(sed.command)
 
 
 
@@ -201,11 +206,6 @@ system(sed.command)
 
 idtype <- try(scan("idtype", what = "", n = 1))
 organism <- try(scan("organism", what = "", n = 1))
-
-
-
-
-
 
 
 ##############################################
@@ -491,7 +491,7 @@ if(!(is.numeric(xdata))) {
 
 if(any(is.na(xdata))) {
     caughtUserError("Your covariate file contains missing values. \n That is not allowed.\n")
-}
+2}
 
 
 
@@ -521,6 +521,8 @@ print("Second gc")
 print(gc())
 
 
+basicClusterInit(mpi.universe.size()-1)
+
 trycode <- try(
                rf.vs1 <- varSelRF(xdata, Class, fitted.rf = rf1)
                )
@@ -533,7 +535,7 @@ print(gc())
                
 trycode <- try(
               rf.vs1.boot <- varSelRFBoot(xdata, Class, srf = rf.vs1,
-                            TheCluster = TheCluster,
+                             TheCluster = TheCluster,
                             bootnumber = numBootstrap)
             )
 if(inherits(trycode, "try-error"))
@@ -546,12 +548,14 @@ trycode <- try(
                
                rvi <- randomVarImpsRF(xdata, Class, forest = rf1,
                        numrandom = numRand,
-                       TheCluster = TheCluster)
+                       TheCluster = TheCluster
+                                      )
             )
 if(inherits(trycode, "try-error"))
   caughtOurError(paste("Could not run randomVarImpsRF, with error",
                        trycode, ". \n Please let us know so we can fix the code."))
 
+stopCluster(TheCluster)
                
 trycode <- try(
              { 
@@ -597,21 +601,18 @@ plots.oobpreds <- levels(Class)
 numgddplots <- length(levels(Class))
 
 for(ngddpl in 1:numgddplots) {
-    GDD(file = paste("fbootB", ngddpl, sep = ""), type = "png",
-        width = png.width,
-        height = png.height, ps = png.pointsize,
-        bg = "white")
+        CairoPNG(file = paste("fbootB", ngddpl, sep = ""),
+                 width = png.width, height = png.height,
+                 ps = png.pointsize, bg = "white")
     par(cex.axis = 0.75); par(cex.lab = 1); par(cex.main = 1)
     plot(rf.vs1.boot,
          ErrorNum = FALSE,
          class.to.plot = ngddpl)
     dev.off()
 }
-
-GDD(file = paste("fbootB", numgddplots + 1, sep = ""), type = "png",
-    width = png.width,
-    height = png.height, ps = png.pointsize,
-    bg = "white")
+CairoPNG(file = paste("fbootB", numgddplots + 1, sep = ""),
+         width = png.width, height = png.height, ps = png.pointsize,
+         bg = "white")
 par(cex.axis = 0.75); par(cex.lab = 1); par(cex.main = 1)
 par(las = 2)
 par(mar = c(5, 5, 4, 2) + 0.1)
@@ -621,11 +622,8 @@ plot(rf.vs1.boot,
      oobProb = FALSE)
 dev.off()
 
-
-
-
-GDD(file = "fimpspec-all.png", width = png.width,
-        height = png.height, ps = png.pointsize)
+CairoPNG(file = "fimpspec-all.png", width = png.width,
+         height = png.height, ps = png.pointsize)
 par(cex.axis = 0.75); par(cex.lab = 1.2); par(cex.main = 1.2)
 randomVarImpsRFplot(rvi, rf1,
                     main = "Importance Spectrum: all genes",
@@ -639,9 +637,8 @@ legend(x = 0.4 * dim(xdata)[2], y = 0.85 * maxy ,
        col = c("black", "lightblue", "red"))
 dev.off()
 
-
-GDD(file = "fimpspec-200.png", width = png.width,
-       height = png.height, ps = png.pointsize)
+CairoPNG(file = "fimpspec-200.png", width = png.width,
+         height = png.height, ps = png.pointsize)
 #       pointsize = png.pointsize,
 #       family = png.family)
 par(cex.axis = 0.75); par(cex.lab = 1.2); par(cex.main = 1.2)
@@ -650,22 +647,16 @@ randomVarImpsRFplot(rvi, rf1, nvars = 200,
                     overlay = TRUE)
 dev.off()
 
-GDD(file = "fimpspec-30.png", width = png.width,
-       height = png.height, ps = png.pointsize)
-#       pointsize = png.pointsize,
-#       family = png.family)
+CairoPNG(file = "fimpspec-30.png", width = png.width,
+         height = png.height, ps = png.pointsize)
 par(cex.axis = 0.75); par(cex.lab = 1.2); par(cex.main = 1.2)
 randomVarImpsRFplot(rvi, rf1, nvars = 30,
                     main = "Importance Spectrum: first 30 genes",
                     overlay = TRUE)
 dev.off()
 
-
-
-GDD(file = "fselprobplot.png", width = png.width,
-       height = png.height, ps = png.pointsize)
-#       pointsize = png.pointsize,
-#       family = png.family)
+CairoPNG(file = "fselprobplot.png", width = png.width,
+         height = png.height, ps = png.pointsize)
 par(cex.axis = 0.75); par(cex.lab = 1.2); par(cex.main = 1.2)
 selProbPlot(rf.vs1.boot, k = c(20, 100), 
             main = "Selection Probability Plot")
@@ -759,7 +750,7 @@ if(inherits(trycode, "try-error"))
   caughtOurError(paste("Plotting problem, with error",
                        trycode, ". \n Please let us know so we can fix the code."))
 
-stopCluster(TheCluster)
+# stopCluster(TheCluster)
 
 ## cat(paste("\n Did the call to stopCluster ", date(), " \n"),
 ##     file = "tmp.checks", append = TRUE)

@@ -38,7 +38,7 @@ class GeneSrF(FunkLoadTestCase):
     def setUp(self):
         """Setting up test."""
         self.logd("setUp")
-        self.server_url = 'http://genesrf2.bioinfo.cnio.es'
+        self.server_url = 'http://genesrf.iib.uam.es'
         ##self.server_url = self.conf_get('main', 'url')
 
     def test1(self, dataset):

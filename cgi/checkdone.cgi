@@ -109,7 +109,7 @@ def clean_for_PaLS(file_in, file_out):
 
 def printPalsURL(newDir,
                  tmpDir,
-                 application_url = "http://genesrf2.bioinfo.cnio.es",
+                 application_url = "http://genesrf.iib.uam.es",
                  f1 = "Selected.genes.txt",
                  f2 = "Selected.and.bootstrap.selected.txt",
                  s1 = "genes selected in main run (this rarely makes any sense!)",
@@ -136,13 +136,13 @@ def printPalsURL(newDir,
     ## clean_for_PaLS(tmpDir + '/' + f2, tmpDir + '/' + f2)
     
     outstr0 = '<br /> <hr> ' + \
-              '<h3> Send results to <a href = "http://pals.bioinfo.cnio.es">' + \
+              '<h3> Send results to <a href = "http://pals.iib.uam.es">' + \
               '<IMG BORDER="0" SRC="../../palsfavicon40.png" align="middle"></a></h3>'
     outstr = outstr0 + \
-             '<p> Send set of <a href="http://pals.bioinfo.cnio.es?' + \
+             '<p> Send set of <a href="http://pals.iib.uam.es?' + \
              url_org_id + 'datafile=' + gl1 + \
              '">' + s1 + ' to PaLS</a></p>' + \
-             '<p> Send set of <a href="http://pals.bioinfo.cnio.es?' + \
+             '<p> Send set of <a href="http://pals.iib.uam.es?' + \
              url_org_id + 'datafile=' + gl2 + \
              '">' + s2 + ' to PaLS</a></p>' 
     return(outstr)
@@ -205,7 +205,7 @@ def relaunchCGI():
     print '</head> <body>'
     print '<p> This is an autorefreshing page; your results will eventually be displayed here.\n'
     print 'If your browser does not autorefresh, the results will be kept for five days at</p>'
-    print '<p><a href="' + getBaseURL() + '?newDir=' + newDir + '">', 'http://genesrf2.bioinfo.cnio.es/tmp/'+ newDir + '/results.html</a>.' 
+    print '<p><a href="' + getBaseURL() + '?newDir=' + newDir + '">', 'http://genesrf.iib.uam.es/tmp/'+ newDir + '/results.html</a>.' 
     print '</p> </body> </html>'
     
 
@@ -255,7 +255,7 @@ def printOKRun():
         outf.write('<IMG BORDER="0" SRC="ErrorFigure.png">')
         outf.write("<br /><br /> <hr>")
         outf.write("<pre>")
-        outf.write('<br /><br /><h2> Results <a href="http://adacgh.bioinfo.cnio.es/help/adacgh-help.html#outputText">(help)</a></h2> \n')
+        outf.write('<br /><br /><h2> Results <a href="http://adacgh.iib.uam.es/help/adacgh-help.html#outputText">(help)</a></h2> \n')
         outf.write("<br /><br /> <hr>")
         outf.write(cgi.escape(resultsFile))
         outf.write("</pre>")
@@ -269,18 +269,18 @@ def printOKRun():
         listPNGS = glob.glob(tmpDir + "/fboot*.png")
         listPNGS.sort()
         nf1 = len(listPNGS)
-        outf.write('<h2>OOB error vs. num of genes <a href="http://genesrf2.bioinfo.cnio.es/help/genesrf-help.html#f1">(help)</a></h2> \n')
+        outf.write('<h2>OOB error vs. num of genes <a href="http://genesrf.iib.uam.es/help/genesrf-help.html#f1">(help)</a></h2> \n')
         outf.write('<IMG BORDER="0" SRC="' +
                        listPNGS[nf1 - 1].replace(tmpDir + '/', '') + '">') 
         if nf1 > 1:
-            outf.write('<br /><br /><h2>OOB predictions <a href="http://genesrf2.bioinfo.cnio.es/help/genesrf-help.html#f2">(help)</a></h2> \n')
+            outf.write('<br /><br /><h2>OOB predictions <a href="http://genesrf.iib.uam.es/help/genesrf-help.html#f2">(help)</a></h2> \n')
             for index in range(nf1 - 1):
                 tmpfile = listPNGS[index].replace(tmpDir + '/','')
                 outf.write('<IMG BORDER="0" SRC="' +
                            tmpfile + '">') 
 
         if os.path.exists(tmpDir + "/fimpspec-all.png"):
-            outf.write('<br /><br /><h2> Importance spectrum plots <a href="http://genesrf2.bioinfo.cnio.es/help/genesrf-help.html#f3">(help)</a></h2> \n')
+            outf.write('<br /><br /><h2> Importance spectrum plots <a href="http://genesrf.iib.uam.es/help/genesrf-help.html#f3">(help)</a></h2> \n')
             outf.write('<IMG BORDER="0" SRC="fimpspec-all.png">')
         if os.path.exists(tmpDir + "/fimpspec-200.png"):
             outf.write('<IMG BORDER="0" SRC="fimpspec-200.png">')
@@ -288,12 +288,12 @@ def printOKRun():
             outf.write('<IMG BORDER="0" SRC="fimpspec-30.png">')
 
         if os.path.exists(tmpDir + "/fselprobplot.png"):
-            outf.write('<br /><br /><h2> Selection probability plot <a href="http://genesrf2.bioinfo.cnio.es/help/genesrf-help.html#f4">(help)</a></h2> \n')
+            outf.write('<br /><br /><h2> Selection probability plot <a href="http://genesrf.iib.uam.es/help/genesrf-help.html#f4">(help)</a></h2> \n')
             outf.write('<IMG BORDER="0" SRC="fselprobplot.png">')
 
         outf.write("<br /><br /> <hr>")
     #    outf.write("<pre>")
-        outf.write('<br /><br /><h2> Results <a href="http://genesrf2.bioinfo.cnio.es/help/genesrf-help.html#resultstext">(help)</a></h2> \n')
+        outf.write('<br /><br /><h2> Results <a href="http://genesrf.iib.uam.es/help/genesrf-help.html#resultstext">(help)</a></h2> \n')
         outf.write(resultsFile)
     #    outf.write("</pre>")
         ## compress all the results
@@ -324,7 +324,7 @@ def printOKRun():
                     allResults.add(listPDFS[index], 'OOBPredictionsFigure' + str(index + 1) + '.pdf')
         allResults.add(tmpDir + '/pre-results.html', 'results.html')                    
         allResults.close()
-        outf.write('<hr> <a href="http://genesrf2.bioinfo.cnio.es/tmp/' +
+        outf.write('<hr> <a href="http://genesrf.iib.uam.es/tmp/' +
                    newDir + '/all.results.tar.gz">Download</a> all figures and text results.')  
 
         outf.write(printPalsURL(newDir, tmpDir))
@@ -396,7 +396,7 @@ if re.search(r'[^0-9]', str(newDir)):
     sys.exit()
     
 redirectLoc = "/tmp/" + newDir
-tmpDir = "/http/genesrf2/www/tmp/" + newDir
+tmpDir = "/asterias-web-apps/genesrf/www/tmp/" + newDir
 
 if not os.path.isdir(tmpDir):
     commonOutput()
@@ -411,7 +411,7 @@ if not os.path.isdir(tmpDir):
 ## No need to reopen files or check anything else. Return url with results
 ## and bail out.
 if os.path.exists(tmpDir + "/natural.death.pid.txt") or os.path.exists(tmpDir + "/killed.pid.txt"):
-    print 'Location: http://genesrf2.bioinfo.cnio.es/tmp/'+ newDir + '/results.html \n\n'
+    print 'Location: http://genesrf.iib.uam.es/tmp/'+ newDir + '/results.html \n\n'
     sys.exit()
 
 ## No, we were not done. Need to examine R output
@@ -438,18 +438,18 @@ if os.path.exists(tmpDir + "/pid.txt"):
         os.rename(tmpDir + '/pid.txt', tmpDir + '/killed.pid.txt')
 ##        os.remove(tmpDir + '/f1.R')
         try:
-            os.system("rm /http/genesrf2/www/R.running.procs/R." + newDir + "*")
+            os.system("rm /asterias-web-apps/genesrf/www/R.running.procs/R." + newDir + "*")
         except:
             None
-        print 'Location: http://genesrf2.bioinfo.cnio.es/tmp/'+ newDir + '/results.html \n\n'
-##                chkmpi = os.system('/http/mpi.log/adhocCheckRmpi.py GeneSrF&')
+        print 'Location: http://genesrf.iib.uam.es/tmp/'+ newDir + '/results.html \n\n'
+##                chkmpi = os.system('/asterias-web-apps/mpi.log/adhocCheckRmpi.py GeneSrF&')
         sys.exit()
 
 if errorRun > 0:
     printErrorRun()
     os.rename(tmpDir + '/pid.txt', tmpDir + '/natural.death.pid.txt')
 ##    os.remove(tmpDir + '/f1.R')
-##    chkmpi = os.system('/http/mpi.log/adhocCheckRmpi.py GeneSrF&')
+##    chkmpi = os.system('/asterias-web-apps/mpi.log/adhocCheckRmpi.py GeneSrF&')
     try:
         lamenv = open(tmpDir + "/lamSuffix", mode = "r").readline()
     except:
@@ -461,10 +461,10 @@ if errorRun > 0:
     except:
         None
     try:
-        os.system("rm /http/genesrf2/www/R.running.procs/R." + newDir + "*")
+        os.system("rm /asterias-web-apps/genesrf/www/R.running.procs/R." + newDir + "*")
     except:
         None
-    print 'Location: http://genesrf2.bioinfo.cnio.es/tmp/'+ newDir + '/results.html \n\n'
+    print 'Location: http://genesrf.iib.uam.es/tmp/'+ newDir + '/results.html \n\n'
 
 
 elif finishedOK > 0:
@@ -482,12 +482,12 @@ elif finishedOK > 0:
     printOKRun()
     os.rename(tmpDir + '/pid.txt', tmpDir + '/natural.death.pid.txt')
 #    os.remove(tmpDir + '/f1.R')
-    ##    chkmpi = os.system('/http/mpi.log/adhocCheckRmpi.py GeneSrF&')
+    ##    chkmpi = os.system('/asterias-web-apps/mpi.log/adhocCheckRmpi.py GeneSrF&')
     try:
-        os.system("rm /http/genesrf2/www/R.running.procs/R." + newDir  + "*")
+        os.system("rm /asterias-web-apps/genesrf/www/R.running.procs/R." + newDir  + "*")
     except:
         None
-    print 'Location: http://genesrf2.bioinfo.cnio.es/tmp/'+ newDir + '/results.html \n\n'
+    print 'Location: http://genesrf.iib.uam.es/tmp/'+ newDir + '/results.html \n\n'
 
     
 else:
@@ -506,7 +506,7 @@ else:
 # print "<p> getPathInfo ",getPathinfo(), "<p>"
 # print "</body></html>"
 
-# # # getQualifiedURL http://genesrf2.bioinfo.cnio.es
+# # # getQualifiedURL http://genesrf.iib.uam.es
 # # # getScriptname /cgi-bin/checkdone.cgi
-# # # getBaseURL http://genesrf2.bioinfo.cnio.es/cgi-bin/checkdone.cgi
-# # # getPathInfo Traceback (most recent call last): File "/http/genesrf2/cgi/checkdone.cgi", line 120, in ? print "
+# # # getBaseURL http://genesrf.iib.uam.es/cgi-bin/checkdone.cgi
+# # # getPathInfo Traceback (most recent call last): File "/asterias-web-apps/genesrf/cgi/checkdone.cgi", line 120, in ? print "

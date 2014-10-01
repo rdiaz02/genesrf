@@ -25,9 +25,9 @@
 </head>
 
 <body>
-<BODY background="images/fondo3.jpg">
+<!-- <BODY background="images/fondo3.jpg"> -->
 
-<form action="http://genesrf2.iib.uam.es/cgi-bin/genesrfR.cgi"
+<form action="http://genesrf.iib.uam.es/cgi-bin/genesrfR.cgi"
 enctype="multipart/form-data" method="POST">
 
 
@@ -37,7 +37,7 @@ enctype="multipart/form-data" method="POST">
 <table border=0 cellspacing=0 width="100%">
   <tr bgcolor="#54C571">
     <td rowspan="3" align=center width=140>
-      <a href="http://genesrf2.iib.uam.es">
+      <a href="http://genesrf.iib.uam.es">
       <img SRC="genesrf_logo.gif"
       border=0
       alt="genesrf">
@@ -46,19 +46,19 @@ enctype="multipart/form-data" method="POST">
     <td bgcolor="#254117" align=center width="100%">
       <a href="http://iib.uam.es" STYLE="text-decoration:none">
       <font color=white>
-      <b>Bioinformatics Unit</b>
+      <!-- <b>Bioinformatics Unit</b> -->
       </font>
       </a>
         -  
-      <a href="http://www.cnio.es" STYLE="text-decoration:none">
-      <font color=white>
-      <b>CNIO</b>
-      </font>
-      </a>
+      <!-- <a href="http://www.cnio.es" STYLE="text-decoration:none"> -->
+      <!-- <font color=white> -->
+      <!-- <b>CNIO</b> -->
+      <!-- </font> -->
+      <!-- </a> -->
     </td>
     <td rowspan="3" align=center width=124>
       <a href="http://iib.uam.es">
-      <img src="/images/bioinfo.png" border=0>
+      <!-- <img src="/images/bioinfo.png" border=0> -->
       </a>
     </td>
   </tr>
@@ -81,7 +81,7 @@ enctype="multipart/form-data" method="POST">
 <br>
 
 
-<h2>GeneSrF: gene selection with random forests (v. 20070524)</h2>
+<h2>GeneSrF: gene selection with random forests</h2>
 
 <p style="font-family: 'Bitstream Vera Sans',Verdana,sans; font-size: 9pt"> GeneSrF is a
     web tool for gene selection in classification problems that uses random
@@ -101,7 +101,7 @@ For further details see the
 
 
 
-<p style="font-family: 'Bitstream Vera Sans',Verdana,sans; font-size: 9pt"">To use this web
+<p style="font-family: 'Bitstream Vera Sans',Verdana,sans; font-size: 9pt">To use this web
 tool you need to provide two files, one with the gene expression data and one with
 the class labels, and press "Submit".</p>
 <hr>
@@ -149,58 +149,58 @@ target="help_window">?</a>)
 
 
 
-<hr/ >
-<h3>Type of gene identifier and species</h3>
-<p style="font-family: 'Bitstream Vera Sans',Verdana,sans; font-size: 9pt">
-This information is used to provide clickable links (that take you to the one-query-version of our 
-<a href="http://idconverter.iib.uam.es">IDConverter</a>) in the results.</p>
+<!-- <hr/ > -->
+<!-- <h3>Type of gene identifier and species</h3> -->
+<!-- <p style="font-family: 'Bitstream Vera Sans',Verdana,sans; font-size: 9pt"> -->
+<!-- This information is used to provide clickable links (that take you to the one-query-version of our  -->
+<!-- <a href="http://idconverter.iib.uam.es">IDConverter</a>) in the results.</p> -->
 
-<table>
-  <tr><td width="100"></td><td width="400"><b>Type of ID for gene names</b></td>
-    <td width="400"><b>Organism</b></td></tr>
-  <tr><td></td><td>
-      <input type="RADIO" name="idtype" value="affy">  Affymetrix ID</input>
-    </td><td>
-      <input type="RADIO" name="organism" value="Hs">  Human (<i>Homo sapiens</i>)</input>
-  </td></tr>
+<!-- <table> -->
+<!--   <tr><td width="100"></td><td width="400"><b>Type of ID for gene names</b></td> -->
+<!--     <td width="400"><b>Organism</b></td></tr> -->
+<!--   <tr><td></td><td> -->
+<!--       <input type="RADIO" name="idtype" value="affy">  Affymetrix ID</input> -->
+<!--     </td><td> -->
+<!--       <input type="RADIO" name="organism" value="Hs">  Human (<i>Homo sapiens</i>)</input> -->
+<!--   </td></tr> -->
   
-  <tr><td></td><td>
-      <input type="RADIO" name="idtype" value="clone">  Clone ID (IMAGE Consortium)</input>
-    </td><td>
-      <input type="RADIO" name="organism" value="Mm">  Mouse (<i>Mus musculus</i>)</input>
-  </td></tr>
-  <tr><td></td><td>
-      <input type="RADIO" name="idtype" value="acc">  GenBank Accession</input>
-    </td><td>
-      <input type="RADIO" name="organism" value="Rn">  Rat (<i>Rattus norvegicus</i>)</input>
-  </td></tr>
-  <tr><td></td><td>
-      <input type="RADIO" name="idtype" value="ensembl">  Ensembl Gene</input>
-    </td><td>
-      <input type="RADIO" name="organism" checked value="None">  None of the above</input>
-  </td></tr>
-  <tr><td></td><td>
-      <input type="RADIO" name="idtype" value="ug">  Unigene cluster</input>
-    </td><td></td></tr>
-  <tr><td></td><td>
-      <input type="RADIO" name="idtype" value="rsrna">  RefSeq RNA</input>
-    </td><td></td></tr>
-  <tr><td></td><td>
-      <input type="RADIO" name="idtype" value="rspeptide">  RefSeq peptide</input>
-    </td><td></td></tr>
-  <tr><td></td><td>
-      <input type="RADIO" name="idtype" value="entrez">  Entrez Gene</input>
-    </td><td></td></tr>
-  <tr><td></td><td>
-      <input type="RADIO" name="idtype" value="hugo">  HUGO Gene Name</input>
-    </td><td></td></tr>
-  <tr><td></td><td>
-      <input type="RADIO" name="idtype" value="cnio">  CNIO ID</input>
-    </td><td></td></tr>
-  <tr><td></td><td>
-      <input type="RADIO" name="idtype" checked value="None">  None of the above</input>
-    </td><td></td></tr>
-</table>
+<!--   <tr><td></td><td> -->
+<!--       <input type="RADIO" name="idtype" value="clone">  Clone ID (IMAGE Consortium)</input> -->
+<!--     </td><td> -->
+<!--       <input type="RADIO" name="organism" value="Mm">  Mouse (<i>Mus musculus</i>)</input> -->
+<!--   </td></tr> -->
+<!--   <tr><td></td><td> -->
+<!--       <input type="RADIO" name="idtype" value="acc">  GenBank Accession</input> -->
+<!--     </td><td> -->
+<!--       <input type="RADIO" name="organism" value="Rn">  Rat (<i>Rattus norvegicus</i>)</input> -->
+<!--   </td></tr> -->
+<!--   <tr><td></td><td> -->
+<!--       <input type="RADIO" name="idtype" value="ensembl">  Ensembl Gene</input> -->
+<!--     </td><td> -->
+<!--       <input type="RADIO" name="organism" checked value="None">  None of the above</input> -->
+<!--   </td></tr> -->
+<!--   <tr><td></td><td> -->
+<!--       <input type="RADIO" name="idtype" value="ug">  Unigene cluster</input> -->
+<!--     </td><td></td></tr> -->
+<!--   <tr><td></td><td> -->
+<!--       <input type="RADIO" name="idtype" value="rsrna">  RefSeq RNA</input> -->
+<!--     </td><td></td></tr> -->
+<!--   <tr><td></td><td> -->
+<!--       <input type="RADIO" name="idtype" value="rspeptide">  RefSeq peptide</input> -->
+<!--     </td><td></td></tr> -->
+<!--   <tr><td></td><td> -->
+<!--       <input type="RADIO" name="idtype" value="entrez">  Entrez Gene</input> -->
+<!--     </td><td></td></tr> -->
+<!--   <tr><td></td><td> -->
+<!--       <input type="RADIO" name="idtype" value="hugo">  HUGO Gene Name</input> -->
+<!--     </td><td></td></tr> -->
+<!--   <tr><td></td><td> -->
+<!--       <input type="RADIO" name="idtype" value="cnio">  CNIO ID</input> -->
+<!--     </td><td></td></tr> -->
+<!--   <tr><td></td><td> -->
+<!--       <input type="RADIO" name="idtype" checked value="None">  None of the above</input> -->
+<!--     </td><td></td></tr> -->
+<!-- </table> -->
 
 
 
