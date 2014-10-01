@@ -17,9 +17,9 @@ import cgitb
 cgitb.enable() ## zz: eliminar for real work?
 sys.stderr = sys.stdout ## eliminar?
 
-R_MAX_time = 24 * 3600 ## 4 hours is max duration allowd for any process
-
 ## For redirections, from Python Cookbook
+sys.path.append("/asterias-web-apps/web-apps-common")
+from web_apps_config import *
 
 
 def extract_for_PaLS_from_geneSrF(file_in1 = '/results.html',
@@ -450,16 +450,16 @@ if errorRun > 0:
     os.rename(tmpDir + '/pid.txt', tmpDir + '/natural.death.pid.txt')
 ##    os.remove(tmpDir + '/f1.R')
 ##    chkmpi = os.system('/asterias-web-apps/mpi.log/adhocCheckRmpi.py GeneSrF&')
-    try:
-        lamenv = open(tmpDir + "/lamSuffix", mode = "r").readline()
-    except:
-        None
-    try:
-        os.system('export LAM_MPI_SESSION_SUFFIX=' + lamenv +
-                  '; lamhalt -H; lamwipe -H; touch ' +
-                  tmpDir + '/lamKilledFromPython')
-    except:
-        None
+    # try:
+    #     lamenv = open(tmpDir + "/lamSuffix", mode = "r").readline()
+    # except:
+    #     None
+    # try:
+    #     os.system('export LAM_MPI_SESSION_SUFFIX=' + lamenv +
+    #               '; lamhalt -H; lamwipe -H; touch ' +
+    #               tmpDir + '/lamKilledFromPython')
+    # except:
+    #     None
     try:
         os.system("rm /asterias-web-apps/genesrf/www/R.running.procs/R." + newDir + "*")
     except:
@@ -469,16 +469,16 @@ if errorRun > 0:
 
 elif finishedOK > 0:
     ##zz: killing lam seems not to be working from here...
-    try:
-        lamenv = open(tmpDir + "/lamSuffix", mode = "r").readline()
-    except:
-        None
-    try:
-        lamkill = os.system('export LAM_MPI_SESSION_SUFFIX=' + lamenv +
-                            '; lamhalt -H; lamwipe -H; touch ' +
-                            tmpDir + '/lamKilledFromPython')
-    except:
-        None
+    # try:
+    #     lamenv = open(tmpDir + "/lamSuffix", mode = "r").readline()
+    # except:
+    #     None
+    # try:
+    #     lamkill = os.system('export LAM_MPI_SESSION_SUFFIX=' + lamenv +
+    #                         '; lamhalt -H; lamwipe -H; touch ' +
+    #                         tmpDir + '/lamKilledFromPython')
+    # except:
+    #     None
     printOKRun()
     os.rename(tmpDir + '/pid.txt', tmpDir + '/natural.death.pid.txt')
 #    os.remove(tmpDir + '/f1.R')

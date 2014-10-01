@@ -12,12 +12,17 @@ import dircache
 import random
 from stat import ST_SIZE
 import cgitb
+import subprocess
 cgitb.enable() ## zz: eliminar for real work?
 sys.stderr = sys.stdout
 APP_NAME = "GeneSrF"
 sys.path.append("/asterias-web-apps/web-apps-common")
 from web_apps_config import *
 from web_apps_common_funcs import *
+
+## Here we do call checkdone.cgi and tryRrun2.py (this one in web-apps-common)
+
+
 
 ##  f5 <- rep(paste(paste(letters, collapse = ""),
 ##                  paste(LETTERS, collapse="")), 1000)
@@ -240,7 +245,7 @@ organism = dummyUpload('organism', 'None', tmpDir)
 fileUpload('covariate', fs, tmpDir, APP_NAME)
 if os.stat(tmpDir + '/covariate')[ST_SIZE] > MAX_covariate_size:
     shutil.rmtree(tmpDir)
-    commonOutput()
+    commonOutput(APP_NAME)
     print "<h1> GENESRF ERROR </h1>"
     print "<p> Covariate file way too large </p>"
     print "<p> Covariate files this size not allowed.</p>"
@@ -250,7 +255,7 @@ if os.stat(tmpDir + '/covariate')[ST_SIZE] > MAX_covariate_size:
 fileUpload('class', fs, tmpDir, APP_NAME)
 if os.stat(tmpDir + '/class')[ST_SIZE] > MAX_class_size:
     shutil.rmtree(tmpDir)
-    commonOutput()
+    commonOutput(APP_NAME)
     print "<h1> GENESRF ERROR </h1>"
     print "<p> Class file way too large </p>"
     print "<p> Class files this size not allowed.</p>"
@@ -281,7 +286,7 @@ for Rtouchfile in RrunningFiles:
 numRgenesrf = len(glob.glob("/asterias-web-apps/genesrf/www/R.running.procs/R.*@*%*"))
 if numRgenesrf > MAX_genesrf:
     shutil.rmtree(tmpDir)
-    commonOutput()
+    commonOutput(APP_NAME)
     print "<h1> GeneSrF problem: The servers are too busy </h1>"
     print "<p> Because of the popularity of the application "
     print " the maximum number of simultaneous runs of genesrf has been reached.</p>"
@@ -307,7 +312,7 @@ while 1:
            or (line.find('"#name"') == 0) or (line.find('"#NAME"') == 0) or (line.find('"#Name"') == 0):
         num_name_lines = num_name_lines + 1
         if num_name_lines > 1:
-            commonOutput()
+            commonOutput(APP_NAME)
             print """ You have more than one line with #Name (or #NAME or #name), in the data matrix \
                    but only one is allowed."""
             sys.exit()
@@ -337,8 +342,14 @@ touchRout = os.system("/bin/touch " + tmpDir + "/f1.Rout")
 touchRrunning = os.system("/bin/touch /asterias-web-apps/genesrf/www/R.running.procs/R." + newDir +
                           "@" + socket.gethostname())
 shutil.copy("/asterias-web-apps/genesrf/cgi/f1.R", tmpDir)
-tryrrun = os.system('/asterias-web-apps/web-apps-common/tryRrun2.py ' + tmpDir +' 2 ' + 'GeneSrF &')
 createResultsFile = os.system("/bin/touch " + tmpDir + "/results.txt")
+
+# tryrrun = os.system('/asterias-web-apps/web-apps-common/tryRrun2.py ' + tmpDir +' 2 ' + 'GeneSrF &')
+
+subprocess.Popen(['/asterias-web-apps/web-apps-common/tryRrun2.py',
+                  tmpDir, ' 1 ', 'GeneSrF'],
+                 stdout = subprocess.PIPE, stdin = subprocess.PIPE, \
+                 stderr = subprocess.PIPE)
 
 
 
