@@ -556,7 +556,8 @@ if(inherits(trycode, "try-error"))
                        trycode, ". \n Please let us know so we can fix the code."))
 
 stopCluster(TheCluster)
-               
+mpi.exit()
+
 trycode <- try(
              { 
                imps <- importance(rf1, type = 1, scale = FALSE)
@@ -601,7 +602,7 @@ plots.oobpreds <- levels(Class)
 numgddplots <- length(levels(Class))
 
 for(ngddpl in 1:numgddplots) {
-        CairoPNG(file = paste("fbootB", ngddpl, sep = ""),
+        CairoPNG(file = paste("fbootB", ngddpl, ".png", sep = ""),
                  width = png.width, height = png.height,
                  ps = png.pointsize, bg = "white")
     par(cex.axis = 0.75); par(cex.lab = 1); par(cex.main = 1)
@@ -610,7 +611,7 @@ for(ngddpl in 1:numgddplots) {
          class.to.plot = ngddpl)
     dev.off()
 }
-CairoPNG(file = paste("fbootB", numgddplots + 1, sep = ""),
+CairoPNG(file = paste("fbootB", numgddplots + 1, ".png", sep = ""),
          width = png.width, height = png.height, ps = png.pointsize,
          bg = "white")
 par(cex.axis = 0.75); par(cex.lab = 1); par(cex.main = 1)
@@ -750,6 +751,8 @@ if(inherits(trycode, "try-error"))
   caughtOurError(paste("Plotting problem, with error",
                        trycode, ". \n Please let us know so we can fix the code."))
 
+
+mpi.quit()
 # stopCluster(TheCluster)
 
 ## cat(paste("\n Did the call to stopCluster ", date(), " \n"),
