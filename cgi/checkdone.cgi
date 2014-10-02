@@ -22,130 +22,130 @@ sys.path.append("/asterias-web-apps/web-apps-common")
 from web_apps_config import *
 
 
-def extract_for_PaLS_from_geneSrF(file_in1 = '/results.html',
-                                  file_in2 = '/model.freqs.table.html',
-                                  file_out = '/Selected.genes.txt',
-                                  file_out1 ='/Selected.and.bootstrap.selected.txt'):
-    string1_all_data = '<h3>Variable selection using all data </h3><h4>Variables used</h4><TABLE frame="box">\n'
-    string_r_remove_all_data = '</a> </td></tr>'
-    string_l_remove_all_data =  'target="icl_window" >'
-    string_end_all = '</TABLE><p> Number of variables used:'
-    f1 = open(file_in1, mode = 'r').readlines()
-    f2 = open(file_out, mode = 'w')
-    f3 = open(file_out1, mode = 'w')
+# def extract_for_PaLS_from_geneSrF(file_in1 = '/results.html',
+#                                   file_in2 = '/model.freqs.table.html',
+#                                   file_out = '/Selected.genes.txt',
+#                                   file_out1 ='/Selected.and.bootstrap.selected.txt'):
+#     string1_all_data = '<h3>Variable selection using all data </h3><h4>Variables used</h4><TABLE frame="box">\n'
+#     string_r_remove_all_data = '</a> </td></tr>'
+#     string_l_remove_all_data =  'target="icl_window" >'
+#     string_end_all = '</TABLE><p> Number of variables used:'
+#     f1 = open(file_in1, mode = 'r').readlines()
+#     f2 = open(file_out, mode = 'w')
+#     f3 = open(file_out1, mode = 'w')
 
-    # A check
-    if f1[9] != string1_all_data:
-        raise SystemError
+#     # A check
+#     if f1[9] != string1_all_data:
+#         raise SystemError
 
-    def find_num_used(x):
-        for i in range(9, len(f1)):
-            tmpl = f1[i]
-            if tmpl.startswith(string_end_all):
-                nvars = tmpl.split()[5]
-                return int(nvars)
-                break
+#     def find_num_used(x):
+#         for i in range(9, len(f1)):
+#             tmpl = f1[i]
+#             if tmpl.startswith(string_end_all):
+#                 nvars = tmpl.split()[5]
+#                 return int(nvars)
+#                 break
 
-    nvars = find_num_used(f1)
-    lines_vars = range(11, 11 + nvars)
+#     nvars = find_num_used(f1)
+#     lines_vars = range(11, 11 + nvars)
 
-    f2.write("#AllData\n")
-    f3.write("#AllData\n")
+#     f2.write("#AllData\n")
+#     f3.write("#AllData\n")
 
-    for ll in lines_vars:
-        tmp = f1[ll]
-        posl = tmp.rfind(string_l_remove_all_data) + 21
-        posr = tmp.rfind(string_r_remove_all_data)
-        f2.write(tmp[posl:posr] +  '\n')
-        f3.write(tmp[posl:posr] +  '\n')
+#     for ll in lines_vars:
+#         tmp = f1[ll]
+#         posl = tmp.rfind(string_l_remove_all_data) + 21
+#         posr = tmp.rfind(string_r_remove_all_data)
+#         f2.write(tmp[posl:posr] +  '\n')
+#         f3.write(tmp[posl:posr] +  '\n')
 
-    f2.flush()
-    f2.close()
+#     f2.flush()
+#     f2.close()
 
-    f1b = open(file_in2, mode = 'r').readlines()
-    f1b = f1b[2:-1]
-    cvnum = 1
+#     f1b = open(file_in2, mode = 'r').readlines()
+#     f1b = f1b[2:-1]
+#     cvnum = 1
 
-    for ll in f1b:
-        f3.write("#CV.run." + str(cvnum) + "\n")
-        outst = ll.replace('+', ' ').replace('<tr><td>', ' ').\
-                replace('</td><td><div align=right>',' ').\
-                replace('</div></td></tr>',' ').split()[:-1]
-        for outg in outst:
-            f3.write(outg + '\n')
-        cvnum += 1
+#     for ll in f1b:
+#         f3.write("#CV.run." + str(cvnum) + "\n")
+#         outst = ll.replace('+', ' ').replace('<tr><td>', ' ').\
+#                 replace('</td><td><div align=right>',' ').\
+#                 replace('</div></td></tr>',' ').split()[:-1]
+#         for outg in outst:
+#             f3.write(outg + '\n')
+#         cvnum += 1
 
-    f3.flush()
-    f3.close()
-
-
-def clean_for_PaLS(file_in, file_out):
-    """ Make sure no file has two consecutive lines that start with '#',
-    so there are not lists without genes."""
-    f1 = open(file_in, mode = 'r').readlines()
-    f2 = open(file_out, mode = 'w')
-    maxi = len(f1) - 1
-    i = 0
-    if len(f1) == 0:
-        f2.close()
-    else:
-        tmp1 = f1[i]
-        tmp2 = ' '
-        while True:
-            if i == maxi:
-                break
-            tmp2 = f1[i + 1]
-            if not tmp1.startswith('#'):
-                f2.write(tmp1)
-            elif not tmp2.startswith('#'):
-                f2.write(tmp1)
-            tmp1 = tmp2
-            i += 1
-    ### make sure last one is written if not a "#"
-        if not tmp2.startswith('#'):
-            f2.write(tmp2)
-        f2.close()
+#     f3.flush()
+#     f3.close()
 
 
-def printPalsURL(newDir,
-                 tmpDir,
-                 application_url = "http://genesrf.iib.uam.es",
-                 f1 = "Selected.genes.txt",
-                 f2 = "Selected.and.bootstrap.selected.txt",
-                 s1 = "genes selected in main run (this rarely makes any sense!)",
-                 s2 = "genes selected in main run and in bootstrap runs"):
-    """ Based on Pomelo II's Send_to_Pals.cgi."""
-    f=open(tmpDir + "/idtype")
-    idtype = f.read().strip()
-    f.close()
-    f=open(tmpDir + "/organism")
-    organism = f.read().strip()
-    f.close()
-    if (idtype != "None" and organism != "None"):
-        url_org_id = "org=" + organism + "&idtype=" + idtype + "&"
-    else:
-        url_org_id = ""
-    gl_base = application_url + '/tmp/' + newDir + '/'
-    gl1 = gl_base + f1
-    gl2 = gl_base + f2
+# def clean_for_PaLS(file_in, file_out):
+#     """ Make sure no file has two consecutive lines that start with '#',
+#     so there are not lists without genes."""
+#     f1 = open(file_in, mode = 'r').readlines()
+#     f2 = open(file_out, mode = 'w')
+#     maxi = len(f1) - 1
+#     i = 0
+#     if len(f1) == 0:
+#         f2.close()
+#     else:
+#         tmp1 = f1[i]
+#         tmp2 = ' '
+#         while True:
+#             if i == maxi:
+#                 break
+#             tmp2 = f1[i + 1]
+#             if not tmp1.startswith('#'):
+#                 f2.write(tmp1)
+#             elif not tmp2.startswith('#'):
+#                 f2.write(tmp1)
+#             tmp1 = tmp2
+#             i += 1
+#     ### make sure last one is written if not a "#"
+#         if not tmp2.startswith('#'):
+#             f2.write(tmp2)
+#         f2.close()
 
-    ## Fixme: I am taking this out of here,
-    ## because I need to read the veryu results.html file
-    ## and varSelRF always gives at least two genes.
-    ## clean_for_PaLS(tmpDir + '/' + f1, tmpDir + '/' + f1)
-    ## clean_for_PaLS(tmpDir + '/' + f2, tmpDir + '/' + f2)
+
+# def printPalsURL(newDir,
+#                  tmpDir,
+#                  application_url = "http://genesrf.iib.uam.es",
+#                  f1 = "Selected.genes.txt",
+#                  f2 = "Selected.and.bootstrap.selected.txt",
+#                  s1 = "genes selected in main run (this rarely makes any sense!)",
+#                  s2 = "genes selected in main run and in bootstrap runs"):
+#     """ Based on Pomelo II's Send_to_Pals.cgi."""
+#     f=open(tmpDir + "/idtype")
+#     idtype = f.read().strip()
+#     f.close()
+#     f=open(tmpDir + "/organism")
+#     organism = f.read().strip()
+#     f.close()
+#     if (idtype != "None" and organism != "None"):
+#         url_org_id = "org=" + organism + "&idtype=" + idtype + "&"
+#     else:
+#         url_org_id = ""
+#     gl_base = application_url + '/tmp/' + newDir + '/'
+#     gl1 = gl_base + f1
+#     gl2 = gl_base + f2
+
+#     ## Fixme: I am taking this out of here,
+#     ## because I need to read the veryu results.html file
+#     ## and varSelRF always gives at least two genes.
+#     ## clean_for_PaLS(tmpDir + '/' + f1, tmpDir + '/' + f1)
+#     ## clean_for_PaLS(tmpDir + '/' + f2, tmpDir + '/' + f2)
     
-    outstr0 = '<br /> <hr> ' + \
-              '<h3> Send results to <a href = "http://pals.iib.uam.es">' + \
-              '<IMG BORDER="0" SRC="../../palsfavicon40.png" align="middle"></a></h3>'
-    outstr = outstr0 + \
-             '<p> Send set of <a href="http://pals.iib.uam.es?' + \
-             url_org_id + 'datafile=' + gl1 + \
-             '">' + s1 + ' to PaLS</a></p>' + \
-             '<p> Send set of <a href="http://pals.iib.uam.es?' + \
-             url_org_id + 'datafile=' + gl2 + \
-             '">' + s2 + ' to PaLS</a></p>' 
-    return(outstr)
+#     outstr0 = '<br /> <hr> ' + \
+#               '<h3> Send results to <a href = "http://pals.iib.uam.es">' + \
+#               '<IMG BORDER="0" SRC="../../palsfavicon40.png" align="middle"></a></h3>'
+#     outstr = outstr0 + \
+#              '<p> Send set of <a href="http://pals.iib.uam.es?' + \
+#              url_org_id + 'datafile=' + gl1 + \
+#              '">' + s1 + ' to PaLS</a></p>' + \
+#              '<p> Send set of <a href="http://pals.iib.uam.es?' + \
+#              url_org_id + 'datafile=' + gl2 + \
+#              '">' + s2 + ' to PaLS</a></p>' 
+#     return(outstr)
 
 
 
@@ -327,19 +327,19 @@ def printOKRun():
         outf.write('<hr> <a href="http://genesrf.iib.uam.es/tmp/' +
                    newDir + '/all.results.tar.gz">Download</a> all figures and text results.')  
 
-        outf.write(printPalsURL(newDir, tmpDir))
+        # outf.write(printPalsURL(newDir, tmpDir))
         outf.write("</body></html>")
         outf.flush()
         outf.close()
         Rresults.close()
         shutil.copyfile(tmpDir + "/pre-results.html", tmpDir + "/results.html")
-        try:
-            extract_for_PaLS_from_geneSrF(file_in1 = tmpDir + '/results.html',
-                                          file_in2 = tmpDir + '/model.freqs.table.html',
-                                          file_out = tmpDir + '/Selected.genes.txt',
-                                          file_out1 = tmpDir + '/Selected.and.bootstrap.selected.txt')
-        except:
-            None
+        # try:
+        #     extract_for_PaLS_from_geneSrF(file_in1 = tmpDir + '/results.html',
+        #                                   file_in2 = tmpDir + '/model.freqs.table.html',
+        #                                   file_out = tmpDir + '/Selected.genes.txt',
+        #                                   file_out1 = tmpDir + '/Selected.and.bootstrap.selected.txt')
+        # except:
+        #     None
 
 def printRKilled():
     Rresults = open(tmpDir + "/results.txt")

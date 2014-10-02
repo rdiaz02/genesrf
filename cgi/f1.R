@@ -23,7 +23,7 @@ rm(list = ls())
     ## try(stopCluster(TheCluster))
     cat("\n\n Normal termination\n")
     ## try(system(paste("/http/mpi.log/killLAM.py", lamSESSION, "&")))
-    ## try(mpi.quit(save = "no"), silent = TRUE)
+    try(mpi.quit(save = "no"), silent = TRUE)
 }
 
 startExecTime <- format(Sys.time())
@@ -556,7 +556,7 @@ if(inherits(trycode, "try-error"))
                        trycode, ". \n Please let us know so we can fix the code."))
 
 stopCluster(TheCluster)
-mpi.exit()
+
 
 trycode <- try(
              { 
@@ -752,7 +752,7 @@ if(inherits(trycode, "try-error"))
                        trycode, ". \n Please let us know so we can fix the code."))
 
 
-mpi.quit()
+## mpi.exit()
 # stopCluster(TheCluster)
 
 ## cat(paste("\n Did the call to stopCluster ", date(), " \n"),
