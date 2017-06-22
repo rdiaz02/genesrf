@@ -249,7 +249,7 @@ library(Hmisc)
 html.data.frame <- function (object, first.col = "Name",
                              file = paste(first.word(deparse(substitute(object))), 
                              "html", sep = "."), append = FALSE, link = NULL, linkCol = 1, 
-                             linkType = c("href", "name"), ...) 
+                             linkType = c("href", "name"), numeric.dollar = FALSE, ...) 
 {
     linkType <- match.arg(linkType)
     x <- format.df(object,  ...)
@@ -366,7 +366,7 @@ HTML.varSelRFBoot <- function(object,
         colnames(mean.class.probs) <- levels(object$class)
         mean.class.probs <- data.frame(mean.class.probs)
         html.data.frame(round(mean.class.probs, 4), file = file, append = TRUE,
-                        first.col = "Subject/array")
+                        first.col = "Subject/array", numeric.dollar = FALSE)
     } else{
         sink()
     }
