@@ -245,13 +245,14 @@ linkGene2 <- function(id) {
 }
 
 library(Hmisc)
+
 html.data.frame <- function (object, first.col = "Name",
                              file = paste(first.word(deparse(substitute(object))), 
                              "html", sep = "."), append = FALSE, link = NULL, linkCol = 1, 
                              linkType = c("href", "name"), ...) 
 {
     linkType <- match.arg(linkType)
-    x <- format.df(object, ...)
+    x <- format.df(object,  ...)
     adj <- attr(x, "col.just")
     if (any(adj == "r")) 
         for (i in seq(along = adj)[adj == "r"]) x[, i] <- paste("<div align=right>", 
@@ -357,6 +358,7 @@ HTML.varSelRFBoot <- function(object,
                         first.col = "Model")
     }
     if(return.class.probs) {
+        
         cat("<hr><br><h3>Mean class membership probabilities from out of bag samples</h3>")
         sink()
         mean.class.probs <- apply(object$prob.predictions, c(1, 2),
@@ -561,9 +563,10 @@ print(gc())
 ## }
 
 
-TheCluster <- makeForkCluster(30)
-RNGkind("L'Ecuyer-CMRG")
-## clusterSetRNGStream(TheCluster, iseed = round(2^32 * runif(1)))
+TheCluster <- makeForkCluster(60)
+## RNGkind("L'Ecuyer-CMRG")
+## It is crucial that we setup the cluseter RGstream properly
+clusterSetRNGStream(TheCluster) ## , iseed = round(2^32 * runif(1)))
 clusterEvalQ(TheCluster, library(varSelRF))
 clusterEvalQ(TheCluster, library(randomForest))
 
