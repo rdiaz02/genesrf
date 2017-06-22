@@ -149,9 +149,9 @@ numTree <- 2000
 
 
 library(varSelRF)
-## library(snow)
-## library(Rmpi)
-## library(rsprng)
+library(snow)
+library(Rmpi)
+library(rsprng)
 library(parallel)
 
 
@@ -345,10 +345,7 @@ HTML.varSelRFBoot <- function(object,
         tmp.table <- sort(table(object$all.solutions),
                           decreasing = TRUE)/object$number.of.bootsamples
         n.tmp.table <- names(tmp.table)
-        if(is.vector(tmp.table)) ## can fail in this case
-            dim(tmp.table) <- c(length(tmp.table), 1)
-        else
-            dim(tmp.table) <- c(dim(tmp.table), 1)
+        dim(tmp.table) <- c(dim(tmp.table), 1)
         rownames(tmp.table) <- n.tmp.table
         colnames(tmp.table) <- "Freq."
         cat("<hr><br><h3>Model frequencies in bootstrap samples</h3>")
@@ -526,49 +523,8 @@ print(gc())
 
 # basicClusterInit(mpi.universe.size()-1)
 
-
-
-## basicClusterInit <- function (clusterNumberNodes = 1,
-##                               nameCluster = "TheCluster", 
-##                               typeCluster = "MPI") 
-## {
-##     if (!(typeCluster %in% c("MPI", "PVM"))) 
-##         stop("typeCluster needs to be PVM or MPI")
-##     library(snow)
-##     if (typeCluster == "MPI") {
-##         print("Make sure you have the Rmpi package installed and configure your cluster if needed")
-##     }
-##     if (typeCluster == "PVM") {
-##         print("Make sure you have rpvm installed. We have only checked with Rmpi. Then do library(rpvm)")
-##     }
-##     if (length(find(nameCluster))) 
-##         stop("\nThere is another object called ", nameCluster, 
-##             ".\n", "This could mean that a cluster with that name already exists;\n", 
-##             "   in this case, please use the existing cluster \n", 
-##             "   ---you do not need to initialize the cluster, \n", 
-##             "   just pass its name as the parameter for 'nameCluster'---\n", 
-##             "   or stop that cluster and initialize a new one. \n", 
-##             "It could also mean that there is\n", "   already an object with this name; either remove the object\n", 
-##             "   or use another name for the cluster.\n")
-    
-##     assign(nameCluster, makeCluster(clusterNumberNodes, type = typeCluster), 
-##         env = .GlobalEnv)
-##     sprng.seed <- round(2^32 * runif(1))
-##     print(paste("Using as seed for SPRNG", sprng.seed))
-##     clusterSetupSPRNG(eval(parse(text = nameCluster)), seed = sprng.seed)
-##     clusterEvalQ(eval(parse(text = nameCluster)), library(randomForest))
-##     clusterEvalQ(eval(parse(text = nameCluster)), library(varSelRF))
-## }
-
-
-TheCluster <- makeForkCluster(30)
-RNGkind("L'Ecuyer-CMRG")
-## clusterSetRNGStream(TheCluster, iseed = round(2^32 * runif(1)))
-clusterEvalQ(TheCluster, library(varSelRF))
-clusterEvalQ(TheCluster, library(randomForest))
-
 ## Maximum of 4 nodes!
-## basicClusterInit(min(mpi.universe.size() - 1 , 4))
+basicClusterInit(min(mpi.universe.size() - 1 , 4))
 
 
 trycode <- try(
@@ -593,6 +549,7 @@ if(inherits(trycode, "try-error"))
 
 
 trycode <- try(
+               
                rvi <- randomVarImpsRF(xdata, Class, forest = rf1,
                        numrandom = numRand,
                        TheCluster = TheCluster
