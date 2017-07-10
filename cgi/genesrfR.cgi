@@ -210,9 +210,13 @@ acceptedOrganisms = ('None', 'Hs', 'Mm', 'Rn')
 #########################################################
 #########################################################
 
+
+
 ## Deleting tmp directories older than MAX_time
 currentTime = time.time()
 currentTmp = dircache.listdir("/asterias-web-apps/genesrf/www/tmp")
+
+
 for directory in currentTmp:
     tmpS = "/asterias-web-apps/genesrf/www/tmp/" + directory
     if (currentTime - os.path.getmtime(tmpS)) > MAX_time:
@@ -230,8 +234,11 @@ os.chmod(tmpDir, 0700)
 fs = cgi.FieldStorage()
 
 
-idtype = dummyUpload('idtype', 'None', tmpDir)
+idtype = dummyUpload('idtype','None', tmpDir)
 organism = dummyUpload('organism', 'None', tmpDir)
+
+
+
 
 ##check if file coming from preP
 
@@ -261,6 +268,7 @@ if os.stat(tmpDir + '/class')[ST_SIZE] > MAX_class_size:
     print "<p> Class files this size not allowed.</p>"
     print "</body></html>"
     sys.exit()
+
 
 ## Upload worked OK. We store the original names of the files in the
 ## browser for later report:
@@ -302,7 +310,7 @@ if numRgenesrf > MAX_genesrf:
 
 covarInServer = tmpDir + "/covariate"
 arrayNames = tmpDir + "/arrayNames"
-srvfile = open(covarInServer, mode = 'rU')
+srvfile = open(covarInServer, mode = 'r') ## was rU
 arrayfile = open(arrayNames, mode = 'w')
 num_name_lines = 0
 while 1:
@@ -367,7 +375,14 @@ os.system("/bin/sed 's/sustituyeme/" + newDir + "/g' " +
 # os.system("cd " + tmpDir + "; /bin/sed 's/sustituyeme/" +
 #           newDir + "/g' results-pre.html > results.html; rm results-pre.html")
 
-##############    Redirect to checkdone.cgi    ##################
+# ##############    Redirect to checkdone.cgi    ##################
 print "Location: "+ getQualifiedURL("/cgi-bin/checkdone.cgi") + "?newDir=" + newDir, "\n\n"
+
+
+## If you get strange errors, place these two lines starting at "start execution"
+## and do binary search for error
+# print "Location: http://google.com" 
+# print ""
+
 
 
