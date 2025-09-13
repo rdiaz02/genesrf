@@ -3,7 +3,7 @@ import glob
 import socket
 import sys
 import os
-import cgi 
+import cgi
 ##import types
 import time
 import shutil
@@ -14,9 +14,9 @@ from stat import ST_SIZE
 import cgitb
 import subprocess
 cgitb.enable() ## zz: eliminar for real work?
-sys.stderr = sys.stdout
+## sys.stderr = sys.stdout
 APP_NAME = "GeneSrF"
-sys.path.append("/asterias-web-apps/web-apps-common")
+sys.path.append("/home2/ramon/web-apps/web-apps-common")
 from web_apps_config import *
 from web_apps_common_funcs import *
 
@@ -60,7 +60,7 @@ acceptedOrganisms = ('None', 'Hs', 'Mm', 'Rn')
 
 #     result = "%s://%s" % (schema, host)
 #     if uri: result = result + uri
-    
+
 #     return result
 
 # def getScriptname():
@@ -85,13 +85,13 @@ acceptedOrganisms = ('None', 'Hs', 'Mm', 'Rn')
 # ## we don't deal with OS specific "\n"
 # ## because R does not have a problem (at least with Windows files)
 # ## no problem in R either with empty carriage returns at end of file
-    
+
 #     if fs.has_key(fieldName):
 #         fileClient = fs[fieldName].file
 #         if not fileClient:
 #             shutil.rmtree(tmpDir)
 #             commonOutput()
-#             print "<h1> GENESRF ERROR </h1>"    
+#             print "<h1> GENESRF ERROR </h1>"
 #             print "<p> The ", fieldName, "file you entered is not a file </p>"
 #             print "<p> Please fill up the required fields and try again</p>"
 #             print "</body></html>"
@@ -99,12 +99,12 @@ acceptedOrganisms = ('None', 'Hs', 'Mm', 'Rn')
 #     else:
 #         shutil.rmtree(tmpDir)
 #         commonOutput()
-#         print "<h1> GENESRF ERROR </h1>"    
+#         print "<h1> GENESRF ERROR </h1>"
 #         print "<p> ", fieldName, "file required </p>"
 #         print "<p> Please fill up the required fields and try again</p>"
 #         print "</body></html>"
 #         sys.exit()
-            
+
 #     # transferring files to final destination;
 
 #     fileInServer = tmpDir + "/" + fieldName
@@ -121,9 +121,9 @@ acceptedOrganisms = ('None', 'Hs', 'Mm', 'Rn')
 #     #         if not line: break
 #     #         srvfile.write(line)
 #     #     srvfile.close()
-    
+
 #     os.chmod(fileInServer, 0666)
-        
+
 #     if os.path.getsize(fileInServer) == 0:
 #         shutil.rmtree(tmpDir)
 #         commonOutput()
@@ -143,7 +143,7 @@ acceptedOrganisms = ('None', 'Hs', 'Mm', 'Rn')
 #     if not fs.has_key(fieldName):
 #         shutil.rmtree(tmpDir)
 #         commonOutput()
-#         print "<h1> GeneSrF ERROR </h1>"    
+#         print "<h1> GeneSrF ERROR </h1>"
 #         print "<p>", fieldName, "required </p>"
 #         print "<p> Please fill up the required fields and try again</p>"
 #         print "</body></html>"
@@ -151,7 +151,7 @@ acceptedOrganisms = ('None', 'Hs', 'Mm', 'Rn')
 #     if fs[fieldName].filename:
 #         shutil.rmtree(tmpDir)
 #         commonOutput()
-#         print "<h1> GeneSrF ERROR </h1>"    
+#         print "<h1> GeneSrF ERROR </h1>"
 #         print "<p> ", fieldName, "should not be a file. </p>"
 #         print "<p> Please fill up the required fields and try again</p>"
 #         print "</body></html>"
@@ -159,18 +159,18 @@ acceptedOrganisms = ('None', 'Hs', 'Mm', 'Rn')
 #     if type(fs[fieldName]) == type([]):
 #         shutil.rmtree(tmpDir)
 #         commonOutput()
-#         print "<h1> GeneSrF ERROR </h1>"    
+#         print "<h1> GeneSrF ERROR </h1>"
 #         print "<p>", fieldName, "should be a single value.</p>"
 #         print "<p> Please fill up the required fields and try again</p>"
 #         print "</body></html>"
 #         sys.exit()
 #     else:
 #         tmp = fs[fieldName].value
-            
+
 #     if tmp not in acceptedValues:
 #         shutil.rmtree(tmpDir)
 #         commonOutput()
-#         print "<h1> GeneSrF ERROR </h1>"    
+#         print "<h1> GeneSrF ERROR </h1>"
 #         print "<p> The", fieldName, "choosen is not valid.</p>"
 #         print "<p> Please fill up the required fields and try again.</p>"
 #         print "</body></html>"
@@ -214,11 +214,11 @@ acceptedOrganisms = ('None', 'Hs', 'Mm', 'Rn')
 
 ## Deleting tmp directories older than MAX_time
 currentTime = time.time()
-currentTmp = dircache.listdir("/asterias-web-apps/genesrf/www/tmp")
+currentTmp = dircache.listdir("/home2/ramon/web-apps/genesrf/www/tmp")
 
 
 for directory in currentTmp:
-    tmpS = "/asterias-web-apps/genesrf/www/tmp/" + directory
+    tmpS = "/home2/ramon/web-apps/genesrf/www/tmp/" + directory
     if (currentTime - os.path.getmtime(tmpS)) > MAX_time:
         shutil.rmtree(tmpS)
 
@@ -226,7 +226,7 @@ for directory in currentTmp:
 ### Creating temporal directories
 newDir = str(random.randint(1, 10000)) + str(os.getpid()) + str(random.randint(1, 100000)) + str(int(currentTime)) + str(random.randint(1, 10000))
 redirectLoc = "/tmp/" + newDir
-tmpDir = "/asterias-web-apps/genesrf/www/tmp/" + newDir
+tmpDir = "/home2/ramon/web-apps/genesrf/www/tmp/" + newDir
 os.mkdir(tmpDir)
 os.chmod(tmpDir, 0700)
 
@@ -247,7 +247,7 @@ organism = dummyUpload('organism', 'None', tmpDir)
 #     ## an ugly hack, as prep not in this filesystem
 #     os.system('wget http://prep.iib.uam.es/tmp/' + prep_tmpdir +
 #               '/outdata.txt -O ' + tmpDir + '/covariate')
-#     ## shutil.copy("/asterias-web-apps/prep/www/tmp/" + prep_tmpdir +"/outdata.txt",tmpDir + "/covariate")
+#     ## shutil.copy("/home2/ramon/web-apps/prep/www/tmp/" + prep_tmpdir +"/outdata.txt",tmpDir + "/covariate")
 # else:
 fileUpload('covariate', fs, tmpDir, APP_NAME)
 if os.stat(tmpDir + '/covariate')[ST_SIZE] > MAX_covariate_size:
@@ -284,14 +284,14 @@ fileNamesBrowser.close()
 ## current info about number of process right before we launch R.
 
 ## Now, delete any R file left (e.g., from killing procs, etc).
-RrunningFiles = dircache.listdir("/asterias-web-apps/genesrf/www/R.running.procs")
+RrunningFiles = dircache.listdir("/home2/ramon/web-apps/genesrf/www/R.running.procs")
 for Rtouchfile in RrunningFiles:
-    tmpS = "/asterias-web-apps/genesrf/www/R.running.procs/" + Rtouchfile
+    tmpS = "/home2/ramon/web-apps/genesrf/www/R.running.procs/" + Rtouchfile
     if (currentTime - os.path.getmtime(tmpS)) > R_MAX_time:
         os.remove(tmpS)
 
 ## Now, verify any processes left
-numRgenesrf = len(glob.glob("/asterias-web-apps/genesrf/www/R.running.procs/R.*@*%*"))
+numRgenesrf = len(glob.glob("/home2/ramon/web-apps/genesrf/www/R.running.procs/R.*@*%*"))
 if numRgenesrf > MAX_genesrf:
     shutil.rmtree(tmpDir)
     commonOutput(APP_NAME)
@@ -299,10 +299,10 @@ if numRgenesrf > MAX_genesrf:
     print "<p> Because of the popularity of the application "
     print " the maximum number of simultaneous runs of genesrf has been reached.</p>"
     print "<p> Please try again later.</p>"
-    print "<p> We apologize for the inconvenience.</p>"    
+    print "<p> We apologize for the inconvenience.</p>"
     print "</body></html>"
     sys.exit()
-    
+
 
 ################        Launching R   ###############
 
@@ -326,10 +326,10 @@ while 1:
             sys.exit()
         arrayfile.write(line)
         arrayfile.write("\n\n")
-        
-    
+
+
 srvfile.close()
-arrayfile.close()   
+arrayfile.close()
 os.chmod(arrayNames, 0600)
 
 
@@ -345,16 +345,16 @@ os.chmod(arrayNames, 0600)
     ##write.table(file = "pid.txt", pid, row.names = FALSE, col.names = FALSE)
 
 ## touch Rout, o.w. checkdone can try to open a non-existing file
-touchRout = os.system("/bin/touch " + tmpDir + "/f1.Rout") 
-##touchRrunning = os.system("/bin/touch /asterias-web-apps/genesrf/www/R.running.procs/R." + newDir)
-touchRrunning = os.system("/bin/touch /asterias-web-apps/genesrf/www/R.running.procs/R." + newDir +
+touchRout = os.system("/bin/touch " + tmpDir + "/f1.Rout")
+##touchRrunning = os.system("/bin/touch /home2/ramon/web-apps/genesrf/www/R.running.procs/R." + newDir)
+touchRrunning = os.system("/bin/touch /home2/ramon/web-apps/genesrf/www/R.running.procs/R." + newDir +
                           "@" + socket.gethostname())
-shutil.copy("/asterias-web-apps/genesrf/cgi/f1.R", tmpDir)
+shutil.copy("/home2/ramon/web-apps/genesrf/cgi/f1.R", tmpDir)
 createResultsFile = os.system("/bin/touch " + tmpDir + "/results.txt")
 
-# tryrrun = os.system('/asterias-web-apps/web-apps-common/tryRrun2.py ' + tmpDir +' 2 ' + 'GeneSrF &')
+# tryrrun = os.system('/home2/ramon/web-apps/web-apps-common/tryRrun2.py ' + tmpDir +' 2 ' + 'GeneSrF &')
 
-subprocess.Popen(['/asterias-web-apps/web-apps-common/tryRrun2.py',
+subprocess.Popen(['/home2/ramon/web-apps/web-apps-common/tryRrun2.py',
                   tmpDir, ' 1 ', 'GeneSrF'],
                  stdout = subprocess.PIPE, stdin = subprocess.PIPE, \
                  stderr = subprocess.PIPE)
@@ -366,7 +366,7 @@ subprocess.Popen(['/asterias-web-apps/web-apps-common/tryRrun2.py',
 ## Copy to tmpDir a results.html that redirects to checkdone.cgi
 ## If communication gets broken, there is always a results.html
 ## that will do the right thing.
-shutil.copy("/asterias-web-apps/genesrf/cgi/results-pre.html", tmpDir)
+shutil.copy("/home2/ramon/web-apps/genesrf/cgi/results-pre.html", tmpDir)
 os.system("/bin/sed 's/sustituyeme/" + newDir + "/g' " +
           tmpDir + "/results-pre.html > " +
           tmpDir + "/results.html; rm " +
@@ -381,8 +381,5 @@ print "Location: "+ getQualifiedURL("/cgi-bin/checkdone.cgi") + "?newDir=" + new
 
 ## If you get strange errors, place these two lines starting at "start execution"
 ## and do binary search for error
-# print "Location: http://google.com" 
+# print "Location: http://google.com"
 # print ""
-
-
-

@@ -3,7 +3,7 @@
 
 import sys
 import os
-import cgi 
+import cgi
 import types
 import time
 import shutil
@@ -15,10 +15,10 @@ import tarfile
 
 import cgitb
 cgitb.enable() ## zz: eliminar for real work?
-sys.stderr = sys.stdout ## eliminar?
+## sys.stderr = sys.stdout ## eliminar?
 
 ## For redirections, from Python Cookbook
-sys.path.append("/asterias-web-apps/web-apps-common")
+sys.path.append("/home2/ramon/web-apps/web-apps-common")
 from web_apps_config import *
 
 
@@ -134,7 +134,7 @@ from web_apps_config import *
 #     ## and varSelRF always gives at least two genes.
 #     ## clean_for_PaLS(tmpDir + '/' + f1, tmpDir + '/' + f1)
 #     ## clean_for_PaLS(tmpDir + '/' + f2, tmpDir + '/' + f2)
-    
+
 #     outstr0 = '<br /> <hr> ' + \
 #               '<h3> Send results to <a href = "http://pals.iib.uam.es">' + \
 #               '<IMG BORDER="0" SRC="../../palsfavicon40.png" align="middle"></a></h3>'
@@ -144,7 +144,7 @@ from web_apps_config import *
 #              '">' + s1 + ' to PaLS</a></p>' + \
 #              '<p> Send set of <a href="http://pals.iib.uam.es?' + \
 #              url_org_id + 'datafile=' + gl2 + \
-#              '">' + s2 + ' to PaLS</a></p>' 
+#              '">' + s2 + ' to PaLS</a></p>'
 #     return(outstr)
 
 
@@ -152,7 +152,7 @@ from web_apps_config import *
 
 def getQualifiedURL(uri = None):
     """ Return a full URL starting with schema, servername and port.
-    
+
     *uri* -- append this server-rooted uri (must start with a slash)
     """
     schema, stdport = ('http', '80')
@@ -161,10 +161,10 @@ def getQualifiedURL(uri = None):
         host = os.environ.get('SERVER_NAME')
         port = os.environ.get('SERVER_PORT', '80')
         if port != stdport: host = host + ":" + port
-        
+
     result = "%s://%s" % (schema, host)
     if uri: result = result + uri
-    
+
     return result
 
 def getScriptname():
@@ -191,7 +191,7 @@ def commonOutput():
     </head>
     <body>
     """
-    
+
 ## to keep executing myself:
 def relaunchCGI():
     print "Content-type: text/html\n\n"
@@ -205,9 +205,9 @@ def relaunchCGI():
     print '</head> <body>'
     print '<p> This is an autorefreshing page; your results will eventually be displayed here.\n'
     print 'If your browser does not autorefresh, the results will be kept for five days at</p>'
-    print '<p><a href="' + getBaseURL() + '?newDir=' + newDir + '">', 'http://genesrf.iib.uam.es/tmp/'+ newDir + '/results.html</a>.' 
+    print '<p><a href="' + getBaseURL() + '?newDir=' + newDir + '">', 'http://genesrf.iib.uam.es/tmp/'+ newDir + '/results.html</a>.'
     print '</p> </body> </html>'
-    
+
 
 ## Output-generating functions
 def printErrorRun():
@@ -271,13 +271,13 @@ def printOKRun():
         nf1 = len(listPNGS)
         outf.write('<h2>OOB error vs. num of genes <a href="http://genesrf.iib.uam.es/help/genesrf-help.html#f1">(help)</a></h2> \n')
         outf.write('<IMG BORDER="0" SRC="' +
-                       listPNGS[nf1 - 1].replace(tmpDir + '/', '') + '">') 
+                       listPNGS[nf1 - 1].replace(tmpDir + '/', '') + '">')
         if nf1 > 1:
             outf.write('<br /><br /><h2>OOB predictions <a href="http://genesrf.iib.uam.es/help/genesrf-help.html#f2">(help)</a></h2> \n')
             for index in range(nf1 - 1):
                 tmpfile = listPNGS[index].replace(tmpDir + '/','')
                 outf.write('<IMG BORDER="0" SRC="' +
-                           tmpfile + '">') 
+                           tmpfile + '">')
 
         if os.path.exists(tmpDir + "/fimpspec-all.png"):
             outf.write('<br /><br /><h2> Importance spectrum plots <a href="http://genesrf.iib.uam.es/help/genesrf-help.html#f3">(help)</a></h2> \n')
@@ -300,7 +300,7 @@ def printOKRun():
         allResults = tarfile.open(tmpDir + '/all.results.tar.gz', 'w:gz')
         os.system('cd ' + tmpDir +'; cp results.txt rr.html; w3m -dump rr.html > results.TXT; rm rr.html')
         allResults.add(tmpDir + '/results.TXT', 'results.txt')
-        
+
 	if os.path.exists(tmpDir + "/all.RData"): allResults.add(tmpDir + '/all.RData', 'all_R_objects.RData')
         if os.path.exists(tmpDir + "/fselprobplot.png"): allResults.add(tmpDir + '/fselprobplot.png', 'SelectionProbabilityPlot.png')
         if os.path.exists(tmpDir + "/fimpspec-all.png"): allResults.add(tmpDir + '/fimpspec-all.png', 'ImportanceSpectrumAllGenes.png')
@@ -314,7 +314,7 @@ def printOKRun():
         listPDFS = glob.glob(tmpDir + "/fboot*.pdf")
         if len(listPDFS):
             listPDFS.sort()
-            allResults.add(tmpDir + '/fselprobplot.pdf', 'SelectionProbabilityPlot.pdf') 
+            allResults.add(tmpDir + '/fselprobplot.pdf', 'SelectionProbabilityPlot.pdf')
             allResults.add(tmpDir + '/fimpspec-all.pdf', 'ImportanceSpectrumAllGenes.pdf')
             allResults.add(tmpDir + '/fimpspec-200.pdf', 'ImportanceSpectrum200Genes.pdf')
             allResults.add(tmpDir + '/fimpspec-30.pdf', 'ImportanceSpectrum30Genes.pdf')
@@ -322,10 +322,10 @@ def printOKRun():
             if nf1 > 1:
                 for index in range(nf1 - 1):
                     allResults.add(listPDFS[index], 'OOBPredictionsFigure' + str(index + 1) + '.pdf')
-        allResults.add(tmpDir + '/pre-results.html', 'results.html')                    
+        allResults.add(tmpDir + '/pre-results.html', 'results.html')
         allResults.close()
         outf.write('<hr> <a href="http://genesrf.iib.uam.es/tmp/' +
-                   newDir + '/all.results.tar.gz">Download</a> all figures and text results.')  
+                   newDir + '/all.results.tar.gz">Download</a> all figures and text results.')
 
         # outf.write(printPalsURL(newDir, tmpDir))
         outf.write("</body></html>")
@@ -364,15 +364,15 @@ def printRKilled():
     shutil.copyfile(tmpDir + "/pre-results.html", tmpDir + "/results.html")
 
 
-    
+
 ## Changing to the appropriate directory
-    
+
 form = cgi.FieldStorage()
 if form.has_key('newDir'):
    value=form['newDir']
    if type(value) is types.ListType:
        commonOutput()
-       print "<h1> ERROR </h1>"    
+       print "<h1> ERROR </h1>"
        print "<p> newDir should not be a list. </p>"
        print "<p> Anyone trying to mess with it?</p>"
        print "</body></html>"
@@ -381,7 +381,7 @@ if form.has_key('newDir'):
        newDir = value.value
 else:
     commonOutput()
-    print "<h1> ERROR </h1>"    
+    print "<h1> ERROR </h1>"
     print "<p> newDir is empty. </p>"
     print "</body></html>"
     sys.exit()
@@ -389,23 +389,23 @@ else:
 if re.search(r'[^0-9]', str(newDir)):
 ## newDir can ONLY contain digits.
     commonOutput()
-    print "<h1> ERROR </h1>"    
+    print "<h1> ERROR </h1>"
     print "<p> newDir does not have a valid format. </p>"
     print "<p> Anyone trying to mess with it?</p>"
     print "</body></html>"
     sys.exit()
-    
+
 redirectLoc = "/tmp/" + newDir
-tmpDir = "/asterias-web-apps/genesrf/www/tmp/" + newDir
+tmpDir = "/home2/ramon/web-apps/genesrf/www/tmp/" + newDir
 
 if not os.path.isdir(tmpDir):
     commonOutput()
-    print "<h1> ERROR </h1>"    
+    print "<h1> ERROR </h1>"
     print "<p> newDir is not a valid directory. </p>"
     print "<p> Anyone trying to mess with it?</p>"
     print "</body></html>"
     sys.exit()
-    
+
 
 ## Were we already done in a previous execution?
 ## No need to reopen files or check anything else. Return url with results
@@ -438,18 +438,18 @@ if os.path.exists(tmpDir + "/pid.txt"):
         os.rename(tmpDir + '/pid.txt', tmpDir + '/killed.pid.txt')
 ##        os.remove(tmpDir + '/f1.R')
         try:
-            os.system("rm /asterias-web-apps/genesrf/www/R.running.procs/R." + newDir + "*")
+            os.system("rm /home2/ramon/web-apps/genesrf/www/R.running.procs/R." + newDir + "*")
         except:
             None
         print 'Location: http://genesrf.iib.uam.es/tmp/'+ newDir + '/results.html \n\n'
-##                chkmpi = os.system('/asterias-web-apps/mpi.log/adhocCheckRmpi.py GeneSrF&')
+##                chkmpi = os.system('/home2/ramon/web-apps/mpi.log/adhocCheckRmpi.py GeneSrF&')
         sys.exit()
 
 if errorRun > 0:
     printErrorRun()
     os.rename(tmpDir + '/pid.txt', tmpDir + '/natural.death.pid.txt')
 ##    os.remove(tmpDir + '/f1.R')
-##    chkmpi = os.system('/asterias-web-apps/mpi.log/adhocCheckRmpi.py GeneSrF&')
+##    chkmpi = os.system('/home2/ramon/web-apps/mpi.log/adhocCheckRmpi.py GeneSrF&')
     # try:
     #     lamenv = open(tmpDir + "/lamSuffix", mode = "r").readline()
     # except:
@@ -461,7 +461,7 @@ if errorRun > 0:
     # except:
     #     None
     try:
-        os.system("rm /asterias-web-apps/genesrf/www/R.running.procs/R." + newDir + "*")
+        os.system("rm /home2/ramon/web-apps/genesrf/www/R.running.procs/R." + newDir + "*")
     except:
         None
     print 'Location: http://genesrf.iib.uam.es/tmp/'+ newDir + '/results.html \n\n'
@@ -482,19 +482,19 @@ elif finishedOK > 0:
     printOKRun()
     os.rename(tmpDir + '/pid.txt', tmpDir + '/natural.death.pid.txt')
 #    os.remove(tmpDir + '/f1.R')
-    ##    chkmpi = os.system('/asterias-web-apps/mpi.log/adhocCheckRmpi.py GeneSrF&')
+    ##    chkmpi = os.system('/home2/ramon/web-apps/mpi.log/adhocCheckRmpi.py GeneSrF&')
     try:
-        os.system("rm /asterias-web-apps/genesrf/www/R.running.procs/R." + newDir  + "*")
+        os.system("rm /home2/ramon/web-apps/genesrf/www/R.running.procs/R." + newDir  + "*")
     except:
         None
     print 'Location: http://genesrf.iib.uam.es/tmp/'+ newDir + '/results.html \n\n'
 
-    
+
 else:
-    ## we only end up here if: we were not done in a previous run AND no process was overtime 
+    ## we only end up here if: we were not done in a previous run AND no process was overtime
     ## AND we did not just finish. So we must continue.
     relaunchCGI()
-    
+
 
 
 
@@ -509,4 +509,4 @@ else:
 # # # getQualifiedURL http://genesrf.iib.uam.es
 # # # getScriptname /cgi-bin/checkdone.cgi
 # # # getBaseURL http://genesrf.iib.uam.es/cgi-bin/checkdone.cgi
-# # # getPathInfo Traceback (most recent call last): File "/asterias-web-apps/genesrf/cgi/checkdone.cgi", line 120, in ? print "
+# # # getPathInfo Traceback (most recent call last): File "/home2/ramon/web-apps/genesrf/cgi/checkdone.cgi", line 120, in ? print "

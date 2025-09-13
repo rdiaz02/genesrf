@@ -19,7 +19,7 @@ rm(list = ls())
     RterminatedOK <- file("RterminatedOK", "w")
     cat("\nNormal termination\n", file = RterminatedOK)
     flush(RterminatedOK)
-    close(RterminatedOK)    
+    close(RterminatedOK)
     ## try(stopCluster(TheCluster))
     cat("\n\n Normal termination\n")
     ## try(system(paste("/http/mpi.log/killLAM.py", lamSESSION, "&")))
@@ -62,7 +62,7 @@ caughtUserError <- function(message) {
     text(0.5, 0.7, "There was a PROBLEM with your data.")
     text(0.5, 0.5,
     "Please read carefully the error messages under Results,")
-    
+
     text(0.5, 0.3, "fix the problem, and try again.")
     dev.off()
     sink(file = "results.txt")
@@ -86,7 +86,7 @@ caughtOurError <- function(message, runLast = TRUE) {
     text(0.5, 0.7, "There was a PROBLEM with the code.")
     text(0.5, 0.5,
     "Please let us know (send us the URL),")
-    
+
     text(0.5, 0.3, "so that we can fix it.")
     dev.off()
     sink(file = "results.txt")
@@ -130,7 +130,7 @@ graphDir <- paste(getwd(), "/", sep = "")
 #       height = png.height, res = png.res,
 #       pointsize = png.pointsize,
 #       family = png.family); plot(rnorm(10)); dev.off()
-       
+
 
 ##############################################
 ####       Constants for var sel rf #########
@@ -230,7 +230,7 @@ linkGene <- function(id) {
               organism,"\" target=\"icl_window\" >",id,"</a>", sep = "")
 ## target=\"icl_window\"\
 }
-     
+
 
 
 linkGene2 <- function(id) {
@@ -238,7 +238,7 @@ linkGene2 <- function(id) {
     ## to IDClight.
     if ((idtype == "None") | (organism == "None"))
         return(id)
-    else 
+    else
         paste("http://idclight.bioinfo.cnio.es/IDClight.prog",
               "?idtype=", idtype, "&id=", id, "&org=",
               organism, sep = "")
@@ -246,28 +246,28 @@ linkGene2 <- function(id) {
 
 library(Hmisc)
 html.data.frame <- function (object, first.col = "Name",
-                             file = paste(first.word(deparse(substitute(object))), 
-                             "html", sep = "."), append = FALSE, link = NULL, linkCol = 1, 
-                             linkType = c("href", "name"), ...) 
+                             file = paste(first.word(deparse(substitute(object))),
+                             "html", sep = "."), append = FALSE, link = NULL, linkCol = 1,
+                             linkType = c("href", "name"), ...)
 {
     linkType <- match.arg(linkType)
     x <- format.df(object, ...)
     adj <- attr(x, "col.just")
-    if (any(adj == "r")) 
-        for (i in seq(along = adj)[adj == "r"]) x[, i] <- paste("<div align=right>", 
+    if (any(adj == "r"))
+        for (i in seq(along = adj)[adj == "r"]) x[, i] <- paste("<div align=right>",
             x[, i], "</div>", sep = "")
-    if (length(r <- dimnames(x)[[1]])) 
+    if (length(r <- dimnames(x)[[1]]))
         x <- cbind(first.col = r, x)
     colnames(x)[1] <- first.col
     cat("<TABLE BORDER>\n", file = file, append = append)
-    cat("<tr>", paste("<td>", dimnames(x)[[2]], "</td>", sep = ""), 
+    cat("<tr>", paste("<td>", dimnames(x)[[2]], "</td>", sep = ""),
         "</tr>\n", sep = "", file = file, append = file != "")
-    if (length(link)) 
-        x[, linkCol] <- ifelse(link == "", x[, linkCol], paste("<a ", 
-            linkType, "=\"", link, "\">", x[, linkCol], "</a>", 
+    if (length(link))
+        x[, linkCol] <- ifelse(link == "", x[, linkCol], paste("<a ",
+            linkType, "=\"", link, "\">", x[, linkCol], "</a>",
             sep = ""))
-    for (i in 1:nrow(x)) cat("<tr>", paste("<td>", x[i, ], "</td>", 
-        sep = ""), "</tr>\n", sep = "", file = file, append = file != 
+    for (i in 1:nrow(x)) cat("<tr>", paste("<td>", x[i, ], "</td>",
+        sep = ""), "</tr>\n", sep = "", file = file, append = file !=
         "")
     cat("</TABLE>\n", file = file, append = file != "")
     structure(list(file = file), class = "html")
@@ -283,7 +283,7 @@ HTML.varSelRFBoot <- function(object,
     sink(file, append)
     cat("<h3>Variable selection using all data </h3>")
     cat("<h4>Variables used</h4>")
-    
+
     cat("<TABLE frame=\"box\">\n")
     cat("<tr><th width=200>Gene name</th></tr>\n")
     for(i in 1:length(object$all.data.vars)) {
@@ -396,7 +396,7 @@ tryxdata <- try(
 xdata <- read.table("covariate", header = FALSE, sep = "\t",
                     strip.white = TRUE,
                     comment.char = "#",
-		    quote = ""))
+		    quote = "", stringsAsFactors = TRUE))
 
 if(inherits(tryxdata, "try-error"))
     caughtUserError("The covariate file is not of the appropriate format\n")
@@ -420,7 +420,7 @@ if(length(unique(geneNames)) < length(geneNames)) {
                       "The duplicated names are in rows", dupnames, "\n")
     caughtUserError(emessage)
 }
-    
+
 rownames(xdata) <- geneNames
 
 
@@ -480,14 +480,14 @@ if(length(Class) != dim(xdata)[1]) {
                       length(Class), " arrays according to the class file but \n",
                       dim(xdata)[1], " arrays according to the covariate data.\n",
                       "Please fix this problem and try again.\n")
-    caughtUserError(emessage)  
+    caughtUserError(emessage)
 }
 
 
 if(!(is.numeric(xdata))) {
     caughtUserError("Your covariate file contains non-numeric data. \n That is not allowed.\n")
 }
-    
+
 
 if(any(is.na(xdata))) {
     caughtUserError("Your covariate file contains missing values. \n That is not allowed.\n")
@@ -536,7 +536,7 @@ if(inherits(trycode, "try-error"))
 
 print("Third gc")
 print(gc())
-               
+
 trycode <- try(
               rf.vs1.boot <- varSelRFBoot(xdata, Class, srf = rf.vs1,
                              TheCluster = TheCluster,
@@ -549,7 +549,7 @@ if(inherits(trycode, "try-error"))
 
 
 trycode <- try(
-               
+
                rvi <- randomVarImpsRF(xdata, Class, forest = rf1,
                        numrandom = numRand,
                        TheCluster = TheCluster
@@ -563,7 +563,7 @@ stopCluster(TheCluster)
 
 
 trycode <- try(
-             { 
+             {
                imps <- importance(rf1, type = 1, scale = FALSE)
                imps <- as.matrix(imps[order(imps, decreasing = TRUE),])
                colnames(imps) <- "Mean Decrease in Accuracy"
@@ -573,17 +573,17 @@ if(inherits(trycode, "try-error"))
   caughtOurError(paste("Problem with imps code, with error",
                        trycode, ". \n Please let us know so we can fix the code."))
 
-               
+
 
 ### Now, do the plots; first PNGs for HTML output; at end are the pdfs
 
-               
+
 plots.oobpreds <- levels(Class)
 
 
 
 
-## The folliwing 
+## The folliwing
 ## does not work: superimposes axis and main labels
 ## GDD(file = "fboot", type = "gif", width = png.width,
 ##         height = png.height, ps = png.pointsize)
@@ -593,7 +593,7 @@ plots.oobpreds <- levels(Class)
 ## plot(rf.vs1.boot)
 ## dev.off()
 
-## This next one looks very ugly 
+## This next one looks very ugly
 ## bitmap(file = "fboot%03d.png", width = 9,
 ##         height = 9, pointsize = 12)
 ## par(cex.axis = 0.75); par(cex.lab = 1.4); par(cex.main = 1.4)
@@ -663,7 +663,7 @@ dev.off()
 CairoPNG(file = "fselprobplot.png", width = png.width,
          height = png.height, ps = png.pointsize)
 par(cex.axis = 0.75); par(cex.lab = 1.2); par(cex.main = 1.2)
-selProbPlot(rf.vs1.boot, k = c(20, 100), 
+selProbPlot(rf.vs1.boot, k = c(20, 100),
             main = "Selection Probability Plot")
 dev.off()
 
@@ -695,11 +695,11 @@ cat("</TABLE>")
 sink()
 
 
-               
+
 
 ### for debugging:
 save(file = "all.RData", list = ls())
-     
+
 pdf.height <- 12
 pdf.width <- 12
 ### Now the pdfs
@@ -708,17 +708,17 @@ pdf(file = "fboot%03d.pdf", onefile = FALSE, width = pdf.width,
 plot(rf.vs1.boot)
 dev.off()
 
-          
-          
+
+
 trycode <- (
-            {             
+            {
               pdf(file = "fimpspec-all.pdf", onefile = FALSE, width = pdf.width,
                   height = pdf.height)
               randomVarImpsRFplot(rvi, rf1,
                                   main = "Importance Spectrum: all genes",
                                   overlay = TRUE)
-              
-              
+
+
               legend(x = 0.45 * dim(xdata)[2], y = 0.85 * maxy,
                      legend = c("Original data", "Permuted class labels",
                        "Mean permuted class labels"),
@@ -726,27 +726,27 @@ trycode <- (
                      lty = 1, lwd = 1.5,
                      col = c("black", "lightblue", "red"))
               dev.off()
-              
-              
+
+
               pdf(file = "fimpspec-200.pdf", onefile = FALSE, width = pdf.width,
                   height = pdf.height)
               randomVarImpsRFplot(rvi, rf1, nvars = 200,
                                   main = "Importance Spectrum: first 200 genes",
                                   overlay = TRUE)
               dev.off()
-              
+
               pdf(file = "fimpspec-30.pdf", onefile = FALSE, width = pdf.width,
                   height = pdf.height)
               randomVarImpsRFplot(rvi, rf1, nvars = 30,
                                 main = "Importance Spectrum: first 30 genes",
                                   overlay = TRUE)
               dev.off()
-              
-              
-              
+
+
+
               pdf(file = "fselprobplot.pdf", onefile = FALSE, width = pdf.width,
                 height = pdf.height)
-              selProbPlot(rf.vs1.boot, k = c(20, 100), 
+              selProbPlot(rf.vs1.boot, k = c(20, 100),
                           main = "Selection Probability Plot")
               dev.off()
             }
@@ -779,7 +779,7 @@ if(inherits(trycode, "try-error"))
 #####     "
 ##### \documentclass[10pt]{article}
 ##### \usepackage{ae}
-##### \usepackage{aecompl}       
+##### \usepackage{aecompl}
 ##### \usepackage[latin1]{inputenc}
 ##### \usepackage{geometry}
 ##### \geometry{a4paper,tmargin=30mm,bmargin=30mm,lmargin=20mm,rmargin=20mm}
@@ -789,10 +789,10 @@ if(inherits(trycode, "try-error"))
 ##### \usepackage{verbatim}
 ##### \usepackage{amsmath}
 ##### \usepackage{url}
-##### \usepackage [mathlines, displaymath]{lineno} 
+##### \usepackage [mathlines, displaymath]{lineno}
 ##### \title{Automatically generated report from GeneSrF}
 ##### You run GeneSrF \url{http://genesrf.bioinfo.cnio.es} on ",
-#####     startExecTime, 
+#####     startExecTime,
 #####     " using as covariate file \begin{verbatim}",
 #####     originalFilenames[1, 1], "\end{verbatim}   and as class file
 #####     \begin{verbatim}", originalFilenames[2, 1], "\end{verbatim}
