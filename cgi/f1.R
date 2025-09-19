@@ -140,7 +140,7 @@ numBootstrap <- 200
 numRand <- 50
 numTree <- 2000
 
-numClusterNodes <- 10
+numClusterNodes <- 4 ## 10
 
 
 ##############################################

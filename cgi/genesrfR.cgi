@@ -278,6 +278,8 @@ if(fs.getfirst("covariate2")== None):
 fileNamesBrowser.write(fs['class'].filename + '\n')
 fileNamesBrowser.close()
 
+## Kill long running R processes
+new_clean_kill_1 = os.system("for pid in $(ps -u www-data -o pid,etimes,args | grep 'R-4.5.1' | awk '{ if ($2 > " + str(R_MAX_time) + ") print $1 }'); do kill -TERM $pid; done")
 
 ## current number of processes > max number of processes?
 ## and yes, we do it here, not before, so that we have the most
@@ -289,6 +291,8 @@ for Rtouchfile in RrunningFiles:
     tmpS = "/home2/ramon/web-apps/genesrf/www/R.running.procs/" + Rtouchfile
     if (currentTime - os.path.getmtime(tmpS)) > R_MAX_time:
         os.remove(tmpS)
+
+
 
 ## Now, verify any processes left
 numRgenesrf = len(glob.glob("/home2/ramon/web-apps/genesrf/www/R.running.procs/R.*@*%*"))

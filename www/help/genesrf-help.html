@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Help - GeneSrF</title>
 <style type="text/css">
-                 body { margin-left: 10%; margin-right: 10%; color: black;} 
+                 body { margin-left: 10%; margin-right: 10%; color: black;}
 <!--                  body { margin-left: 10%; margin-right: 10%; color: black; background="fondo3.jpg";} -->
                  <!-- h1 { margin-left: -8%;} -->
                  h2,h3,h4,h5,h6 { margin-left: -4%; }
@@ -18,7 +18,7 @@ h1,h2 { font-family: Verdana, sans-serif; }
 pre { font-family: monospace; }
                </style>
   </head>
-<body background="fondo3.jpg"> 
+<body background="fondo3.jpg">
 
 
 
@@ -114,7 +114,7 @@ rdf:resource="http://web.resource.org/cc/ShareAlike"
 <li><a href="#authors">Author and Acknowledgements</a></li>
 <li><a href="#terms.use">Terms of use</a></li>
 <li><a href="#privacy">Privacy and	Security</a></li>
-<li><a href="#warranty">Disclaimer</a></li>  
+<li><a href="#warranty">Disclaimer</a></li>
 <li><a href="#refs">References</a></li>
 </ol>
 <hr>
@@ -255,25 +255,25 @@ collinearity).</p>
 </ul>
 
 
-  
+
 
     <h2><a name="usage">Usage</a></h2>
-    
+
     <h3><a name="input">Input</a></h3>
 
     <h4><a name="covariates">Expression data file</a></h4>
-    <p>The file with the expression data (the covariates); generally the gene 
+    <p>The file with the expression data (the covariates); generally the gene
     expression data. In this file, rows represent variables (generally genes),
     and columns represent subjects, or samples, or arrays.</p>
 
-    <p> The file for the covariates should be <a name="requirements">formated</a> as:</p> 
-    <ul> 
-      <li>Data should conform to the "genes in rows,  patients (or arrays) in columns". 
-          In other words, each row of the data file is supposed to represent a different gene 
-          or variable.</li> 
-      <li>Use tab (\t) as the field separator within rows.</li> 
-      <li>Use newline or carriage return (\n) between rows. It is also convenient to finish a 
-              file with one carriage return (\n).</li> 
+    <p> The file for the covariates should be <a name="requirements">formated</a> as:</p>
+    <ul>
+      <li>Data should conform to the "genes in rows,  patients (or arrays) in columns".
+          In other words, each row of the data file is supposed to represent a different gene
+          or variable.</li>
+      <li>Use tab (\t) as the field separator within rows.</li>
+      <li>Use newline or carriage return (\n) between rows. It is also convenient to finish a
+              file with one carriage return (\n).</li>
       <li>Array names: if you want to name your arrays (useful for the output of
 	the analyses) do as follows:
 	<ol>
@@ -282,10 +282,10 @@ collinearity).</p>
 	    don't give you choices);</li>
 	  <li>Write the array names (separated by tabs).</li>
 	</ol>
-      <li>The first column is assumed to contain the ID information for genes, marker, 
-        or whatever. This will be used to label the output (but it also means that whatever is 
-        in the first column is not used in the analyses).</li> 
-      <li>You can have an arbitrary number of rows with comments. These rows must always start 
+      <li>The first column is assumed to contain the ID information for genes, marker,
+        or whatever. This will be used to label the output (but it also means that whatever is
+        in the first column is not used in the analyses).</li>
+      <li>You can have an arbitrary number of rows with comments. These rows must always start
         with an "&#035;".</li>
 	    <li><b>Gene names and array names MUST be unique</b>. If
 	      they are not, the program will let you know. If you do
@@ -301,44 +301,44 @@ collinearity).</p>
 	      classifier (and what should we do if two or more genes
 	      are named "gene B"?).</li>
 
-      <li><b>Missing values are NOT allowed</b>. You can use the 
+      <li><b>Missing values are NOT allowed</b>. You can use the
 	      <a href="http://prep.iib.uam.es">preprocessor</a> and do
 	      several things with your data before sending it
 	      to Tnasas. We would probably recommend you do imputation after
 	      eliminating genes with too many (more than, say, 20&#037;?) missing. Anyway,
 	      how best to deal with missing values is not a trivial issue and is outside
 	      the scope of this help file.
-      
-      <li> This is a small covariate data file: 
-        <div class="color"> 
-          <pre> 
-#Name     ge1      ge2      ge1      ge1      ge2 
-gene1   23.4    45.6    44      76      85.6 
-genW@   3      34      23      56      13 
-geneX#  23      25.6    29.4    13.2    1.98   </pre> </div> 
-        </li> 
+
+      <li> This is a small covariate data file:
+        <div class="color">
+          <pre>
+#Name     ge1      ge2      ge1      ge1      ge2
+gene1   23.4    45.6    44      76      85.6
+genW@   3      34      23      56      13
+geneX#  23      25.6    29.4    13.2    1.98   </pre> </div>
+        </li>
 
     </ul>
-    
-    
+
+
     <h4><a name="class">Class file</a></h4>
-    <p>These are the class labels 
+    <p>These are the class labels
       (e.g., healthy or affected, or different types of cancer) that group the
       samples. Our predictor will try to predict these class labels.</p>
-    
+
 	<p>Please note that we do not allow any data set with 3 or fewer cases in any class.
 	  Why? Because, on the one hand, any results from such data would be hard to believe;
 	  on the other hand, that would result in some cross-validation samples
     having some training samples with 0 elements from one of the classes.</p>
-	  
-    <p>Separate values by tab (\t), and finish the file with a carriage return or newline.  
-      No missing values are allowed here. Class labels can be anything you wish; they 
-      can be integers, they can be words, whatever. </p>  
+
+    <p>Separate values by tab (\t), and finish the file with a carriage return or newline.
+      No missing values are allowed here. Class labels can be anything you wish; they
+      can be integers, they can be words, whatever. </p>
     <p> This is a simple example of class labels file  </p>
-    <div class="color"> 
-      <pre>  
-CL1     CL2     CL1     CL4     CL2     CL2     CL1     CL4       </pre>        </div>       
-  
+    <div class="color">
+      <pre>
+CL1     CL2     CL1     CL4     CL2     CL2     CL1     CL4       </pre>        </div>
+
 
 
 <h4><a name="idc">Type of gene identifier and species</a></h4>
@@ -359,9 +359,9 @@ tool.</p>
     data, and with dotted black lines the lines from the bootstrap
     samples. Please note that <b>this OOB errors are biased down</b> and should
     not be used as honest estimates of the error rate.</p>
-    
+
     <h5><a name="f2">OOB predictions</a></h5>
-    
+
     <p>For each sample, its (average) out-of-bag class prediction. Thus, this
     is the Out-of-bag prediction for each sample when that sample was not used
     at all for the training process. We provide one such plot for each of the
@@ -475,16 +475,14 @@ with the Prostate data set of Singh et al. (2002, Cancer Cell, 1: 203--209),
 with 102 subjects and 6033 genes. Of course, your mileage will vary.</p>
 
 <h3><a name="examples">Examples</a></h3>
-<p>Examples of several runs, one with fully commented results, are available 
+<p>Examples of several runs, one with fully commented results, are available
 <a href="http://genesrf.iib.uam.es/Examples/index.html">here</a>.
 
 
     <h2><a name="authors">Author and Acknowledgements</a></h2>
-    
+
     <p>This program was developped by
-      <a href="http://iib.uam.es/~rdiaz" target="_blank">Ramón Díaz-Uriarte</a>, 
-      from the <a href="http://iib.uam.es" target="_blank">Bioinformatics Unit</a> at
-      <a href="http://www.cnio.es" target="_blank">CNIO</a>.
+      <a href="http://iib.uam.es/~rdiaz" target="_blank">Ramón Díaz-Uriarte</a>, while at CNIO, and currently at UAM and IIBM.
       This tool uses <a href="http://www.python.org">Python</a> for the CGI and
     <a href="http://www.r-project.org">R</a> for the computations.
     The basic squeleton of the R code is the package <a
@@ -505,8 +503,8 @@ with 102 subjects and 6033 genes. Of course, your mileage will vary.</p>
     <a
     href="http://cran.r-project.org/src/contrib/Descriptions/rsprng.html">rsprng</a>,
     by Na (Michael) Li. </p>
-    
-    
+
+
 <p>This application is running on a cluster of machines using <a
 href="http://www.debian.org">Debian GNU/Linux</a> as operating system, <a
 href="http://www.apache.org">Apache</a> as web server, <a
@@ -524,21 +522,20 @@ statistical computing</a>.</p>
 
 <p><b>Funding</b> partially provided by Project TIC2003-09331-C02-02 of the
 Spanish Ministry of Education and Science. This application is running on a
-cluster of machines purchased with funds from the 
-<a href="http://www.rticcc.org/">RTICCC</a>.</p> 
+cluster of machines purchased with funds from the
+<a href="http://www.rticcc.org/">RTICCC</a>.</p>
 
 
 
 
-     
-      
+
+
     <h2><a name="terms.use">Terms of use</a></h2>
     <ul>
       <li>You acknowledge that this Software is experimental in nature
-	and is supplied "AS IS", without obligation by the authors, the CNIO's
-	Bioinformatics Unit or the CNIO to provide accompanying
+	and is supplied "AS IS", without obligation by the authors, or their instutions,  to provide accompanying
 	services or support. The entire risk as to the quality and performance of the
-	Software is with you. The CNIO and the authors expressly disclaim any and all
+	Software is with you. The  authors expressly disclaim any and all
 	warranties regarding the software, whether express or implied, including but
 	not limited to warranties pertaining to merchantability or fitness for a
 	particular purpose.</li>
@@ -554,7 +551,7 @@ href="http://www.biomedcentral.com/1471-2105/8/328">BMC Bioinformatics
 	Complaints or suggestions are welcome.</li>
     </ul>
     <br>
-    
+
     <h2><a name="privacy">Privacy and	Security</a></h2>
     <p>Uploaded data set are saved in temporary directories in the server and are
       accessible through the web until they are erased after some time. Anybody can
@@ -565,26 +562,26 @@ href="http://www.biomedcentral.com/1471-2105/8/328">BMC Bioinformatics
       possible for somebody else to look at your data while you are uploading or
       dowloading them.</p>
       <br>
-      
+
     <h2><a name="warranty">Disclaimer</a></h2>
     <p>This software is experimental in nature and is supplied "AS IS", without
-      obligation by the authors or the CNIO the to provide accompanying services or
+      obligation by the authors or their instutitions to provide accompanying services or
       support. The entire risk as to the quality and performance of the software is
       with you. The authors expressly disclaim any and all warranties regarding the
       software, whether express or implied, including but not limited to warranties
       pertaining to merchantability or fitness for a particular purpose.<br>
-      
+
       <!--     (If you are lost using these types of applications, or new, you -->
       <!--       might want to read  -->
       <!--       <a href="http://www.catb.org/~esr/faqs/smart-questions.html"> -->
       <!-- 	How To Ask Questions The Smart Way</a>, by Eric Raymond.) -->
-      
-      
-      
+
+
+
     <h2><a name="refs">References</a></h2>
-    
+
 <p>Ambroise C, McLachlan GJ (2002) Selection bias in gene extraction on the basis
-    of microarray gene-expression data. 
+    of microarray gene-expression data.
       <a href="http://www.pnas.org/cgi/content/abstract/99/10/6562">Proc Natl
 	Acad Sci USA 99: 6562--6566</a>.</p>
 
@@ -615,7 +612,7 @@ report</a>.)</p>
 <p>Friedman, JH, Meulman, JJ. (2004). Clustering objects on subsets of
 attributes (with discussion). <i>J. Royal Statistical Society, Sr. B</i>, 66: 815--850.</p>
 
-<p>Liaw A, Wiener M (2002) 
+<p>Liaw A, Wiener M (2002)
     <a href="http://cran.r-project.org/doc/Rnews/Rnews_2002-3.pdf">
 Classification and regression by randomForest</a>. <i>R
       News</i>, 2: 18--22.</p>
